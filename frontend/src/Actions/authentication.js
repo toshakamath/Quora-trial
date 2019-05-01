@@ -2,13 +2,16 @@ import axios from "axios";
 import { ERRORS, SIGNUP, LOGIN_USER } from "./types";
 var setData = require("../components/Localstorage").setData;
 
+let user_id = "";
+
 export const signupUser = (signupdata, history) => dispatch => {
   console.log("checking data in backend", signupdata);
   axios
-    .post(window.base_url + "/users/signup", signupdata)
+    .post(window.base_url + "/signup", signupdata)
     .then(res => {
       console.log("this is the data from back end", res.data);
       history.push("/interests");
+      user_id = res.data._id;
     })
     .catch(err => {
       dispatch({
@@ -21,6 +24,8 @@ export const signupUser = (signupdata, history) => dispatch => {
 /***** Topics interests *****/
 export const topicsSelected = (topicsInterested, history) => dispatch => {
   console.log("checking data in backend topics selected", topicsInterested);
+  console.log("this is the user_id", user_id);
+  topicsInterested.userId = user_id;
   axios
     .post(window.base_url + "/topic", topicsInterested)
     .then(res => {

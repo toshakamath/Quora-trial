@@ -48,64 +48,57 @@ router.post("/", function(req, res) {
   // });
 
   // this process will avoid SQL injection attack
-  for (var i = 0; i < 4999; i++) {
-    console.log("Entere insdie for loop", i);
-    let fakeEmail = faker.internet.email();
 
-    let sql = "SELECT emailid FROM userDetails WHERE emailid = ?";
-    connection.query(sql, fakeEmail, function(error, results, fields) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("Entered inside else loop", i);
-        const hashedPassword = bcrypt.hashSync(req.body.password);
-        //hard coded values as FE is not developed well
-        req.body.city = "abc";
-        req.body.state = "xyz";
-        req.body.zipcode = 123;
-        req.body.profileimage = "a";
+  let sql = "SELECT emailid FROM userDetails WHERE emailid = ?";
+  connection.query(sql, req.body.email, function(error, results, fields) {
+    if (error) {
+      console.log(error);
+    } else {
+      const hashedPassword = bcrypt.hashSync(req.body.password);
+      //hard coded values as FE is not developed well
+      req.body.city = "abc";
+      req.body.state = "xyz";
+      req.body.zipcode = 123;
+      req.body.profileimage = "a";
 
-        //this will avoid SQL injection attack
-        let sql = "INSERT INTO userDetails (emailid, password) VALUES  ? ";
-        let inser_vals = [[fakeEmail, hashedPassword]];
+      //this will avoid SQL injection attack
+      let sql = "INSERT INTO userDetails (emailid, password) VALUES  ? ";
+      let inser_vals = [[req.body.email, hashedPassword]];
 
-        connection.query(sql, [inser_vals], function(error, results, fields) {
-          if (error || results == null || results.length < 1) {
-            console.log(error);
-            // res.value = "The User details entered are not valid";
-            console.log(res.value);
-            // callback(null, res);
-          } else {
-            console.log("Going inside table", i);
-            var user = new Model({
-              _id: new mongoose.Types.ObjectId(),
-              firstName: faker.name.firstName(),
-              lastName: faker.name.lastName(),
-              email: fakeEmail,
-              city: req.body.city,
-              state: req.body.state,
-              zipCode: req.body.zipCode,
-              profileImage: req.body.profileImage,
-              status: req.body.status
-            });
+      connection.query(sql, [inser_vals], function(error, results, fields) {
+        if (error || results == null || results.length < 1) {
+          console.log(error);
+          res.value = "The User details entered are not valid";
+          console.log(res.value);
+          callback(null, res);
+        } else {
+          var user = new Model({
+            _id: new mongoose.Types.ObjectId(),
+            firstName: req.body.firstname,
+            lastName: req.body.lastname,
+            email: req.body.email,
+            city: req.body.city,
+            state: req.body.state,
+            zipCode: req.body.zipCode,
+            profileImage: req.body.profileImage,
+            status: req.body.status
+          });
 
-            user.save().then(
-              doc => {
-                // res.status(200).json(doc);
-                console.log("User saved successfully.", doc);
-                // callback(null, doc);
-              },
-              err => {
-                console.log("Unable to save user details.", err);
-                // res.status(404).json(err); //callback(err, null);
-              }
-            );
-          }
-        });
-      }
-    });
-  }
-  console.log("Done ..outside the for loop");
+          user.save().then(
+            doc => {
+              res.status(200).json(doc);
+              console.log("User saved successfully.", doc);
+              callback(null, doc);
+            },
+            err => {
+              console.log("Unable to save user details.", err);
+              res.status(404).json(err); //callback(err, null);
+            }
+          );
+        }
+      });
+    }
+  });
 });
 
 module.exports = router;

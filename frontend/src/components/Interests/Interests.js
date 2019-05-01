@@ -19,15 +19,15 @@ class Interests extends Component {
 
   handleSelect(name, url) {
     let topic = {
-      topicname: name,
-      topicimage: url
+      topicName: name,
+      topicImage: url
     };
     var data = this.state.interests.slice();
     let position = data
       .map(e => {
-        return e.topicname;
+        return e.topicName;
       })
-      .indexOf(topic.topicname);
+      .indexOf(topic.topicName);
 
     if (position < 0) {
       data.push(topic);

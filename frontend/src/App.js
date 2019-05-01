@@ -26,7 +26,8 @@ class App extends Component {
                 path="/signup"
                 render={props => <Signup {...props} />}
               />
-              <Route exact
+              <Route
+                exact
                 path="/interests"
                 render={props => <Interests {...props} />}
               />
