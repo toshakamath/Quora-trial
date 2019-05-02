@@ -4,7 +4,7 @@ import { Field, reduxForm } from "redux-form";
 import "./signup.css";
 import axios from "axios";
 import { connect } from "react-redux";
-var signupUser = require("../../Actions/authentication").signupUser;
+var signupUser = require("../../Actions/authAction").signupUser;
 
 //Define a Login Component
 class Signup extends Component {

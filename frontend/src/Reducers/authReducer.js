@@ -1,7 +1,8 @@
-import { SIGNUP, LOGIN_USER } from "../Actions/types";
+import {LOGIN_USER, TOPICS } from "../Actions/types";
 const initialState = {
   token: {},
-  authenticated: true
+  authenticated: true,
+  topics: []
 };
 export default function(state = initialState, action) {
   switch (action.type) {
@@ -13,6 +14,11 @@ export default function(state = initialState, action) {
           token: action.payload
         };
       }
+    case TOPICS:
+      return {
+        ...state,
+        topics: action.payload
+      };
     default:
       return state;
   }

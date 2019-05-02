@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import "./interests.css";
-var topicsSelected = require("../../Actions/authentication").topicsSelected;
+var topicsSelected = require("../../Actions/authAction").topicsSelected;
 
 class Interests extends Component {
   constructor(props) {

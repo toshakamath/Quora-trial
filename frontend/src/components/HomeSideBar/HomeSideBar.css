@@ -25,7 +25,7 @@
 .SwitcherItemWithImage label {
   display: inline-block;
   color: #666;
-  margin-left: 8px;
+  margin-left: 15px;
   margin-bottom: 0px;
   font-weight: 500;
   text-transform: none;
@@ -34,7 +34,7 @@
 }
 
 .SwitcherItemWithImage:hover {
-  background-color: #e6e6e6;
+  background: #e6e6e6;
 }
 
 .swictherImg {
@@ -43,6 +43,42 @@
   background-position: center !important;
   background-size: 90%;
   border-radius: 2px im;
-  height: 100%;
-  width: 100%;
+  height: 150%;
+  width: 150%;
 }
+
+/* .BookmarkswictherImg{
+  background-image: url(https://qsf.fs.quoracdn.net/7-images.icons.mobile_feed_switcher.bookmark_3x.png-26-fd5bb1ef5737065f.png);
+  background-position: center !important;
+  background-size: 90%;
+  border-radius: 2px im;
+  height: 150%;
+  width: 150%;
+} */
+
+
+
+/*** CSS for sidebar topics ***/
+.topicList {
+  margin-left: -4px;
+  padding: 3px 3px;
+}
+
+.topicList:hover{
+  background: #e6e6e6;
+  border-radius: 3px;
+}
+
+.swictherImgTopics {
+  background-position: center !important;
+  background-size: 100%;
+  border-radius: 2px im;
+  height: 150%;
+  width: 150%;
+}
+.topicname {
+  margin-left: 15px;
+  font-weight: 700;
+}
+
+

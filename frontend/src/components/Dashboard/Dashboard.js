@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
-
-import axios from "axios";
-import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import Profile from "../Profile/Profile";
 import Navbar from "../Navbar/Navbar";

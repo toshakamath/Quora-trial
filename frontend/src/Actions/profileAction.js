@@ -1,6 +1,7 @@
 import axios from "axios";
 import { GET_PROFILE } from "./type";
 import jwt_decode from "jwt-decode";
+
 export const getProfile = () => dispatch => {
   let token = localStorage.jwtToken;
   const decoded = jwt_decode(token);
@@ -17,3 +18,5 @@ export const getProfile = () => dispatch => {
       });
     });
 };
+
+

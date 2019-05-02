@@ -16,9 +16,7 @@ class Navbar extends Component {
       <div className="siteHeader">
         <div className="container d-flex justify-content-between">
           <div className="headerLogo">
-            <Link to="/home">
-              <span className="display-none">Quora</span>
-            </Link>
+            <Link to="/home" />
           </div>
           <div className="d-flex justify-content-between">
             <div className="headerNav" role="navigation">

@@ -11,7 +11,7 @@ var userDetails = new Schema({
   zipCode: { type: Number },
   profileImage: { type: String },
   status: { type: Boolean },
-  topic: [{ topicName: { type: String }, topicImage: { type: String } }]
+  topics: [{ topicName: { type: String }, topicImage: { type: String } }]
 });
 
 module.exports = mongoose.model("userDetails", userDetails);
