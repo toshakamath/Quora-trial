@@ -4,22 +4,18 @@ import { Link, withRouter } from "react-router-dom";
 import "./questions.css";
 
 const questions = ({ question }) => {
-
   //let answer = {}
 
   var max = -Infinity;
   var index = -1;
-  question.answers.forEach(function (a, i) {
+  question.answers.forEach(function(a, i) {
     if (a.upVote.length > max) {
       max = a.length;
       index = i;
     }
   });
 
-
   // diff is: Thu Jul 05 1973 04:00:00 GMT+0300 (EEST)
-
-
 
   const maxUpVotedAnswer = question.answers[index].answer;
   const answerDate = question.answers[index].answerDate;
@@ -30,20 +26,15 @@ const questions = ({ question }) => {
 
   if (diff.getUTCFullYear() - 1970 > 0) {
     displayAsweredTime = diff.getUTCFullYear() - 1970 + " years ago";
-  }
-  else if (diff.getUTCMonth() > 0) {
+  } else if (diff.getUTCMonth() > 0) {
     displayAsweredTime = diff.getUTCMonth() + " months ago";
-  }
-  else if (diff.getUTCDate() - 1 > 0) {
+  } else if (diff.getUTCDate() - 1 > 0) {
     displayAsweredTime = diff.getUTCDate() - 1 + " days ago";
-  }
-  else if (diff.getUTCHours() > 0) {
+  } else if (diff.getUTCHours() > 0) {
     displayAsweredTime = diff.getUTCHours() + " hours ago";
-  }
-  else if (diff.getMinutes() - 1 > 0) {
+  } else if (diff.getMinutes() - 1 > 0) {
     displayAsweredTime = diff.getMinutes() + " minutes ago";
-  }
-  else if (diff.getUTCSeconds() - 1 > 0) {
+  } else if (diff.getUTCSeconds() - 1 > 0) {
     displayAsweredTime = diff.getUTCSeconds() + " seconds ago";
   }
 
@@ -54,28 +45,24 @@ const questions = ({ question }) => {
         <h15 className="card-title">Topic: {question.topic} </h15>
 
         <a href={"#question" + question._id} className="questions">
-          <h5 className="card-title">
-            {question.question}
-          </h5>
+          <h5 className="card-title">{question.question}</h5>
         </a>
 
         <h6 className="userInfo card-subtitle mb-2 text-muted">User Info</h6>
-        <h6 className="userInfo card-subtitle mb-2 text-muted">Answered: {displayAsweredTime}</h6>
+        <h6 className="userInfo card-subtitle mb-2 text-muted">
+          Answered: {displayAsweredTime}
+        </h6>
 
-        <a className="answers card-link collapsed"
-
+        <a
+          className="answers card-link collapsed"
           data-toggle="collapse"
           href={"#" + question._id}
           aria-expanded="false"
           aria-controls={question._id}
         >
           <div id="summary">
-
             <p className="card-text collapse" id={question._id}>
-
               {maxUpVotedAnswer}
-
-
             </p>
             <a
               className="collapsed"

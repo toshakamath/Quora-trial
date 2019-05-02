@@ -2,22 +2,22 @@ const mysql = require("mysql");
 const mongoose = require("mongoose");
 
 //My SQl create connection
-// const db = mysql.createConnection({
-//   host: "quora273instance.ckkymcjvc8eq.us-east-2.rds.amazonaws.com",
-//   port: 3306,
-//   user: "quoraadmin",
-//   password: "quora273",
-//   database: "quora273db"
-// });
-
-var db = mysql.createPool({
-  connectionLimit: 100,
+const db = mysql.createConnection({
   host: "quora273instance.ckkymcjvc8eq.us-east-2.rds.amazonaws.com",
   port: 3306,
   user: "quoraadmin",
   password: "quora273",
   database: "quora273db"
 });
+
+// var db = mysql.createPool({
+//   connectionLimit: 100,
+//   host: "quora273instance.ckkymcjvc8eq.us-east-2.rds.amazonaws.com",
+//   port: 3306,
+//   user: "quoraadmin",
+//   password: "quora273",
+//   database: "quora273db"
+// });
 
 // MYSQL connect to database
 db.connect(function(err) {
