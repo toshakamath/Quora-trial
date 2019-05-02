@@ -45,7 +45,7 @@ require("./config/passport")(passport);
 app.use(passport.initialize());
 
 // Bring in defined Passport Strategy
-require('./config/passport')(passport);
+require("./config/passport")(passport);
 
 // app.use("/inbox/peopledetails", message.getPeopleDetails);
 // app.use("/inbox/sendmessage", message.sendMessage);
@@ -53,7 +53,6 @@ require('./config/passport')(passport);
 // app.use("/inbox/reply", message.replyMessages);
 
 app.use("/inbox", message);
-
 
 //Storing documents/Images
 const storage = multer.diskStorage({
@@ -74,7 +73,6 @@ app.post("/uploadprofile", upload.array("photos", 5), (req, res) => {
     res.end();
   }
 });
-
 
 //use Routes
 app.use("/login", login);

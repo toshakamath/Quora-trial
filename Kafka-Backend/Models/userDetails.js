@@ -3,7 +3,6 @@ var Schema = mongoose.Schema;
 
 var userDetails = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
-
   firstName: { type: String },
   lastName: { type: String },
   email: { type: String },
@@ -12,7 +11,7 @@ var userDetails = new Schema({
   zipCode: { type: Number },
   profileImage: { type: String },
   status: { type: Boolean },
-  topics: [{ topic: { type: Schema.Types.ObjectId, ref: "topic" } }]
+  topic: [{ topicName: { type: String }, topicImage: { type: String } }]
 });
 
 module.exports = mongoose.model("userDetails", userDetails);

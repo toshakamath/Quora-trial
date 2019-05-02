@@ -49,14 +49,13 @@ router.post("/", function(req, res) {
   // this process will avoid SQL injection attack
 
   let sql = "SELECT emailid FROM userDetails WHERE emailid = ?";
-  
+
   connection.query(sql, req.body.email, function(error, results, fields) {
-    if(error){
-      console.log(error)
-    }
-    else if (results.length!=0) {
+    if (error) {
+      console.log(error);
+    } else if (results.length != 0) {
       res.status(404).json("Duplicate Entry!!");
-    } else { 
+    } else {
       const hashedPassword = bcrypt.hashSync(req.body.password);
       //hard coded values as FE is not developed well
       req.body.city = "abcd";

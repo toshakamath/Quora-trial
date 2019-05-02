@@ -2,13 +2,16 @@ import axios from "axios";
 import { ERRORS, SIGNUP, LOGIN_USER } from "./types";
 var setData = require("../components/Localstorage").setData;
 
+let user_id = "";
+
 export const signupUser = (signupdata, history) => dispatch => {
   console.log("checking data in backend", signupdata);
   axios
-    .post(window.base_url+"/signup", signupdata)
+    .post(window.base_url + "/signup", signupdata)
     .then(res => {
       console.log("this is the data from back end", res.data);
-    //  history.push("/interests");
+      history.push("/interests");
+      user_id = res.data._id;
     })
     .catch(err => {
       dispatch({
@@ -20,7 +23,7 @@ export const signupUser = (signupdata, history) => dispatch => {
 
 /***** Topics interests *****/
 export const topicsSelected = (topicsInterested, history) => dispatch => {
-  console.log("checking data in backend topics selected", topicsInterested);
+  topicsInterested.userId = user_id;
   axios
     .post(window.base_url + "/topic", topicsInterested)
     .then(res => {
@@ -29,6 +32,7 @@ export const topicsSelected = (topicsInterested, history) => dispatch => {
       //    payload: res.data
       //    });
       console.log("this is the data from back end", res.data);
+      history.push("/login");
     })
     .catch(err => {
       // dispatch({
@@ -42,7 +46,7 @@ export const topicsSelected = (topicsInterested, history) => dispatch => {
 export const loginUser = (logindata, history) => dispatch => {
   console.log("checking data in backend", logindata);
   axios
-    .post(window.base_url+"/login", logindata)
+    .post(window.base_url + "/login", logindata)
     .then(res => {
       console.log("inside login back from backedn", res.data);
       dispatch({

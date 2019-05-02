@@ -4,8 +4,9 @@ var Schema = mongoose.Schema;
 var topic = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
   //Topic details
-  topicName: { type: String },
-  topicImage: { type: String },
+  topicsSelected: [
+    { topicName: { type: String }, topicImage: { type: String } }
+  ],
   followers: { type: String },
   userId: { type: String }
 });
