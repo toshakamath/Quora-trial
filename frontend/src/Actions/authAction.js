@@ -49,6 +49,7 @@ export const loginUser = (logindata, history) => dispatch => {
 /***** Topics interests *****/
 export const topicsSelected = (topicsInterested, history) => dispatch => {
   topicsInterested.userId = user_id;
+  console.log("the data is topics ", topicsInterested);
   axios
     .post(window.base_url + "/topic", topicsInterested)
     .then(res => {
@@ -76,10 +77,9 @@ export const fetchTopics = () => dispatch => {
       params: { email: decoded.email }
     })
     .then(response => {
-      console.log("this is user topicsssssssss", response.data);
-          dispatch({
-            type: TOPICS,
-            payload: response.data.topic
-          });
+      dispatch({
+        type: TOPICS,
+        payload: response.data.topics
+      });
     });
 };

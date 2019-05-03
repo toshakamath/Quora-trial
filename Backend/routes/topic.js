@@ -11,7 +11,7 @@ router.post("/", function(req, res) {
   console.log("Req Body : ", req.body);
   Model.findOneAndUpdate(
     { _id: req.body.userId },
-    { $set: { topic: req.body.topic } },
+    { $set: { topics: req.body.topics } },
     { useFindAndModify: false, new: true },
     (err1, modelResult) => {
       if (err1) {
@@ -30,7 +30,7 @@ router.post("/", function(req, res) {
 
 router.get("/", function(req, res) {
   console.log("Inside Topic Get Request", req.query.email);
-  Model.findOne({ email: req.query.email }, "topic", (err1, result) => {
+  Model.findOne({ email: req.query.email }, "topics", (err1, result) => {
     if (err1) {
       console.log("Error in finding the user", err1);
       res.status(400).send({ message: "Error in Adding the interests" });

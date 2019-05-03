@@ -47,7 +47,7 @@ class Interests extends Component {
     console.log("Enterd here");
     e.preventDefault();
     this.props.topicsSelected(
-      { topic: this.state.interests },
+      { topics: this.state.interests },
       this.props.history
     );
   }

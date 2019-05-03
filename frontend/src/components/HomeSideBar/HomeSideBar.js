@@ -21,7 +21,10 @@ class HomeSideBar extends Component {
       <li className="topicList">
         <Link to={`/questions/${topic.topicName}`} className="swictherLink">
           <div className="switcherImgWrapper">
-            <div className="swictherImgTopics" style={{backgroundImage: `url(${topic.topicImage})`}} />
+            <div
+              className="swictherImgTopics"
+              style={{ backgroundImage: `url(${topic.topicImage})` }}
+            />
           </div>
           <label className="topicname">{topic.topicName}</label>
         </Link>
@@ -53,7 +56,7 @@ class HomeSideBar extends Component {
                 className="swictherLink"
               >
                 <div className="switcherImgWrapper">
-                  <span className="glyphicon glyphicon-bookmark"></span>
+                  <span className="glyphicon glyphicon-bookmark" />
                 </div>
                 <label>Bookmarks</label>
               </Link>
