@@ -14,8 +14,10 @@ import PropTypes from "prop-types";
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = { showPopup: false };
+    this.state = { showPopup: false, showButtons: false };
+    let isVisible = false;
   }
+
   //new
   componentDidMount() {
     this.props.getQuestions();
@@ -26,6 +28,9 @@ class Home extends Component {
       showPopup: !this.state.showPopup
     });
   }
+
+
+
   render() {
     //new
     const { questions } = this.props.questions;

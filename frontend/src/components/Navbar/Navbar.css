@@ -133,6 +133,7 @@
   border-top-right-radius: 0;
 }
 .selectorInput {
+  /* margin: 15px 5px 5px 5px;
   border: 1px solid #e2e2e2;
   border-radius: 4px;
   padding-left: 26px;
@@ -140,8 +141,23 @@
     no-repeat 8px center;
   background-size: 13px;
   position: relative;
-  width: 100%;
+  width: 200px;
+  height: 25px; */
 }
+
+#searchbar{
+  width: 200px;
+  display: inline;
+  margin-right: 10px;
+}
+
+.searchform{  
+  padding: 10px 5px !important;
+  width: 250px !important; 
+}
+
+
+
 .siteHeader .headerNav > span {
   display: table-cell;
   white-space: nowrap;

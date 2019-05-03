@@ -50,15 +50,15 @@ class HomeSideBar extends Component {
               </Link>
             </li>
             {this.topicsList()}
-            <li className="SwitcherItemWithImage">
+            <li>
               <Link
-                to={`/courses/${this.props.id}/Home`}
+                to={`/courses/Home`}
                 className="swictherLink"
               >
-                <div className="switcherImgWrapper">
-                  <span className="glyphicon glyphicon-bookmark" />
+                <div className="BookmarkswictherImg">
+                  <i className="fa fa-bookmark" id="bookmark" aria-hidden="true" />
                 </div>
-                <label>Bookmarks</label>
+                <label className="bookmarklabel">Bookmarks</label>
               </Link>
             </li>
           </ul>

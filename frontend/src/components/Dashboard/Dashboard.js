@@ -5,6 +5,7 @@ import Profile from "../Profile/Profile";
 import Navbar from "../Navbar/Navbar";
 import Home from "../Home/Home";
 import Answer from "../Answer/Answer";
+import ViewQuestion from "../ViewQuestion/ViewQuestion";
 import "../../App.css";
 import "./Dashboard.css";
 import ConversationsList from "../Message/ConversationsList";
@@ -53,6 +54,7 @@ class Dashboard extends Component {
               <Route path="/home/inbox/createmessage" component={CreateMessage} />
               <Route path="/home/inbox" component={ConversationsList} />
               <Route path="/home" component={Home} />
+              <Route path="/:questionid" component={ViewQuestion} />
               <Route path="/Answer" component={Answer} />
               <Route path="/profile" component={Profile} />
             </Switch>

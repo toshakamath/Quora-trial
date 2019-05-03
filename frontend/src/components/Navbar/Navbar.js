@@ -1,12 +1,34 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import Axios from "axios";
 import "./Navbar.css";
 class Navbar extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   logOut(e) {
     //e.prventDefault()
     localStorage.removeItem("jwtToken");
     this.props.history.push("/login");
   }
+
+  renderSearchResult(){
+    console.log("entered here in side RENDER SEARCH RESULT");
+  }
+
+  handleClick = e => {
+    var searchdata = {
+      search: e.target.value
+    };
+    console.log("entered handle click", searchdata);
+    Axios.post(window.base_url + "/search", searchdata).then(response => {
+      console.log("final data", response.data);
+      this.renderSearchResult();
+    });
+
+
+  };
 
   show(e) {
     document.getElementById("abc").classList.toggle("show");
@@ -89,13 +111,17 @@ class Navbar extends Component {
               <div className="searchBar">
                 <div className="lookupBarSelector selector" tabIndex="-1">
                   <div className="selectorInputWrpaper">
-                    <input
-                      className="selectorInput text"
-                      type="text"
-                      data-lpignore="true"
-                      autoFocus="true"
-                      placeholder="Search Quora"
-                    />
+                    <form className="searchform">
+                      <input
+                        className="form-control"
+                        id="searchbar"
+                        type="text"
+                        name="search"
+                        placeholder="Search..."
+                        aria-label="Search"
+                        onChange={this.handleClick}
+                      />
+                    </form>
                   </div>
                 </div>
               </div>
@@ -136,3 +162,12 @@ class Navbar extends Component {
   }
 }
 export default withRouter(Navbar);
+
+// <input
+//                       className="selectorInput text"
+//                       type="text"
+//                       data-lpignore="true"
+//                       autoFocus="true"
+//                       placeholder="Search Quora"
+//                       name="search"
+//                     />

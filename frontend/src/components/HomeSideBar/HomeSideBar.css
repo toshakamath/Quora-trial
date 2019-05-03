@@ -42,20 +42,31 @@
   background-color: #b92b27;
   background-position: center !important;
   background-size: 90%;
-  border-radius: 2px im;
+  border-radius: 2px !important;
   height: 150%;
   width: 150%;
 }
 
-/* .BookmarkswictherImg{
-  background-image: url(https://qsf.fs.quoracdn.net/7-images.icons.mobile_feed_switcher.bookmark_3x.png-26-fd5bb1ef5737065f.png);
+/*** CSS Bookmark ***/
+.BookmarkswictherImg{
+  background: #949494;
   background-position: center !important;
-  background-size: 90%;
-  border-radius: 2px im;
-  height: 150%;
-  width: 150%;
-} */
+  border: 1px solid #949494;
+  border-radius: 2px !important;
+  height: 25px;
+  width: 25px;
+}
 
+#bookmark{
+  margin-left: 6px;
+  margin-top: 6px;
+  color: white;
+}
+ .bookmarklabel{
+  margin-left: 6px;
+  font-weight: 700;
+  font-size: 11px;
+ }
 
 
 /*** CSS for sidebar topics ***/
@@ -72,7 +83,7 @@
 .swictherImgTopics {
   background-position: center !important;
   background-size: 100%;
-  border-radius: 2px im;
+  border-radius: 2px !important;
   height: 150%;
   width: 150%;
 }
