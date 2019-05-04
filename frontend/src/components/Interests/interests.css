@@ -13,7 +13,7 @@
     padding: 0px 0px;
   }
   
-  ul {
+  .interestul {
     list-style-type: none;
     border: 1px solid rgb(196, 196, 196);
     box-shadow: 0 0 5px #888;
@@ -27,7 +27,7 @@
     text-align: center;
   }
   
-  li {
+  .interestli {
     display: inline-block;
     margin: 0px 10px;
     height: 32%;
@@ -37,7 +37,7 @@
     display: none;
   }
   
-  label {
+  .labelinterest {
     border: 1px solid whitesmoke;
     padding: 10px;
     display: block;
@@ -52,7 +52,7 @@
     user-select: none;
   }
   
-  label::before {
+  .labelinterest::before {
     background-color: white;
     color: white;
     content: " ";
@@ -70,7 +70,7 @@
     transform: scale(0);
   }
   
-  label img {
+  .labelinterest img {
     transition-duration: 0.2s;
     transform-origin: 50% 50%;
   }

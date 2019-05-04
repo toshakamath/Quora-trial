@@ -17,7 +17,7 @@ class Navbar extends Component {
         <div className="container d-flex justify-content-between">
           <div className="headerLogo">
             <Link to="/home">
-              <span className="display-none">Quora</span>
+              <span className="display-none"></span>
             </Link>
           </div>
           <div className="d-flex justify-content-between">
@@ -105,22 +105,31 @@ class Navbar extends Component {
                 <span>
                   <div className="hover-menu ">
                     <div className="hover-menu-contents">
-                      <Link to="#profileImage" className="navItemLink">
-                        <span className="expanded">
-                          <span className="photoWrapper">
-                            <div id="#123">
-                              <span className="photo-tooltip">
-                                <img
-                                  className="profileImage"
-                                  height="50px"
-                                  width="50px"
-                                  src={`https://qph.fs.quoracdn.net/main-thumb-70332528-50-qpikqkavbsrjbupveiqfitmnpiraxvsw.jpeg`}
-                                />
-                              </span>
-                            </div>
-                          </span>
+                      {/* <Link to="eeeee" className="navItemLink"> */}
+                      <span className="expanded">
+                        <span className="photoWrapper">
+                          <div id="#123">
+                            <span className="photo-tooltip">
+                              <img
+                                className="profilephotodropdown"
+                                height="50px"
+                                width="50px"
+                                src={`https://qph.fs.quoracdn.net/main-thumb-70332528-50-qpikqkavbsrjbupveiqfitmnpiraxvsw.jpeg`}
+                                type="button" data-toggle="dropdown"
+                              />
+                              <ul class="dropdown-menu">
+                              <li><a href="/profile" class="list-group-item list-group-item-action list-group-item-light">Profile</a></li>
+                              <li><a href="/home/inbox" class="list-group-item list-group-item-action list-group-item-light">Messages</a></li>
+                              <li><a href="#" class="list-group-item list-group-item-action list-group-item-light">Your Content</a></li>
+                              <li><a href="#" class="list-group-item list-group-item-action list-group-item-light">Stats</a></li>
+                              <li><a href="#" class="list-group-item list-group-item-action list-group-item-light">Logout</a></li>
+                              <li><a href="#" class="list-group-item list-group-item-action list-group-item-light">Delete Account</a></li>
+                              </ul>
+                            </span>
+                          </div>
                         </span>
-                      </Link>
+                      </span>
+                      {/* </Link> */}
                     </div>
                   </div>
                 </span>

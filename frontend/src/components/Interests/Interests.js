@@ -54,14 +54,14 @@ class Interests extends Component {
 
   renderTopic(id, value, src) {
     return (
-      <li>
+      <li className="interestli">
         <input
           type="checkbox"
           id={id}
           value={value}
           onChange={() => this.handleSelect(value, src)}
         />
-        <label htmlFor={id}>
+        <label htmlFor={id} className="labelinterest">
           <img
             className="icon"
             style={{ width: "105px", height: "105px", marginTop: "0px" }}
@@ -83,7 +83,7 @@ class Interests extends Component {
         />
         <hr />
         <form>
-          <ul>
+          <ul className="interestul">
             {this.renderTopic(
               "cb1",
               "Movies",
