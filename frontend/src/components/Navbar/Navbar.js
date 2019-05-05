@@ -5,6 +5,11 @@ import "./Navbar.css";
 class Navbar extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      searchitem: ""
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   logOut(e) {
@@ -13,21 +18,22 @@ class Navbar extends Component {
     this.props.history.push("/login");
   }
 
-  renderSearchResult(){
-    console.log("entered here in side RENDER SEARCH RESULT");
-  }
-
-  handleClick = e => {
+  handleSubmit = e => {
+    e.preventDefault();
     var searchdata = {
-      search: e.target.value
+      searchItem: this.state.searchitem
     };
-    console.log("entered handle click", searchdata);
     Axios.post(window.base_url + "/search", searchdata).then(response => {
-      console.log("final data", response.data);
-      this.renderSearchResult();
+      console.log("final data", response.data.Search);
+      this.props.history.push({
+        pathname: "/search",
+        state: { detail: response.data.Search }
+      });
     });
+  };
 
-
+  handleChange = e => {
+    this.setState({ searchitem: e.target.value });
   };
 
   show(e) {
@@ -111,16 +117,23 @@ class Navbar extends Component {
               <div className="searchBar">
                 <div className="lookupBarSelector selector" tabIndex="-1">
                   <div className="selectorInputWrpaper">
-                    <form className="searchform">
-                      <input
-                        className="form-control"
-                        id="searchbar"
-                        type="text"
-                        name="search"
-                        placeholder="Search..."
-                        aria-label="Search"
-                        onChange={this.handleClick}
-                      />
+                    <form className="searchform" onSubmit={this.handleSubmit}>
+                      <div className="input-group md-form form-sm form-1">
+                        <div className="input-group-prepend">
+                          <span id="searchicon" className="input-group-text">
+                            <i className="fa fa-search" aria-hidden="true" />
+                          </span>
+                        </div>
+                        <input
+                          className="form-control1"
+                          id="searchbar"
+                          type="text"
+                          name="search"
+                          placeholder="Search Quora"
+                          aria-label="Search"
+                          onChange={this.handleChange}
+                        />
+                      </div>
                     </form>
                   </div>
                 </div>

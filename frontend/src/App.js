@@ -7,6 +7,7 @@ import Signup from "./components/Signup/Signup";
 import Interests from "./components/Interests/Interests";
 import Login from "./components/Login/Login";
 import Dashboard from "./components/Dashboard/Dashboard";
+
 import "./App.css";
 import "react-router-modal/css/react-router-modal.css";
 import { ModalContainer, ModalRoute, Modal } from "react-router-modal";

@@ -31,7 +31,6 @@ class Signup extends Component {
   //submit Login handler to send a request to the node backend
   onSignup = values => {
     this.props.signupUser(values, this.props.history);
-    console.log("values entered ", values);
   };
 
   render() {

@@ -14,7 +14,7 @@ var connection = require("../../Kafka-Backend/connection");
 
 //Route to handle Post Request Call
 router.post("/", function(req, res) {
-  console.log("Inside Login signup post Request");
+  console.log("Inside  signup post Request");
   console.log("Req Body : ", req.body);
 
   // kafka.make_request('signup', req.body, function(err, result){

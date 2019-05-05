@@ -145,18 +145,28 @@
   height: 25px; */
 }
 
-#searchbar{
-  width: 200px;
+#searchbar {
+  width: 150px;
   display: inline;
   margin-right: 10px;
+  border: 1px solid #e2e2e2;
+  border-left: 1px white;
+  height: 35px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 
-.searchform{  
+.searchform {
   padding: 10px 5px !important;
-  width: 250px !important; 
+  width: 250px !important;
 }
 
-
+#searchicon {
+  display: inline;
+  background: white;
+  border: 1px solid #e2e2e2;
+  height: 35px;
+}
 
 .siteHeader .headerNav > span {
   display: table-cell;
@@ -217,4 +227,9 @@
 a:hover {
   text-decoration-line: none;
   text-decoration: none;
+}
+
+#searchbar:focus {
+  outline: 0 none !important;
+  outline-color: #e2e2e2 !important;
 }
