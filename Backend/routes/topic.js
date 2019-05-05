@@ -4,6 +4,7 @@ var passport = require("passport");
 var requireAuth = passport.authenticate("jwt", { session: false });
 const mongoose = require("mongoose");
 var Model = require("../../Kafka-Backend/Models/userDetails");
+var Topic = require("../../Kafka-Backend/Models/topic");
 
 //post a new question from a user
 router.post("/", function(req, res) {
@@ -42,6 +43,31 @@ router.get("/", function(req, res) {
       res.status(200).send(result);
     }
   });
+});
+
+// router.get("/all", function(req, res) {
+//   console.log("Inside Topic Get Request", req);
+//   Topic.find({}, "topics", (err1, result) => {
+//     if (err1) {
+//       console.log("Error in finding the user", err1);
+//       res.status(400).send({ message: "Error in Adding the interests" });
+//     } else {
+//       console.log("Topics rendered: ",result);
+//       res.status(200).send(result);
+//     }
+//   });
+// });
+
+router.get("/all", function(req, res) {
+  console.log("Inside Topic Get Request", req);
+  Topic.find({})
+  .then( result=>{
+      console.log("Topics rendered: ",result);
+      res.status(200).send(result);
+  }, err1=>{
+    console.log("Error in finding the user", err1);
+      res.status(400).send({ message: "Error in Adding the interests" });
+  })
 });
 
 module.exports = router;

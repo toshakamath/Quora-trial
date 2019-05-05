@@ -11,6 +11,7 @@ import Questions from "../Questions/questions";
 import { getQuestions } from "../../Actions/questionsAction";
 import PropTypes from "prop-types";
 import {getProfileName} from "../../Actions/profileAction";
+import { Checkbox } from 'antd';
 
 
 class Home extends Component {
@@ -19,7 +20,9 @@ class Home extends Component {
     this.state = { 
       showPopup: false,
       addQuestion: "activeTab",
-      shareLink: "inactiveTab"
+      shareLink: "inactiveTab",
+      topics:[],
+      // checked: true
      };
   }
   onChangeHandler(e){   //identity, newquestion, questionlink
@@ -39,9 +42,10 @@ class Home extends Component {
   }
   onChangeHandler1(e){    //topicscheck
     e.preventDefault();
-    // this.setState({
-    //   [e.target.name]: e.target.value
-    // })
+    console.log("E: ",e);
+    this.setState({
+      [e.target.name]: e.target.checked
+    });
   }
   toggleClass(e) {
     console.log("THIS IS THE CURRENT TAB NAME: ", e);
@@ -72,6 +76,18 @@ class Home extends Component {
     console.log("DATA: ", data);
     this.props.getProfileName(data);
     // this.props.getAllTopics();
+        axios.defaults.withCredentials = true;
+        axios
+        .get(window.base_url+`/topic/all`)
+          .then((response) => {
+            console.log("Status Code : ", response.status);
+            console.log("Data from node : ", response.data);
+            this.setState({
+                topics: response.data
+              },(err)=>{
+                console.log("Error : ", err);
+              })
+          });
   }
   //
   togglePopup() {
@@ -96,6 +112,19 @@ class Home extends Component {
     //iterate over books to create a table row
 
     console.log("in course:" + this.props.match.params.Id);
+
+    console.log("this.state.topics: ", this.state.topics);
+    //this.state.topics[i].topicName
+    //this.state.topics[i]._id
+
+    let renderTopicsCheckbox = (this.state.topics||[]).map((t)=>{
+      return(
+        <div class="custom-control">
+          <input type="checkbox" class="custom-control-input" name={t.topicName} value={t._id} id="topicscheck" onChange={this.onChangeHandler1} />
+          <label class="custom-control-label" for="topicscheck">{t.topicName}</label>
+        </div>
+      )
+    })
 
   //   const { activeTab } = this.state;
   //   const TabLabel = ({ active, text, onClick }) => 
@@ -240,10 +269,7 @@ class Home extends Component {
                       <div class="modal-body" style={{ height: "300px" }}>
                         <p><b>Add topics that best describe your question</b></p>
                         <hr/>
-                        <div class="custom-control">
-                          <input type="checkbox" class="custom-control-input" id="topicscheck" onChange={this.onChangeHandler1} />
-                          <label class="custom-control-label" for="topicscheck" name="topicname" value="topicvalue">Check this custom checkbox</label>
-                        </div>
+                        {renderTopicsCheckbox}
                       </div>
                       <div class="modal-footer" style={{ height: "10px", marginBottom: "20px" }}>
                       <button id="messagesClose" type="button" class="btn btn-default" data-dismiss="modal"
