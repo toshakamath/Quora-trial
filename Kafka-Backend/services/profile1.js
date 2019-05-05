@@ -15,7 +15,7 @@ function handle_request(message, callback){
         const errors = {};
 
   Profile.find()
-    .populate("user", ["fristName,lastName,email"])
+    .populate("user", ["firstName,lastName,email"])
     .then(profiles => {
       if (!profiles) {
         errors.noprofile = "There are no profiles";

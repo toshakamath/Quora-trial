@@ -3,48 +3,45 @@ var router = express.Router();
 var passport = require("passport");
 var requireAuth = passport.authenticate("jwt", { session: false });
 const mongoose = require("mongoose");
-var Question = require("../../Kafka-Backend/Models/topic");
+var Model = require("../../Kafka-Backend/Models/userDetails");
 
 //post a new question from a user
 router.post("/", function(req, res) {
   console.log("Inside topic Post Request");
-
   console.log("Req Body : ", req.body);
-  // const d = new Date().toISOString().slice(0, 10);
+  Model.findOneAndUpdate(
+    { _id: req.body.userId },
+    { $set: { topics: req.body.topics } },
+    { useFindAndModify: false, new: true },
+    (err1, modelResult) => {
+      if (err1) {
+        console.log("Error in finding the user", err1);
+        res.status(400).send({ message: "Error in Adding the interests" });
+      } else {
+        console.log(
+          "Topics added to the userDetails Schema. Updated output",
+          modelResult
+        );
+        res.status(200).json({ message: "Topics Added Successfully." });
+      }
+    }
+  );
+});
 
-  //search whether a question alread exists
-  //   Question.findOne({ question: req.body.question })
-  //     .then(question => {
-  //       if (question) {
-  //         res.status(400).json("we have found a similar question");
-  //       } else {
-  //         var question = new Question({
-  //           _id: new mongoose.Types.ObjectId(),
-  //           question: req.body.question,
-  //           user: req.user.id,
-  //           topic: req.body.topic,
-  //           postDate: new Date()
-  //         });
-  //         console.log(question);
-
-  //         //add a new question if not already exists
-  //         question
-  //           .save()
-  //           .then(question => {
-  //             res.status(200).json({ message: "Question posted successfully" });
-  //             console.log("Saved Question:" + question);
-  //           })
-  //           .catch(err => {
-  //             res
-  //               .status(404)
-  //               .json({ message: "error in creating question:" + err });
-  //             console.log(err);
-  //           });
-  //       }
-  //     })
-  //     .catch(err => {
-  //       res.status(404).json({ message: "error while creating a question" });
-  //     });
+router.get("/", function(req, res) {
+  console.log("Inside Topic Get Request", req.query.email);
+  Model.findOne({ email: req.query.email }, "topics", (err1, result) => {
+    if (err1) {
+      console.log("Error in finding the user", err1);
+      res.status(400).send({ message: "Error in Adding the interests" });
+    } else {
+      console.log(
+        "Topics added to the userDetails Schema. Updated output",
+        result
+      );
+      res.status(200).send(result);
+    }
+  });
 });
 
 module.exports = router;

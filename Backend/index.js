@@ -14,11 +14,13 @@ const login = require("./routes/login");
 const signup = require("./routes/signup");
 const profile = require("./routes/profile");
 const question = require("./routes/question");
+const getonequestion = require("./routes/getonequestion");
 const answer = require("./routes/answer");
 const topic = require("./routes/topic");
 const message = require("./routes/message");
 const content = require("./routes/content");
 
+const search = require("./routes/search");
 const fs = require("fs");
 var glob = require("glob");
 
@@ -47,7 +49,7 @@ require("./config/passport")(passport);
 app.use(passport.initialize());
 
 // Bring in defined Passport Strategy
-require('./config/passport')(passport);
+require("./config/passport")(passport);
 
 // app.use("/inbox/peopledetails", message.getPeopleDetails);
 // app.use("/inbox/sendmessage", message.sendMessage);
@@ -55,7 +57,6 @@ require('./config/passport')(passport);
 // app.use("/inbox/reply", message.replyMessages);
 
 app.use("/inbox", message);
-
 
 //Storing documents/Images
 const storage = multer.diskStorage({
@@ -77,13 +78,14 @@ app.post("/uploadprofile", upload.array("photos", 5), (req, res) => {
   }
 });
 
-
 //use Routes
 app.use("/login", login);
 app.use("/signup", signup);
 app.use("/topic", topic);
 app.use("/profile", profile);
 app.use("/question", question);
+app.use("/getonequestion", getonequestion);
+app.use("/search", search);
 app.use("/answer", answer);
 app.use("/content", content);
 // app.use("/all", profile1);

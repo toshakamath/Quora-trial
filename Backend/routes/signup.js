@@ -14,7 +14,7 @@ var connection = require("../../Kafka-Backend/connection");
 
 //Route to handle Post Request Call
 router.post("/", function(req, res) {
-  console.log("Inside Login signup post Request");
+  console.log("Inside  signup post Request");
   console.log("Req Body : ", req.body);
 
   // kafka.make_request('signup', req.body, function(err, result){
@@ -49,14 +49,13 @@ router.post("/", function(req, res) {
   // this process will avoid SQL injection attack
 
   let sql = "SELECT emailid FROM userDetails WHERE emailid = ?";
-  
+
   connection.query(sql, req.body.email, function(error, results, fields) {
-    if(error){
-      console.log(error)
-    }
-    else if (results.length!=0) {
+    if (error) {
+      console.log(error);
+    } else if (results.length != 0) {
       res.status(404).json("Duplicate Entry!!");
-    } else { 
+    } else {
       const hashedPassword = bcrypt.hashSync(req.body.password);
       //hard coded values as FE is not developed well
       req.body.city = "abcd";

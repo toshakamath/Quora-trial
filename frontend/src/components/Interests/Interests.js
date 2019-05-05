@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import "./interests.css";
-var topicsSelected = require("../../Actions/authentication").topicsSelected;
+var topicsSelected = require("../../Actions/authAction").topicsSelected;
 
 class Interests extends Component {
   constructor(props) {
@@ -19,15 +19,15 @@ class Interests extends Component {
 
   handleSelect(name, url) {
     let topic = {
-      topicname: name,
-      topicimage: url
+      topicName: name,
+      topicImage: url
     };
     var data = this.state.interests.slice();
     let position = data
       .map(e => {
-        return e.topicname;
+        return e.topicName;
       })
-      .indexOf(topic.topicname);
+      .indexOf(topic.topicName);
 
     if (position < 0) {
       data.push(topic);
@@ -47,21 +47,21 @@ class Interests extends Component {
     console.log("Enterd here");
     e.preventDefault();
     this.props.topicsSelected(
-      { topicsSelected: this.state.interests },
+      { topics: this.state.interests },
       this.props.history
     );
   }
 
   renderTopic(id, value, src) {
     return (
-      <li>
+      <li className="interestli">
         <input
           type="checkbox"
           id={id}
           value={value}
           onChange={() => this.handleSelect(value, src)}
         />
-        <label htmlFor={id}>
+        <label className="interestlabel" htmlFor={id}>
           <img
             className="icon"
             style={{ width: "105px", height: "105px", marginTop: "0px" }}
@@ -83,7 +83,7 @@ class Interests extends Component {
         />
         <hr />
         <form>
-          <ul>
+          <ul className="ulinterest">
             {this.renderTopic(
               "cb1",
               "Movies",

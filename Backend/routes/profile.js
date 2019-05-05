@@ -28,7 +28,7 @@ const validateEducationInput = require("../validation/education");
 //get current user's profile
 
 router.get("/", passport.authenticate("jwt", { session: false }), (req, res) => {
-
+console.log("SOMETHING TO LOG");
   client.get(req.user.id, function (err, value) {
 
     if (err) {
@@ -73,7 +73,7 @@ router.get("/", passport.authenticate("jwt", { session: false }), (req, res) => 
   router.get("/all", (req, res) => {
     const errors = {};
     Profile.find()
-      .populate("user", ["fristName,lastName,email"])
+      .populate("user", ["firstName,lastName,email"])
       .then(profiles => {
         if (!profiles) {
           errors.noprofile = "There are no profiles";
