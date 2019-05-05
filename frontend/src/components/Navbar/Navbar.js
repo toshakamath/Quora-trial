@@ -160,7 +160,9 @@ class Navbar extends Component {
                               />
                               <ul class="dropdown-menu" id="navbardropdown">
                               <li><a href="/profile" class="list-group-item list-group-item-action list-group-item-light">Profile</a></li>
-                              <li><a href="/home/inbox" class="list-group-item list-group-item-action list-group-item-light">Messages</a></li>
+                              {/* <li><Link to={{pathname: `/home/inbox/a`,state: { modal: true }}}>Messages</Link></li> */}
+
+                              <li><a href="/home/messages" class="list-group-item list-group-item-action list-group-item-light">Messages</a></li>
                               {/* <li><button type="button" class="list-group-item list-group-item-action list-group-item-light" data-toggle="modal" data-target="#DisplayAllMessages">Messages</button></li> */}
                               <li><a href="#" class="list-group-item list-group-item-action list-group-item-light">Your Content</a></li>
                               <li><a href="#" class="list-group-item list-group-item-action list-group-item-light">Stats</a></li>

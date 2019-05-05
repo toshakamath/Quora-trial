@@ -8,10 +8,14 @@ import { Link, withRouter } from "react-router-dom";
 import HomeSideBar from "../HomeSideBar/HomeSideBar";
 //new vaibhav
 import Questions from "../Questions/questions";
+import Sample from "../Sample";
 import { getQuestions } from "../../Actions/questionsAction";
 import PropTypes from "prop-types";
 import {getProfileName} from "../../Actions/profileAction";
 import { Checkbox } from 'antd';
+import CreateMessage1 from "../Message/CreateMessage1";
+import DisplayAllMessages1 from "../Message/DisplayAllMessages1";
+import ViewConversation1 from "../Message/ViewConversation1";
 
 
 class Home extends Component {
@@ -41,11 +45,11 @@ class Home extends Component {
 
   }
   onChangeHandler1(e){    //topicscheck
-    e.preventDefault();
-    console.log("E: ",e);
-    this.setState({
-      [e.target.name]: e.target.checked
-    });
+   // e.preventDefault();
+    console.log("E: ",e.target.value);
+    // this.setState({
+    //   [e.target.name]: e.target.checked
+    // });
   }
   toggleClass(e) {
     console.log("THIS IS THE CURRENT TAB NAME: ", e);
@@ -120,8 +124,8 @@ class Home extends Component {
     let renderTopicsCheckbox = (this.state.topics||[]).map((t)=>{
       return(
         <div class="custom-control">
-          <input type="checkbox" class="custom-control-input" name={t.topicName} value={t._id} id="topicscheck" onChange={this.onChangeHandler1} />
-          <label class="custom-control-label" for="topicscheck">{t.topicName}</label>
+          <input type="checkbox" class="custom-control-input" name="samename" value={t._id} id={t._id}   onChange={this.onChangeHandler1}/>
+          <label class="custom-control-label" for={t._id}>{t.topicName}</label>
         </div>
       )
     })
@@ -134,6 +138,12 @@ class Home extends Component {
 
     return (
       <div className="container container-fluid">
+      <Switch>
+        {/* <Route path="/home/inbox/a" component={Sample} /> */}
+        <Route path="/home/messages/create" component={CreateMessage1} />
+        <Route path="/home/messages/:_id" component={ViewConversation1} />
+        <Route path="/home/messages" component={DisplayAllMessages1} />
+      </Switch>
         <div className="row">
           <div className="col-md-2">
             <HomeSideBar id={this.props.match.params.Id} />
@@ -270,6 +280,7 @@ class Home extends Component {
                         <p><b>Add topics that best describe your question</b></p>
                         <hr/>
                         {renderTopicsCheckbox}
+                        
                       </div>
                       <div class="modal-footer" style={{ height: "10px", marginBottom: "20px" }}>
                       <button id="messagesClose" type="button" class="btn btn-default" data-dismiss="modal"

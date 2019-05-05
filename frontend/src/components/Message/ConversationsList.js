@@ -9,62 +9,6 @@ import 'react-router-modal/css/react-router-modal.css';
 import { ModalContainer, ModalRoute, Modal } from 'react-router-modal';
 import "../../App.css";
 
-// let Inbox2 = ()=>{
-//   return(
-//     <div className="trial-modal">
-//       {/* <img src="https://source.unsplash.com/random" /> */}
-//       <footer className="footerid">
-//               <div>
-//                 <div className="form-group">
-//                   <textarea
-//                     rows="4"
-//                     cols="50"
-//                     type="text"
-//                     className="form-control"
-//                     name="message"
-//                     placeholder="message"/>
-//                   <button
-//                     className="btn btn-primary"
-//                     type="submit"
-//                     name="send"
-//                     style={{marginTop:"-10px"}}
-//                   > Send</button>
-//                   </div>
-//           </div>
-//           </footer>
-//     </div>
-//   );
-// }
-
-
-// let Inbox2 = () => {
-//   return (
-//     <div class="modal" id="ViewConversation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-//       <div class="modal-dialog" role="document">
-//         <div class="modal-content" style={{ width: "600px" }}>
-//           <div class="modal-header">
-//             <a href="#">
-//               <span style={{ fontSize: "19px", color: "#333", height: "19px", display: "inline-block", opacity: ".7", top: "3px", marginRight: "12px" }} class="glyphicon glyphicon-chevron-left" data-dismiss="modal"></span>
-//             </a>
-//             <h5 class="modal-title" id="exampleModalLabel" style={{ fontSize: "19px", fontWeight: "bold", color: "#333", borderRadius: "4px 4px 0 0" }}>New message</h5>
-//             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-//               <span aria-hidden="true">&times;</span>
-//             </button>
-//           </div>
-//           <div class="modal-body" style={{ height: "500px" }}>
-//           </div>
-//           <div class="modal-footer" style={{ height: "20px", marginBottom: "50px" }}>
-//             <button type="button" id="messagesClose" style={{ marginTop: "80px", background: "transparent", color: "#949494", display: "inline-block", cursor: "pointer", fontSize: "15px", fontWeight: "normal", lineHeight: "1.4" }} class="btn" data-dismiss="modal">Back</button>
-//             <button type="button" data-toggle="modal" data-target="#CreateMessage" class="btn btn-primary" style={{ borderRadius: "3px", fontWeight: "bold", background: "#3e78ad", color: "#fff", border: "1px solid #3a66ad" }}>Send</button>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
 class ConversationsList extends Component {
 
   componentDidMount() {
@@ -144,8 +88,8 @@ class ConversationsList extends Component {
         <option value={m.email}>{m.name}</option>
       );
     });
-    let route = "home/inbox";
-    console.log("this.props.message.viewmessages", this.props);
+    // let route = "home/inbox";
+    console.log("this.props", this.props);
     let params = this.props.match.params;
     console.log("params: ", params);
     let details2 = (this.props.message.viewmessages || []).map((d) => {
@@ -212,6 +156,8 @@ class ConversationsList extends Component {
         </div>
       );
     });
+
+  
 
 
     return (

@@ -51,10 +51,10 @@ export const sendMessage=(data, history) => dispatch =>{
       payload: res.data
       })
       if(res.status===200){
-        history.push(`/home/inbox`);
+        history.push(`/home/messages`);
       }
       else{
-        history.push(`/home/inbox/createmessage`);
+        history.push(`/home/messages/create`);
       }
     })
     .catch(err=>{
@@ -97,7 +97,7 @@ export const replyMessages=(data, history)=>dispatch=>{
       .post(window.base_url+`/inbox/reply`, data)
       .then(res=>{
         console.log("res replyMessages", res)
-  history.push(`/home/inbox/${data._id}`)
+  history.push(`/home/messages/${data._id}`);
   dispatch({
     type: REPLY_MESSAGES,
     payload: {}
