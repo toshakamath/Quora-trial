@@ -1,0 +1,49 @@
+.sidebarList {
+    list-style: none;
+    padding-inline-start: 0px;
+  }
+  
+  .SwitcherItemWithImage {
+    display: inline-flex;
+    margin-bottom: 8px;
+    padding: 4px;
+    margin-left: -4px;
+    width: 100%;
+    border-radius: 3px;
+  }
+  
+  .swictherLink {
+    display: flex;
+  }
+  .switcherImgWrapper {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    border-radius: 3px;
+  }
+  
+  .SwitcherItemWithImage label {
+    display: inline-block;
+    color: #666;
+    margin-left: 8px;
+    margin-bottom: 0px;
+    font-weight: 500;
+    text-transform: none;
+    font-size: 13px;
+    line-height: initial;
+  }
+  
+  .SwitcherItemWithImage:hover {
+    background-color: #e6e6e6;
+  }
+  
+  .swictherImg {
+    background-image: url(https://qsf.fs.quoracdn.net/-3-images.icons.mobile_feed_switcher.feed_3x.png-26-94e21de5c18cba55.png);
+    background-color: #b92b27;
+    background-position: center !important;
+    background-size: 90%;
+    border-radius: 2px im;
+    height: 100%;
+    width: 100%;
+  }
+  

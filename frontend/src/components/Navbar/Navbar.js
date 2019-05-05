@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import "./Navbar.css";
+// import "../Message/ConversationsList";
+
 class Navbar extends Component {
   logOut(e) {
     //e.prventDefault()
@@ -117,9 +119,10 @@ class Navbar extends Component {
                                 src={`https://qph.fs.quoracdn.net/main-thumb-70332528-50-qpikqkavbsrjbupveiqfitmnpiraxvsw.jpeg`}
                                 type="button" data-toggle="dropdown"
                               />
-                              <ul class="dropdown-menu">
+                              <ul class="dropdown-menu" id="navbardropdown">
                               <li><a href="/profile" class="list-group-item list-group-item-action list-group-item-light">Profile</a></li>
                               <li><a href="/home/inbox" class="list-group-item list-group-item-action list-group-item-light">Messages</a></li>
+                              {/* <li><button type="button" class="list-group-item list-group-item-action list-group-item-light" data-toggle="modal" data-target="#DisplayAllMessages">Messages</button></li> */}
                               <li><a href="#" class="list-group-item list-group-item-action list-group-item-light">Your Content</a></li>
                               <li><a href="#" class="list-group-item list-group-item-action list-group-item-light">Stats</a></li>
                               <li><a href="#" class="list-group-item list-group-item-action list-group-item-light">Logout</a></li>

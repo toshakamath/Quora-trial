@@ -12,6 +12,7 @@ import "../../App.css";
 import "./Dashboard.css";
 import ConversationsList from "../Message/ConversationsList";
 import CreateMessage from "../Message/CreateMessage";
+import Content from "../Content/Content";
 // import Questions from "../Questions/questions";
 // import { getQuestions } from "../../Actions/questionsAction";
 // import PropTypes from "prop-types";
@@ -55,6 +56,7 @@ class Dashboard extends Component {
             <Switch>
               <Route path="/home/inbox/createmessage" component={CreateMessage} />
               <Route path="/home/inbox" component={ConversationsList} />
+              <Route exact path="/content" component={Content}/>
               <Route path="/home" component={Home} />
               <Route path="/Answer" component={Answer} />
               <Route path="/profile" component={Profile} />

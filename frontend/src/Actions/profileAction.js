@@ -21,21 +21,23 @@ export const GET_PROFILE_NAME = "GET_PROFILE_NAME";
 // };
 
 export const getProfileName=(data) => dispatch =>{
-  console.log("ResponseSSSSSSSSSSS before: ", data);
-    // axios
-    //     .get(window.base_url+`/home/profilename`)
-    //     .then(res =>{
-    //       console.log("ResponseSSSSSSSSSSS after: ", res);
-    //       dispatch({
-    //         type: GET_PROFILE_NAME,
-    //         payload: res.data
-    //       });
-    //     })
-    //     .catch(err => {
-    //       dispatch({
-    //         type: ERRORS,
-    //         payload: err.response.data
-    //       });
-    //     });
+  console.log("ResponseSSSSSSSSSSS PROFILE before: ", data.token);
+  let Token=localStorage.getItem("token");
+  console.log("ResponseSSSSSSSSSSS PROFILE before: ", Token);
+    axios
+        .get(window.base_url+`/profile`, {headers: {Authorization:Token}})
+        .then(res =>{
+          console.log("ResponseSSSSSSSSSSS after: ", res);
+          dispatch({
+            type: GET_PROFILE_NAME,
+            payload: res.data
+          });
+        })
+        .catch(err => {
+          dispatch({
+            type: ERRORS,
+            payload: err.response.data
+          });
+        });
 };
 

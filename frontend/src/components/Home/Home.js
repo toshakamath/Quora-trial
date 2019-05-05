@@ -23,21 +23,25 @@ class Home extends Component {
      };
   }
   onChangeHandler(e){   //identity, newquestion, questionlink
+    e.preventDefault();
     this.setState({
       [e.target.name]: e.target.value
     })
   }
   addQuestion(e){
+    e.preventDefault();
     //get question name from props here and use in next modal
     // let question_name= this.props.
   }
   mapTopicsToQuestion(e){
+    e.preventDefault();
 
   }
   onChangeHandler1(e){    //topicscheck
-    this.setState({
-      [e.target.name]: e.target.value
-    })
+    e.preventDefault();
+    // this.setState({
+    //   [e.target.name]: e.target.value
+    // })
   }
   toggleClass(e) {
     console.log("THIS IS THE CURRENT TAB NAME: ", e);
@@ -64,7 +68,7 @@ class Home extends Component {
     const data = { token: token };
     console.log("DATA: ", data);
     this.props.getProfileName(data);
-    //this.props.getAllTopics();
+    // this.props.getAllTopics();
   }
   //
   togglePopup() {
@@ -235,7 +239,7 @@ class Home extends Component {
                         <hr/>
                         <div class="custom-control">
                           <input type="checkbox" class="custom-control-input" id="topicscheck" onChange={this.onChangeHandler1} />
-                          <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+                          <label class="custom-control-label" for="topicscheck" name="topicname" value="topicvalue">Check this custom checkbox</label>
                         </div>
                       </div>
                       <div class="modal-footer" style={{ height: "10px", marginBottom: "20px" }}>
