@@ -19,8 +19,6 @@ const questions = ({ question }) => {
 
   // diff is: Thu Jul 05 1973 04:00:00 GMT+0300 (EEST)
 
-
-
   const maxUpVotedAnswer = question.answers[index].answer;
   const answerDate = question.answers[index].answerDate;
   var displayAsweredTime = "";

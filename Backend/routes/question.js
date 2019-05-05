@@ -5,7 +5,8 @@ var requireAuth = passport.authenticate("jwt", { session: false });
 const mongoose = require("mongoose");
 var Question = require("../../Kafka-Backend/Models/questionsDetail");
 
-router.post("/", requireAuth, function(req, res) {
+
+router.post("/", requireAuth, function (req, res) {
   console.log("Inside question Get Request");
 
   console.log("Req Body : ", req.body);
@@ -67,6 +68,32 @@ router.get("/", (req, res) => {
 });
 
 module.exports = router;
+
+
+router.get("/content", (req, res) => {
+  console.log("Inside Get-content questions");
+
+  var params = {};
+
+  if (req.query.userid) {
+    let user = req.query.userid;
+    params.user = mongoose.Types.ObjectId(user);
+  }
+
+  Question.find(params)
+    .then(questions => {
+      console.log("success Get-content questions")
+
+      res.json(questions);
+    })
+    .catch(err => {
+      console.log("Error while fetching content questions", err);
+    }
+    )
+}
+);
+
+
 
 //Laxmikant question post query
 

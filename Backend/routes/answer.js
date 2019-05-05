@@ -9,7 +9,7 @@ var Question = require("../../Kafka-Backend/Models/questionsDetail");
 router.get("/", (req, res) => {
   const errors = {};
   console.log(req.query);
-//  const answersFields = {};
+  //  const answersFields = {};
 
   //answersFields.answer = "abc";
   //answersFields._id = "5cbfb135f2a460f63f4fee8c";
@@ -74,6 +74,9 @@ router.post("/", requireAuth, function (req, res) {
       res.end(JSON.stringify(res.value));
     }
   );
+
+
+
 });
 
 module.exports = router;

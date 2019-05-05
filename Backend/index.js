@@ -17,6 +17,8 @@ const question = require("./routes/question");
 const answer = require("./routes/answer");
 const topic = require("./routes/topic");
 const message = require("./routes/message");
+const content = require("./routes/content");
+
 const fs = require("fs");
 var glob = require("glob");
 
@@ -24,7 +26,7 @@ const multer = require("multer");
 const path = require("path");
 
 //use cors to allow cross origin resource sharing
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -83,6 +85,7 @@ app.use("/topic", topic);
 app.use("/profile", profile);
 app.use("/question", question);
 app.use("/answer", answer);
+app.use("/content", content);
 // app.use("/all", profile1);
 //start your server on posrt 3001
 //app.settings.env = "production";
