@@ -56,12 +56,11 @@ class Dashboard extends Component {
             <Route path="/search" component={Search}/>
               <Route path="/home/inbox/createmessage" component={CreateMessage} />
               <Route path="/home/inbox" component={ConversationsList} />
-              <Route exact path="/content" component={Content}/>
+              <Route path="/content" component={Content}/>
               <Route path="/home" component={Home} />
+              <Route path="/profile" component={Profile} />
               <Route path="/:questionid" component={ViewQuestion} />
               <Route path="/Answer" component={Answer} />
-              <Route path="/profile" component={Profile} />
-              
             </Switch>
           }
 

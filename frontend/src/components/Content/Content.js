@@ -31,6 +31,7 @@ class Home extends Component {
           </div>
 
           <div className="col-md-8">
+          <p><b style={{fontSize:"15px"}}>Your Content</b></p>
             <div className="card questionCard">
               </div>
                 </div>

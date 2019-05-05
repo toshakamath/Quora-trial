@@ -25,17 +25,19 @@ class ContentSideBar extends Component {
             </li>
             apply map here for topic
           </ul> */}
-          <div class="list-group">
+          <div class="list-group" id="content-side-bar">
           <h4>By Content Type</h4>
           <a href="#" class="list-group-item list-group-item-action list-group-item-light">All Types</a>
           <a href="#" class="list-group-item list-group-item-action list-group-item-light">Questions Asked</a>
           <a href="#" class="list-group-item list-group-item-action list-group-item-light">Questions Followed</a>
           <a href="#" class="list-group-item list-group-item-action list-group-item-light">Answers</a>
           <h4>By Year</h4>
-          <a href="#" class="list-group-item list-group-item-action list-group-item-light">All Types</a>
-          <a href="#" class="list-group-item list-group-item-action list-group-item-light">Questions Asked</a>
-          <a href="#" class="list-group-item list-group-item-action list-group-item-light">Questions Followed</a>
-          <a href="#" class="list-group-item list-group-item-action list-group-item-light">Answers</a>
+          <a href="#" class="list-group-item list-group-item-action list-group-item-light">All Time</a>
+          <a href="#" class="list-group-item list-group-item-action list-group-item-light">2019</a>
+          <a href="#" class="list-group-item list-group-item-action list-group-item-light">2018</a>
+          <a href="#" class="list-group-item list-group-item-action list-group-item-light">2017</a>
+          <a href="#" class="list-group-item list-group-item-action list-group-item-light">2016</a>
+          <a href="#" class="list-group-item list-group-item-action list-group-item-light">2015</a>
           <h4>Sort Order</h4>
           <a href="#" class="list-group-item list-group-item-action list-group-item-light">Newest First</a>
           <a href="#" class="list-group-item list-group-item-action list-group-item-light">Oldest First</a>
