@@ -59,7 +59,10 @@ class Home extends Component {
         addQuestion:"inactiveTab"
       })
     }
+    // this.state = { showPopup: false, showButtons: false };
+    // let isVisible = false;
   }
+
   //new
   componentDidMount() {
     this.props.getQuestions();

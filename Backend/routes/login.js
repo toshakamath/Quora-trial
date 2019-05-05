@@ -78,7 +78,6 @@ router.post("/", (req, res) => {
 
 ///Users/sachinwaghmode/Desktop/Quora-Team/Kafka-Backend/connection.js
 
-
 //Route to handle Post Request Call
 // router.post("/", function(req, res) {
 //   console.log("Inside Login Post Request");
@@ -140,55 +139,55 @@ router.post("/", (req, res) => {
 //     }
 //   });
 
-  // let sql = "SELECT emailid,password FROM userDetails WHERE emailid = ?";
+// let sql = "SELECT emailid,password FROM userDetails WHERE emailid = ?";
 
-  // console.log(req.body.email);
+// console.log(req.body.email);
 
-  // connection.query(sql, req.body.email, function(error, results, fields) {
+// connection.query(sql, req.body.email, function(error, results, fields) {
 
-  //   if (error || results == null || results.length < 1) {
-  //     console.log(error);
-  //     res.value =
-  //       "The email and password you entered did not match our records. Please try again.";
-  //     console.log(res.value);
+//   if (error || results == null || results.length < 1) {
+//     console.log(error);
+//     res.value =
+//       "The email and password you entered did not match our records. Please try again.";
+//     console.log(res.value);
 
-  //   } else {
-  //     if (bcrypt.compareSync(req.body.password, results[0].password)) {
-  //       console.log("Valid Credentials");
-  //       res.code = "200";
-  //       res.value = results;
-  //       console.log("login result", results);
+//   } else {
+//     if (bcrypt.compareSync(req.body.password, results[0].password)) {
+//       console.log("Valid Credentials");
+//       res.code = "200";
+//       res.value = results;
+//       console.log("login result", results);
 
-  //       email = req.body.email;
-  //       //Find user Query
-  //       console.log("trying mongo");
-  //       User.findOne({ email }).then(user => {
-  //         if (!user) {
-  //           return res.status(404).json({ email: "User not found" });
-  //         }
+//       email = req.body.email;
+//       //Find user Query
+//       console.log("trying mongo");
+//       User.findOne({ email }).then(user => {
+//         if (!user) {
+//           return res.status(404).json({ email: "User not found" });
+//         }
 
-  //         const payload = {
-  //           id: user.id
-  //         };
-  //         //sign Token
-  //         jwt.sign(payload, "secret", { expiresIn: "1h" }, (err, token) => {
-  //           res.json({
-  //             token: "Bearer " + token
-  //           });
-  //           console.log("Bearer " + token);
-  //         });
-  //       });
+//         const payload = {
+//           id: user.id
+//         };
+//         //sign Token
+//         jwt.sign(payload, "secret", { expiresIn: "1h" }, (err, token) => {
+//           res.json({
+//             token: "Bearer " + token
+//           });
+//           console.log("Bearer " + token);
+//         });
+//       });
 
-        //res.status(200).json(doc);
-        //  callback(null, res);
-  //     } else {
-  //       console.log("InValid Credentials");
-  //       res.code = "400";
+//res.status(200).json(doc);
+//  callback(null, res);
+//     } else {
+//       console.log("InValid Credentials");
+//       res.code = "400";
 
-  //       //callback(null, res);
-  //     }
-  //   }
-  // });
+//       //callback(null, res);
+//     }
+//   }
+// });
 //});
 
 module.exports = router;

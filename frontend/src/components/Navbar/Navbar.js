@@ -1,14 +1,42 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import Axios from "axios";
 import "./Navbar.css";
 // import "../Message/ConversationsList";
 
 class Navbar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchitem: ""
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
   logOut(e) {
     //e.prventDefault()
     localStorage.removeItem("jwtToken");
     this.props.history.push("/login");
   }
+
+  handleSubmit = e => {
+    e.preventDefault();
+    var searchdata = {
+      searchItem: this.state.searchitem
+    };
+    Axios.post(window.base_url + "/search", searchdata).then(response => {
+      console.log("final data", response.data.Search);
+      this.props.history.push({
+        pathname: "/search",
+        state: { detail: response.data.Search }
+      });
+    });
+  };
+
+  handleChange = e => {
+    this.setState({ searchitem: e.target.value });
+  };
 
   show(e) {
     document.getElementById("abc").classList.toggle("show");
@@ -93,13 +121,24 @@ class Navbar extends Component {
               <div className="searchBar">
                 <div className="lookupBarSelector selector" tabIndex="-1">
                   <div className="selectorInputWrpaper">
-                    <input
-                      className="selectorInput text"
-                      type="text"
-                      data-lpignore="true"
-                      autoFocus="true"
-                      placeholder="Search Quora"
-                    />
+                    <form className="searchform" onSubmit={this.handleSubmit}>
+                      <div className="input-group md-form form-sm form-1">
+                        <div className="input-group-prepend">
+                          <span id="searchicon" className="input-group-text">
+                            <i className="fa fa-search" aria-hidden="true" />
+                          </span>
+                        </div>
+                        <input
+                          className="form-control1"
+                          id="searchbar"
+                          type="text"
+                          name="search"
+                          placeholder="Search Quora"
+                          aria-label="Search"
+                          onChange={this.handleChange}
+                        />
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -150,3 +189,12 @@ class Navbar extends Component {
   }
 }
 export default withRouter(Navbar);
+
+// <input
+//                       className="selectorInput text"
+//                       type="text"
+//                       data-lpignore="true"
+//                       autoFocus="true"
+//                       placeholder="Search Quora"
+//                       name="search"
+//                     />

@@ -1,0 +1,9 @@
+.questioncontainer{
+    margin-left: 12px;
+}
+
+.questionheader{
+    width: 49rem;
+    height: 30px;
+    background: cyan;
+}
