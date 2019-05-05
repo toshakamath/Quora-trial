@@ -31,12 +31,12 @@ class Navbar extends Component {
                         aria-hidden="true"
                       >
                         <i
-                          class="far fa-newspaper"
+                          className="far fa-newspaper"
                           size="width:24px;height:24px"
                         />
                       </span>
                     </div>
-                    <span class="badge badge-light bd">4</span>
+                    <span className="badge badge-light bd">4</span>
                     <span className="expanded">Home</span>
                   </Link>
                 </div>
@@ -49,7 +49,7 @@ class Navbar extends Component {
                         className="ui-icon ui-icon-color-grey icon-size-regular"
                         aria-hidden="true"
                       >
-                        <i class="far fa-edit" />
+                        <i className="far fa-edit" />
                       </span>
                     </div>
                     <span className="expanded">Answer</span>
@@ -64,7 +64,7 @@ class Navbar extends Component {
                         className="ui-icon ui-icon-color-grey icon-size-regular"
                         aria-hidden="true"
                       >
-                        <i class="fas fa-users" />
+                        <i className="fas fa-users" />
                       </span>
                     </div>
                     <span className="expanded">Spaces</span>
@@ -79,7 +79,7 @@ class Navbar extends Component {
                         className="ui-icon ui-icon-color-grey icon-size-regular"
                         aria-hidden="true"
                       >
-                        <i class="far fa-bell" />
+                        <i className="far fa-bell" />
                       </span>
                     </div>
                     <span className="expanded">Notifications</span>
@@ -95,7 +95,7 @@ class Navbar extends Component {
                       className="selectorInput text"
                       type="text"
                       data-lpignore="true"
-                      autoFocus="true"
+                      autoFocus={true}
                       placeholder="Search Quora"
                     />
                   </div>

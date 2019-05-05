@@ -1,16 +1,16 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-var passport = require('passport');
-var requireAuth = passport.authenticate('jwt', {session: false});
-var Model = require('../../Kafka-Backend/Models/questionsDetail');
+var passport = require("passport");
+var requireAuth = passport.authenticate("jwt", { session: false });
+var Model = require("../../Kafka-Backend/Models/questionsDetail");
 
-router.get('/', requireAuth, function(req,res){
+router.get("/", requireAuth, function(req, res) {
+  console.log("Inside question Get Request");
 
-console.log("Inside question Get Request");
+  console.log("Req Body : ", req.body);
 
-console.log("Req Body : ",req.body);
-
-Model.find().populate('answer')
+  Model.find()
+    .populate("answer")
     .then(result => {
       console.log(result);
       res.status(200).json(result);

@@ -1,6 +1,6 @@
-.cardstyle {
+/* .cardstyle {
   width: 40rem;
-}
+} */
 
 /* .test {
   data-toggle: collapse;
@@ -32,4 +32,7 @@
 
 #summary a:not(.collapsed):after {
   content: "(less)...";
+}
+.card {
+  margin-bottom: 8px;
 }

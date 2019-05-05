@@ -82,7 +82,7 @@ class Interests extends Component {
           src="//qsf.fs.quoracdn.net/-3-images.logo.wordmark_default.svg-26-bfa6b94bc0d6af2e.svg"
         />
         <hr />
-        <form>
+        <form className="interesstForm">
           <ul>
             {this.renderTopic(
               "cb1",

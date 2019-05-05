@@ -51,7 +51,7 @@ label {
   margin-bottom: 15px;
 }
 
-form {
+.login form {
   display: table;
   margin: 0px auto;
   width: 450px;
@@ -62,7 +62,6 @@ form {
   width: 100%;
   border: 1px solid #666;
   margin-bottom: 10px;
-  
 }
 
 .error {
@@ -70,7 +69,7 @@ form {
   display: grid;
 }
 
-.btn {
+.login .btn {
   margin-bottom: 30px;
   margin-top: 50px;
 }

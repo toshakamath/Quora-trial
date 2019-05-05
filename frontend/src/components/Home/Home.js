@@ -32,8 +32,8 @@ class Home extends Component {
 
     if (questions === null) return <div />;
 
-    const questionsList = questions.map(question => (
-      <Questions question={question} />
+    const questionsList = questions.map((question, index) => (
+      <Questions key={index} question={question} />
     ));
     //iterate over books to create a table row
 
@@ -100,7 +100,7 @@ class Home extends Component {
 
 Home.propTypes = {
   getQuestions: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
+  //auth: PropTypes.object.isRequired,
   questions: PropTypes.object.isRequired
 };
 

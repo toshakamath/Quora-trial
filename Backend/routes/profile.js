@@ -3,20 +3,6 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const passport = require("passport");
 //var kafka = require('../kafka/client');
-
-var requireAuth = passport.authenticate("jwt", { session: false });
-
-//redis database
-const redis = require("redis")
-
-// var cache = require('lru-cache')({  
-//   max : 100,                   // The maximum number of items allowed in the cache
-//   max_age : 1000 * 60 * 60     // The maximum life of a cached item in milliseconds
-// });
-
-//autmtically connects localhost:6379
-const client = redis.createClient();
-
 //load credential model
 const Profile = require("../../Kafka-Backend/Models/credentials");
 //laod userDetails model
@@ -25,144 +11,280 @@ const User = require("../../Kafka-Backend/Models/userDetails");
 const validateProfileInput = require("../validation/profile");
 const validateExperienceInput = require("../validation/experience");
 const validateEducationInput = require("../validation/education");
+var requireAuth = passport.authenticate("jwt", { session: false });
+const fileUpdload = require("express-fileupload");
+router.use(
+  fileUpdload({
+    limits: { fileSize: 50 * 1024 * 1024 },
+    useTempFiles: true,
+    tempFileDir: `${__dirname}/../public/temp`,
+    responseOnLimit: "File size limit has been reached"
+  })
+);
+
+router.post("/profileImage", requireAuth, (req, res) => {
+  let uploadFile = req.files.file;
+  const fileName = req.files.file.name;
+  console.log("filename:" + req.files.file.name);
+  console.log(req.body.assignmentName);
+  console.log("reqparams:" + req.params.id);
+  console.log(fileName);
+  console.log(uploadFile);
+  uploadFile.mv(`${__dirname}/../public/files/${fileName}`, function(err) {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    console.log("path:" + `${__dirname}/../public/files/${fileName}`);
+  });
+
+  profileFields = {};
+
+  profileFields.profileImage = fileName;
+  Profile.findOneAndUpdate(
+    { user: req.user.id },
+    { $set: profileFields },
+    { new: true }
+  ).then(profile => res.json(profile));
+});
+router.get("/file", (req, res) => {
+  Profile.findById(req.user.id)
+    .then(profile => {
+      console.log(profile.profileImage);
+      res.status(200).json(profile.profileImage);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(400).json(err);
+    });
+});
+// const AWS = require("aws-sdk");
+// const fs = require("fs");
+// const fileType = require("file-type");
+// const bluebird = require("bluebird");
+// const multiparty = require("multiparty");
+// configure the keys for accessing AWS
+
+// router.post("/profileImage", requireAuth, (request, response) => {
+//   // console.log("request :" + request.files);
+//   // console.log("file path:" + request.files.file[0].path);x
+//   console.log(request.file.file);
+//   const form = new multiparty.Form();
+//   form.parse(request, async (error, fields, files) => {
+//     if (error) throw new Error(error);
+//     try {
+//       console.log(files.file[0].path);
+//       const path = files.file[0].path;
+//       const buffer = fs.readFileSync(path);
+//       const type = fileType(buffer);
+//       const timestamp = Date.now().toString();
+//       const fileName = `bucketFolder/${timestamp}-lg`;
+//       const data = await uploadFile(buffer, fileName, type);
+//       return response.status(200).send(data);
+//     } catch (error) {
+//       return response.status(400).send(error);
+//     }
+//   });
+
+// let uploadFile = req.files.file;
+// const fileName = req.files.file.name;
+// console.log("filename:" + req.files.file.name);
+// console.log(req.body.assignmentName);
+// console.log("reqparams:" + req.params.id);
+// console.log(fileName);
+// console.log(uploadFile);
+// uploadFile.mv(
+//   `${__dirname}/../public/files/assignments/${fileName}`,
+//   function(err) {
+//     if (err) {
+//       return res.status(500).send(err);
+//     }
+//     console.log("path:" + `${__dirname}/../public/files/${fileName}`);
+//   }
+// );
+
+// profileFields = {};
+
+// profileFields.profileImage = fileName;
+// Profile.findOneAndUpdate(
+//   { user: req.user.id },
+//   { $set: profileFields },
+//   { new: true }
+// ).then(profile => console.log(profile));
+// });
+
+//redis database
+// const redis = require("redis");
+
+// var cache = require('lru-cache')({
+//   max : 100,                   // The maximum number of items allowed in the cache
+//   max_age : 1000 * 60 * 60     // The maximum life of a cached item in milliseconds
+// });
+
+//autmtically connects localhost:6379
+// const client = redis.createClient();
+//file upload
+// const fileUpdload = require("express-fileupload");
+
+// router.use(
+//   fileUpdload({
+//     limits: { fileSize: 50 * 1024 * 1024 },
+//     useTempFiles: true,
+//     tempFileDir: `${__dirname}/../public/temp`,
+//     responseOnLimit: "File size limit has been reached"
+//   })
+// );
+
+//edit name
+router.post("/user", requireAuth, (req, res) => {
+  console.log(req.body);
+  const profileFields = {};
+  if (req.body.firstname) profileFields.firstName = req.body.firstname;
+  User.findOneAndUpdate(
+    { _id: req.user.id },
+    { $set: profileFields },
+    { new: true }
+  ).then(user => {
+    console.log("new user:" + user.firstName);
+    res.status(200).json(user);
+  });
+});
+
 //get current user's profile
 
-router.get("/", passport.authenticate("jwt", { session: false }), (req, res) => {
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    // client.get(req.user.id, function (err, value) {
 
-  client.get(req.user.id, function (err, value) {
+    //   if (err) {
+    //     return console.log(err);
+    //   }
+    //   if (value) {
+    //     console.log("Redis Cache has required value :", value);
+    //     res.status(200).json(value);
+    //   } else {
 
-    if (err) {
-      return console.log(err);
-    }
-    if (value) {
-      console.log("Redis Cache has required value :", value);
-      res.status(200).json(value);
-    } else {
-
-      const errors = {};
-      Profile.findOne({ user: req.user.id })
-        .then(profile => {
-
-          if (!profile) {
-            errors.noprofile = "There is no profile for this user";
-            return res.status(404).json(errors);
-          }
-          else {
-
-
-            console.log("I am coming here and lets try for REDIS now");
-            console.log(req.user.id);
-            console.log(profile);
-            client.set(req.user.id, JSON.stringify(profile), function (err) {
-              if (err) callback(err);
-              else {
-                console.log("REDIS Set successful");
-              }
-            });
-
-            console.log("profile==", profile);
-            res.status(200).json(profile);
-          }
-        })
-        .catch(err => res.status(404).json(err));
-    };
-  });
-  //@route  GET /profile/all
-  //@desc   get all profiles
-  //@access public (anyone can see this user profile)
-  router.get("/all", (req, res) => {
     const errors = {};
-    Profile.find()
-      .populate("user", ["fristName,lastName,email"])
-      .then(profiles => {
-        if (!profiles) {
-          errors.noprofile = "There are no profiles";
-          return res.status(404).json(errors);
-        }
-        res.json(profiles);
-      })
-      .catch(err =>
-        res.status(404).json({ profile: "There are no profiles" + err })
-      );
-  });
-
-  //@route  GET /profile/handle/:handle
-  //@desc   get profile by handle
-  //@access public (anyone can see this user profile)
-
-  router.get("/handle/:handle", (req, res) => {
-    Profile.findOne({ handle: req.params.handle })
+    Profile.findOne({ user: req.user.id })
       .populate("user", ["firstName", "lastName", "email"])
       .then(profile => {
         if (!profile) {
-          errors.noprofile = "There is no profile";
-          res.status(404).json(errors);
+          errors.noprofile = "There is no profile for this user";
+          return res.status(404).json(errors);
+        } else {
+          console.log("I am coming here and lets try for REDIS now");
+          console.log(req.user.id);
+          console.log(profile);
+          // client.set(req.user.id, JSON.stringify(profile), function(err) {
+          //   if (err) callback(err);
+          //   else {
+          //     console.log("REDIS Set successful");
+          //   }
+          // });
+
+          console.log("profile==", profile);
+          res.status(200).json(profile);
         }
-        res.json(profile);
       })
       .catch(err => res.status(404).json(err));
-  });
+    // };
+  }
+);
+//@route  GET /profile/all
+//@desc   get all profiles
+//@access public (anyone can see this user profile)
+router.get("/all", (req, res) => {
+  const errors = {};
+  Profile.find()
+    .populate("user", ["fristName,lastName,email"])
+    .then(profiles => {
+      if (!profiles) {
+        errors.noprofile = "There are no profiles";
+        return res.status(404).json(errors);
+      }
+      res.json(profiles);
+    })
+    .catch(err =>
+      res.status(404).json({ profile: "There are no profiles" + err })
+    );
+});
 
-  //@route  GET /profile/user/:user_id
-  //@desc   get profile by userId
-  //@access public (anyone can see this user profile)
+//@route  GET /profile/handle/:handle
+//@desc   get profile by handle
+//@access public (anyone can see this user profile)
 
-  router.get("/user/:user_id", (req, res) => {
-    Profile.findOne({ user: req.params.user_id }).populate("user", ["firstName", "lastName", "email"]).then(profile => {
+router.get("/handle/:handle", (req, res) => {
+  Profile.findOne({ handle: req.params.handle })
+    .populate("user", ["firstName", "lastName", "email"])
+    .then(profile => {
       if (!profile) {
         errors.noprofile = "There is no profile";
         res.status(404).json(errors);
       }
       res.json(profile);
-    }).catch(err =>
+    })
+    .catch(err => res.status(404).json(err));
+});
+
+//@route  GET /profile/user/:user_id
+//@desc   get profile by userId
+//@access public (anyone can see this user profile)
+
+router.get("/user/:user_id", (req, res) => {
+  Profile.findOne({ user: req.params.user_id })
+    .populate("user", ["firstName", "lastName", "email"])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = "There is no profile";
+        res.status(404).json(errors);
+      }
+      res.json(profile);
+    })
+    .catch(err =>
       res.status(404).json({ profile: "There is no profile for this user" })
     );
-  });
+});
 
+// client.get(req.user.id , function(err, value) {
 
+//   if(err){
+//     return console.log(err);
+//   }
 
+//   if(value)
+//   {
+//     console.log("Redis Cache has required value :", value);
+//     res.status(200).json(value);
+//   }
+//   else
+//   {
+//     console.log('i am in req.body: ', req.user.id );
 
-  // client.get(req.user.id , function(err, value) {
+//     kafka.make_request('profile', req.user, function(err, result){
 
-  //   if(err){
-  //     return console.log(err);
-  //   }
+//     console.log('In results Signup');
+//     console.log('Results: ', result);
 
-  //   if(value)
-  //   {
-  //     console.log("Redis Cache has required value :", value);
-  //     res.status(200).json(value);
-  //   }
-  //   else
-  //   {
-  //     console.log('i am in req.body: ', req.user.id );
+//     if(err){
+//       console.log('Unable to fetch User details from the System.', err.message);
+//       res.writeHead(400, {
+//           'Content-type': 'text/plain'
+//       });
+//       res.end('Error in profile detail fetch the application');
+//     }
+//     else{
+//       console.log('profile fetched in successfully.', result);
+//       res.writeHead(200,{
+//           'Content-type' : 'application/json'
+//       });
 
-  //     kafka.make_request('profile', req.user, function(err, result){
-
-  //     console.log('In results Signup');
-  //     console.log('Results: ', result);
-
-
-
-  //     if(err){
-  //       console.log('Unable to fetch User details from the System.', err.message);
-  //       res.writeHead(400, {
-  //           'Content-type': 'text/plain'
-  //       });
-  //       res.end('Error in profile detail fetch the application');
-  //     }
-  //     else{
-  //       console.log('profile fetched in successfully.', result);
-  //       res.writeHead(200,{
-  //           'Content-type' : 'application/json'
-  //       });
-
-  //       res.end(JSON.stringify(result));
-  //      }
-  //     });
-  //    }
-  //   });
-})
+//       res.end(JSON.stringify(result));
+//      }
+//     });
+//    }
+//   });
+// })
 
 // router.get(
 //   "/",
@@ -189,13 +311,13 @@ router.post(
   (req, res) => {
     //get fields
     console.log(req.body);
-    const { errors, isValid } = validateProfileInput(req.body);
-    //check validation
-    if (!isValid) {
-      //return error
+    // const { errors, isValid } = validateProfileInput(req.body);
+    // //check validation
+    // if (!isValid) {
+    //   //return error
 
-      return res.status(400).json(errors);
-    }
+    //   return res.status(400).json(errors);
+    // }
 
     const profileFields = {};
     profileFields.user = req.user.id;
@@ -230,7 +352,10 @@ router.post(
           { user: req.user.id },
           { $set: profileFields },
           { new: true }
-        ).then(profile => res.json(profile));
+        ).then(profile => {
+          console.log("bio called:" + profile.bio);
+          res.json(profile);
+        });
         //radis update
       } else {
         //create
@@ -355,5 +480,110 @@ router.delete("/", requireAuth, (req, res) => {
     });
   });
 });
+//@route  POST /profileImage
+//@desc   Add ProfileImage
+//@access private
+// router.post("/profileImage", requireAuth, (req, res) => {
+//   let uploadFile = req.files.file;
+//   const fileName = req.files.file.name;
+//   console.log("filename:" + req.files.file.name);
+//   console.log(req.body.assignmentName);
+//   console.log("reqparams:" + req.params.id);
+//   console.log(fileName);
+//   console.log(uploadFile);
+//   uploadFile.mv(
+//     `${__dirname}/../public/files/assignments/${fileName}`,
+//     function(err) {
+//       if (err) {
+//         return res.status(500).send(err);
+//       }
+//       console.log("path:" + `${__dirname}/../public/files/${fileName}`);
+//     }
+//   );
 
+//   profileFields = {};
+
+//   profileFields.profileImage = fileName;
+//   Profile.findOneAndUpdate(
+//     { user: req.user.id },
+//     { $set: profileFields },
+//     { new: true }
+//   ).then(profile => res.json(profile));
+// });
+
+//@route  POST /follow
+//@desc   Follow
+//@access private
+router.post("/follow", requireAuth, (req, res) => {
+  console.log(req.user.id);
+  Profile.findOne({ user: req.body.userId })
+    .then(profile => {
+      const count = profile.followers
+        .map(follower => follower.user)
+        .indexOf(req.user.id);
+
+      if (count => 0) {
+        res.status(300).json("already followed");
+      } else {
+        const follower = {
+          user: req.user.id
+        };
+        profile.followers.unshift(follower);
+        profile
+          .save()
+          .then(profile => {
+            console.log("in ");
+            console.log(req.user.id);
+            Profile.findOne({ user: req.user.id })
+              .then(profile => {
+                console.log(profile);
+                console.log("found");
+                const following = {
+                  user: req.body.userId
+                };
+
+                profile.following.unshift(following);
+
+                profile
+                  .save()
+                  .then(profile => {
+                    console.log("followed" + profile);
+                    res.status(200).json(profile);
+                  })
+                  .catch(err => {
+                    console.log("unable to follow");
+                  });
+              })
+              .catch(err => {
+                console.log("user not found");
+              });
+          })
+          .catch(err => {
+            console.log("unable to find");
+          });
+      }
+    })
+    .catch(err => {
+      console.log("unable to find first profile");
+    });
+});
 module.exports = router;
+// AWS.config.update({
+//   accessKeyId: "AKIAIXOBVMK5U5Y57TPQ",
+//   SecretAccessKey: "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"
+// });
+// // configure AWS to work with promises
+// AWS.config.setPromisesDependency(bluebird);
+// // create S3 instance
+// const s3 = new AWS.S3();
+// // abstracts function to upload a file returning a promise
+// const uploadFile = (buffer, name, type) => {
+//   const params = {
+//     ACL: "public-read",
+//     Body: buffer,
+//     Bucket: quora - trail - bucket,
+//     ContentType: type.mime,
+//     Key: `${name}.${type.ext}`
+//   };
+//   return s3.upload(params).promise();
+// };
