@@ -70,6 +70,18 @@ router.get("/file", (req, res) => {
       res.status(400).json(err);
     });
 });
+
+router.get("/getallusersdetails", (req, res)=>{
+  console.log("req.body", req.body);
+    User.find({})
+    .then(response=>{
+      console.log(res);
+      res.status(200).send(response);
+    }, (err)=>{
+      console.log(err);
+      res.status(200);
+    })
+})
 // const AWS = require("aws-sdk");
 // const fs = require("fs");
 // const fileType = require("file-type");
@@ -164,10 +176,7 @@ router.post("/user", requireAuth, (req, res) => {
 
 //get current user's profile
 
-router.get(
-  "/",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
+router.get("/",passport.authenticate("jwt", { session: false }),(req, res) => {
     // client.get(req.user.id, function (err, value) {
 
     //   if (err) {
@@ -179,6 +188,7 @@ router.get(
     //   } else {
 
     const errors = {};
+    console.log("USERID : :: : :  > > > ",req.user.id)
     Profile.findOne({ user: req.user.id })
       .populate("user", ["firstName", "lastName", "email"])
       .populate("following")
@@ -322,10 +332,7 @@ router.get("/user/:user_id", (req, res) => {
 // );
 
 //create or edit user profile
-router.post(
-  "/",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
+router.post("/",passport.authenticate("jwt", { session: false }),(req, res) => {
     //get fields
     console.log(req.body);
     // const { errors, isValid } = validateProfileInput(req.body);

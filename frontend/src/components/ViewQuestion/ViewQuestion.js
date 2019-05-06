@@ -7,6 +7,10 @@ import Axios from "axios";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import axios from "axios";
+import "./ViewQuestion.css";
+import jwt_decode from "jwt-decode";
+var htmlToRtf = require('html-to-rtf');
+
 
 class ViewQuestion extends Component {
   constructor(props) {
@@ -19,7 +23,8 @@ class ViewQuestion extends Component {
       editorHtml: '', 
       theme: 'snow',
       showFlag: false,
-      identity:"public"
+      identity:"public",
+      user_id: []
     };
   }
 
@@ -28,15 +33,35 @@ class ViewQuestion extends Component {
     Axios.get(window.base_url + "/getonequestion", {
       params: { questionId: questionid }
     }).then(response => {
-      console.log("final data", response.data);
+      console.log("final data", response.data);   //response.data.answerDetails[i].answerOwner  
+      //if answerOwner=loggedin user then display edit button
+      //"5cd00a68da41ec298ee8dacd" > answerOwner  > John Doe>firstName > userdetails
+      const decoded = (jwt_decode(localStorage.getItem("token"))).id;
+      console.log("TokenTokenTokenToken: ",decoded);
+      let answerOwnerArray=[], a=[];
+      for(let i=0; i<this.state.answerDetails.length; i++){
+        console.log(this.state.answerDetails[i].answerOwner)
+      a = answerOwnerArray.concat(this.state.answerDetails[i].answerOwner)
+      }
+      console.log(a, " ", this.state.user_id);
       this.setState({
         questionDetails: response.data.questionDetails,
         answerDetails: this.state.answerDetails.concat(
           response.data.answerDetails
         ),
-        len: response.data.questionDetails.answers.length
+        len: response.data.questionDetails.answers.length,
+        user_id: answerOwnerArray
       });
+     axios.get(window.base_url + "/profile/getallusersdetails", {params:{user_id: this.state.user_id}})
+    .then(response=>{
+      console.log("response.data", response.data);
+    }, (err)=>{
+      console.log("response.data", err);
+    })
+    }, (err)=>{
+      console.log("response.data", err);
     });
+    
   }
 onSubmitAnswer=(e)=>{
   e.preventDefault();
@@ -49,16 +74,15 @@ onSubmitAnswer=(e)=>{
     console.log("this.props.match.params._id: ", this.props.match.params.questionid);
     
   let data={
-    token: localStorage.getItem("token"),
     editorHtml: this.state.editorHtml,
     isAnonymous: isAnonymous,
-    questionid: this.props.match.params.questionid
+    question: this.props.match.params.questionid
   }
   console.log("DATAAA: ", data);
   axios.defaults.withCredentials = true;
   const Token=localStorage.getItem("token")
         axios
-        .post(window.base_url+`/answer`,{headers:{Authorization:Token}})
+        .post(window.base_url+`/answer`,data,{headers:{Authorization:Token}})
           .then((response) => {
             console.log("Status Code : ", response.status);
             console.log("Data from node : ", response.data);
@@ -75,11 +99,23 @@ onSubmitAnswer=(e)=>{
         <label  style={{display:'inline'}} >{answer.answerOwner}</label>
         <div style={{ float: "right" }}>Answered On : {answer.answerDate}</div>
         <br/>
-        <p>{answer.answer}</p>
+        {/* <p>{answer.answer}</p> */}
+        <div id="setPhoto" className="setPhoto" dangerouslySetInnerHTML={{ __html: answer.answer }} />
+        {/* <p><img></img>lwenf jlvcn</p> */}
         <button>
             <i className="fa fa-arrow-up" aria-hidden="true" id="upvotearrow" />
             Upvote
           </button>
+          {((jwt_decode(localStorage.getItem("token"))).id)== answer.answerOwner ?
+          
+          <span style={{float: "right"}}><button>
+            Edit
+          </button></span>
+          :
+          <div></div>
+          
+          //htmlToRtf.saveRtfInFile('<Path>/<FileName>.rtf', htmlToRtf.convertHtmlToRtf(html))
+      }
       </li>
     ));
   }

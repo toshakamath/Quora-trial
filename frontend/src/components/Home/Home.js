@@ -51,7 +51,6 @@ class Home extends Component {
       isAnonymous=true;
     
     let data={
-      token: localStorage.getItem("token"),
       newquestion:this.state.newquestion,
       questionlink: this.state.questionlink,
       isAnonymous: isAnonymous,
@@ -62,7 +61,7 @@ class Home extends Component {
     const Token=localStorage.getItem("token")
     console.log("TOKENNNNN: ",Token)
         axios
-        .post(window.base_url+`/question`, {headers:{Authorization:Token}})
+        .post(window.base_url+`/question`, data,{headers:{Authorization:Token}})
           .then((response) => {
             console.log("Status Code : ", response.status);
             console.log("Data from node : ", response.data);
@@ -127,8 +126,7 @@ class Home extends Component {
     this.props.getProfileName(data);
     // this.props.getAllTopics();
         axios.defaults.withCredentials = true;
-        axios
-        .get(window.base_url+`/topic/all`)
+        axios.get(window.base_url+`/topic/all`)
           .then((response) => {
             console.log("Status Code : ", response.status);
             console.log("Data from node : ", response.data);
@@ -171,7 +169,7 @@ class Home extends Component {
     let renderTopicsCheckbox = (this.state.topics||[]).map((t)=>{
       return(
         <div class="custom-control">
-          <input type="checkbox" class="custom-control-input" name="topicsSelected" value={t._id} id={t._id} onChange={this.onChangeHandler1}/>
+          <input type="checkbox" class="custom-control-input" name="topicsSelected" value={t.topicName} id={t._id} onChange={this.onChangeHandler1}/>
           <label class="custom-control-label" for={t._id}>{t.topicName}</label>
         </div>
       )

@@ -5,10 +5,13 @@ const bodyParser = require("body-parser");
 const app = express();
 const passport = require("passport");
 const port = process.env.PORT || 3001;
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.raw({limit: "50mb"}));
 
+app.use(bodyParser.json({limit: '10mb', extended: true}))
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
 //import Routes
 const login = require("./routes/login");
 const signup = require("./routes/signup");

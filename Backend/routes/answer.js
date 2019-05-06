@@ -43,11 +43,11 @@ router.post("/", requireAuth, function (req, res) {
 
   var user = new Answer({
     _id: new mongoose.Types.ObjectId(),
-    answer: req.body.answer,
+    answer: req.body.editorHtml,
     answerOwner: req.user.id,
     question: req.body.question,
     upVote: "5cbf8764ad4cd7eed70e105d",
-    isAnnonymous: req.body.isAnnonymous,
+    isAnnonymous: req.body.isAnonymous,
     answerDate: Date.now()
   });
 
