@@ -23,6 +23,7 @@ router.post("/", (req, res) => {
     [email],
     function(error, results, fields) {
       if (error) {
+        console.log(error);
         res.json({
           status: false,
           message: "there are some error with query:" + error
@@ -43,7 +44,8 @@ router.post("/", (req, res) => {
                   console.log("mongo user" + user);
                   const payload = {
                     id: user.id,
-                    email: user.email
+                    email: user.email,
+                    name: user.firstName + user.lastName
                   };
                   //Sign the token with payload
                   jwt.sign(

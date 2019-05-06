@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ERRORS, SIGNUP, LOGIN_USER, TOPICS } from "./types";
+import { ERRORS, SIGNUP, LOGIN_USER, SET_CURRENT_USER, TOPICS } from "./types";
 import jwt_decode from "jwt-decode";
 var setData = require("../components/Localstorage").setData;
 var getToken = require("../components/Localstorage").getToken;
@@ -36,6 +36,8 @@ export const loginUser = (logindata, history) => dispatch => {
       });
       /***** Setting up the data in localstorage *****/
       setData(res.data.token);
+      const decoded = jwt_decode(res.data.token);
+      localStorage.setItem("name", decoded.name);
       history.push("/home");
     })
     .catch(err => {
@@ -49,7 +51,7 @@ export const loginUser = (logindata, history) => dispatch => {
 /***** Topics interests *****/
 export const topicsSelected = (topicsInterested, history) => dispatch => {
   topicsInterested.userId = user_id;
-  console.log("the data is topics ", topicsInterested);
+  // console.log("the data is topics ", topicsInterested);
   axios
     .post(window.base_url + "/topic", topicsInterested)
     .then(res => {
@@ -57,7 +59,7 @@ export const topicsSelected = (topicsInterested, history) => dispatch => {
       //    type: INTERESTS,
       //    payload: res.data
       //    });
-      console.log("this is the data from back end", res.data);
+      //  console.log("this is the data from back end", res.data);
       history.push("/login");
     })
     .catch(err => {
@@ -70,8 +72,10 @@ export const topicsSelected = (topicsInterested, history) => dispatch => {
 
 /***** Render all Topics Selected *****/
 export const fetchTopics = () => dispatch => {
-  let token = getToken();
-  const decoded = jwt_decode(token);
+  // let token = getToken();
+  const Token = localStorage.getItem("token");
+  console.log(Token);
+  const decoded = jwt_decode(Token);
   axios
     .get(window.base_url + "/topic", {
       params: { email: decoded.email }
@@ -82,4 +86,10 @@ export const fetchTopics = () => dispatch => {
         payload: response.data.topics
       });
     });
+};
+export const setCurrentUser = decoded => {
+  return {
+    type: SET_CURRENT_USER,
+    payload: decoded
+  };
 };

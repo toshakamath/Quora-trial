@@ -97,6 +97,3 @@ export default reduxForm({ mapStateToProps, validate, form: "login" })(
     { loginUser }
   )(withRouter(Login))
 );
-
-//export Login Component
-// export default Signup;

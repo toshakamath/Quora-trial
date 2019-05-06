@@ -16,8 +16,7 @@ router.get("/", (req, res) => {
   //answersFields.isAnnonymous = "true";
 
   console.log("fields ans", answersFields);
-  //(req.query.answer)
-  //{ _id: "5cbfaae81aae68f35807012a" }
+
   Answer.find(answersFields)
 
     .then(answers => {

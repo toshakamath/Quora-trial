@@ -16,7 +16,7 @@ class Search extends Component {
   }
 
   renderProfile() {
-    let searchProfile = this.props.location.state.detail.profile;
+    let searchProfile = (this.props.location.state.detail)||{}.profile;
     return _.map(searchProfile, profile => (
       <li className="list-group-item">
         <Link to={`/profile/${profile._id}`}>
@@ -27,7 +27,7 @@ class Search extends Component {
   }
 
   renderQuestions() {
-    let searchQuestion = this.props.location.state.detail.question;
+    let searchQuestion = (this.props.location.state.detail)||{}.question;
     return _.map(searchQuestion, question => (
       <li className="list-group-item">
         <Link to={`/${question._id}`}>
@@ -38,7 +38,7 @@ class Search extends Component {
   }
 
   renderTopics() {
-    let searchTopics = this.props.location.state.detail.topics;
+    let searchTopics = (this.props.location.state.detail)||{}.topics;
     return _.map(searchTopics, topic => (
       <li className="list-group-item">
         <Link to={`/topics/${topic._id}`}>

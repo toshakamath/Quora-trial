@@ -143,8 +143,10 @@ controller.replyMessages=function (req, cb) {
             cb(true,null)
         })
   };
+
+
   router.post('/reply', (req, res, next)=>{
-    controller.reply(req, (err, row1)=>{
+    controller.replyMessages(req, (err, row1)=>{
         if(err){
             res.status(400);
         }

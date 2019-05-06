@@ -12,6 +12,8 @@ import "./Dashboard.css";
 import ConversationsList from "../Message/ConversationsList";
 import CreateMessage from "../Message/CreateMessage";
 import Content from "../Content/Content";
+import Sample from "../Sample";
+import Graph from "../Graphs/Graph";
 // import Questions from "../Questions/questions";
 // import { getQuestions } from "../../Actions/questionsAction";
 // import PropTypes from "prop-types";
@@ -33,18 +35,8 @@ class Dashboard extends Component {
     });
   }
 
-
   //Dummy componenet did mount
   render() {
-    // const { questions } = this.props.questions;
-
-    // if (questions === null)
-    //   return <div></div>
-
-    // const questionsList = questions.map(question => (
-    //   <Questions question={question} />
-    // ));
-
     return (
       <div>
         <Navbar />
@@ -53,10 +45,19 @@ class Dashboard extends Component {
           {/*questionsList*/}
           {
             <Switch>
-            <Route path="/search" component={Search}/>
+              <Route path="/search" component={Search} />
+              <Route path="/Graphs" component={Graph} />
+              {/* <Route path="/home/inbox/a" component={Sample} />
               <Route path="/home/inbox/createmessage" component={CreateMessage} />
+              <Route exact path="/profile" component={Profile} />
+              <Route path="/search" component={Search} />
+              <Route
+                path="/home/inbox/createmessage"
+                component={CreateMessage}
+              />
               <Route path="/home/inbox" component={ConversationsList} />
-              <Route path="/content" component={Content}/>
+              <Route path="/home/inbox" component={ConversationsList} /> */}
+              <Route path="/content" component={Content} />
               <Route path="/home" component={Home} />
               <Route path="/profile" component={Profile} />
               <Route path="/:questionid" component={ViewQuestion} />
@@ -64,9 +65,7 @@ class Dashboard extends Component {
             </Switch>
           }
 
-
           <div>
-
             {/* <div className="card questionCard">
               <div >
                 <div>

@@ -11,10 +11,11 @@ import contentAnsweredReducer from "./contentAnsweredReducer";
 export default combineReducers({
   auth: authReducer,
   errors: errors,
+  profile: ProfileReducer,
   form: formReducer,
   message: MessageReducer,
   questions: questions,
-  profile: ProfileReducer,
+
   content: contentReducer,
   contentAnswered: contentAnsweredReducer
 });
