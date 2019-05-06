@@ -9,3 +9,4 @@ export const GET_PROFILES = "GET_PROFILES";
 export const SET_PROFILEIMAGE = "SET_PROFILEIMAGE";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const TOPICS = "TOPICS";
+export const GET_ANSWERS = "GET_ANSWERS";

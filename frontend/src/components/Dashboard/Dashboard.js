@@ -12,6 +12,8 @@ import "./Dashboard.css";
 import ConversationsList from "../Message/ConversationsList";
 import CreateMessage from "../Message/CreateMessage";
 import Content from "../Content/Content";
+import Sample from "../Sample";
+import Graph from "../Graphs/Graph";
 // import Questions from "../Questions/questions";
 // import { getQuestions } from "../../Actions/questionsAction";
 // import PropTypes from "prop-types";
@@ -40,13 +42,66 @@ class Dashboard extends Component {
         <Navbar />
 
         <div className="page-content">
-          <Switch>
-            <Route path="/home/inbox/createmessage" component={CreateMessage} />
-            <Route path="/home/inbox" component={ConversationsList} />
-            <Route path="/home" component={Home} />
-            <Route path="/Answer" component={Answer} />
-            <Route path="/profile" component={Profile} />
-          </Switch>
+          {/*questionsList*/}
+          {
+            <Switch>
+              <Route path="/search" component={Search} />
+              <Route path="/Graphs" component={Graph} />
+              {/* <Route path="/home/inbox/a" component={Sample} />
+              <Route path="/home/inbox/createmessage" component={CreateMessage} />
+              <Route exact path="/profile" component={Profile} />
+              <Route path="/search" component={Search} />
+              <Route
+                path="/home/inbox/createmessage"
+                component={CreateMessage}
+              />
+              <Route path="/home/inbox" component={ConversationsList} />
+              <Route path="/home/inbox" component={ConversationsList} /> */}
+              <Route path="/content" component={Content} />
+              <Route path="/home" component={Home} />
+              <Route path="/profile" component={Profile} />
+              <Route path="/:questionid" component={ViewQuestion} />
+              <Route path="/Answer" component={Answer} />
+            </Switch>
+          }
+
+          <div>
+            {/* <div className="card questionCard">
+              <div >
+                <div>
+                  <span>
+                    <div className="hover-menu ">
+                      <div className="hover-menu-contents">
+                        <Link to="#profileImage" className="navItemLink">
+                          <span className="expanded">
+                            <span className="photoWrapper">
+                              <div id="#123">
+                                <span className="photo-tooltip">
+                                  <img
+                                    className="profileImage"
+                                    height="50px"
+                                    width="50px"
+                                    src={`https://qph.fs.quoracdn.net/main-thumb-70332528-50-qpikqkavbsrjbupveiqfitmnpiraxvsw.jpeg`}
+                                  />
+                                </span>
+                              </div>
+                            </span>
+                            <span>
+                              <Link to='/profile'>Laxmikant Pandhare.</Link><br />
+                            </span>
+
+                          </span>
+
+                        </Link>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+               
+                <Link to='/dashboard' onClick={this.togglePopup.bind(this)}>What is your question or link ?</Link>
+              </div>
+            </div> */}
+          </div>
         </div>
       </div>
     );

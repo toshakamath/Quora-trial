@@ -6,6 +6,7 @@ const app = express();
 const passport = require("passport");
 const port = process.env.PORT || 3001;
 app.use(bodyParser.json());
+// app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -19,6 +20,8 @@ const answer = require("./routes/answer");
 const topic = require("./routes/topic");
 const message = require("./routes/message");
 const search = require("./routes/search");
+const getallanswer = require("./routes/getallanswer");
+
 const fs = require("fs");
 var glob = require("glob");
 
@@ -46,15 +49,10 @@ require("./config/passport")(passport);
 
 app.use(passport.initialize());
 
-// Bring in defined Passport Strategy
-require("./config/passport")(passport);
-
 // app.use("/inbox/peopledetails", message.getPeopleDetails);
 // app.use("/inbox/sendmessage", message.sendMessage);
 // app.use("/inbox/displaymessages", message.displayMessages);
 // app.use("/inbox/reply", message.replyMessages);
-
-app.use("/inbox", message);
 
 app.use(express.static(__dirname + "/public"));
 //Storing documents/Images
@@ -78,6 +76,7 @@ app.use(express.static(__dirname + "/public"));
 // });
 
 //use Routes
+app.use("/inbox", message);
 app.use("/login", login);
 app.use("/signup", signup);
 app.use("/topic", topic);
@@ -86,6 +85,8 @@ app.use("/question", question);
 app.use("/getonequestion", getonequestion);
 app.use("/search", search);
 app.use("/answer", answer);
+app.use("/getallanswer", getallanswer);
+
 // app.use("/all", profile1);
 //start your server on posrt 3001
 //app.settings.env = "production";

@@ -23,6 +23,7 @@ router.post("/", (req, res) => {
     [email],
     function(error, results, fields) {
       if (error) {
+        console.log(error);
         res.json({
           status: false,
           message: "there are some error with query:" + error

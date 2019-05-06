@@ -172,7 +172,7 @@ class Navbar extends Component {
                                 </li>
                                 <li>
                                   <a
-                                    href="/home/inbox"
+                                    href="/home/messages"
                                     className="list-group-item list-group-item-action list-group-item-light"
                                   >
                                     Messages

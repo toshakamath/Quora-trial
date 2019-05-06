@@ -8,9 +8,14 @@ import { Link, withRouter } from "react-router-dom";
 import HomeSideBar from "../HomeSideBar/HomeSideBar";
 //new vaibhav
 import Questions from "../Questions/questions";
+import Sample from "../Sample";
 import { getQuestions } from "../../Actions/questionsAction";
 import PropTypes from "prop-types";
 import { getProfileName } from "../../Actions/profileAction";
+import { Checkbox } from "antd";
+import CreateMessage1 from "../Message/CreateMessage1";
+import DisplayAllMessages1 from "../Message/DisplayAllMessages1";
+import ViewConversation1 from "../Message/ViewConversation1";
 
 class Home extends Component {
   constructor(props) {
@@ -18,32 +23,91 @@ class Home extends Component {
     this.state = {
       showPopup: false,
       addQuestion: "activeTab",
-      shareLink: "inactiveTab"
+      shareLink: "inactiveTab",
+      topicsSelected: [],
+      identity: "public",
+      newquestion: "",
+      questionlink: ""
+      // checked: true
     };
   }
-  onChangeHandler(e) {
+  onChangeHandler = e => {
     //identity, newquestion, questionlink
-    e.preventDefault();
+    console.log(e.target.name, e.target.value);
     this.setState({
       [e.target.name]: e.target.value
     });
-  }
-  addQuestion(e) {
+  };
+  addQuestion = e => {
     e.preventDefault();
     //get question name from props here and use in next modal
     // let question_name= this.props.
-  }
-  mapTopicsToQuestion(e) {
+  };
+  mapTopicsToQuestion = e => {
     e.preventDefault();
-  }
-  onChangeHandler1(e) {
+    let isAnonymous = false;
+    if (this.state.identity == "public") isAnonymous = false;
+    else if (this.state.identity == "anonymous") isAnonymous = true;
+
+    let data = {
+      token: localStorage.getItem("token"),
+      newquestion: this.state.newquestion,
+      questionlink: this.state.questionlink,
+      isAnonymous: isAnonymous,
+      topicsSelected: this.state.topicsSelected
+    };
+    console.log("Data to be sent to backend: ", data);
+    axios.defaults.withCredentials = true;
+    const Token = localStorage.getItem("token");
+    console.log("TOKENNNNN: ", Token);
+    axios
+      .post(window.base_url + `/question`, {
+        headers: { Authorization: Token }
+      })
+      .then(
+        response => {
+          console.log("Status Code : ", response.status);
+          console.log("Data from node : ", response.data);
+        },
+        err => {
+          console.log("ERROR : ", err);
+        }
+      );
+  };
+
+  // topicsSelected 5ccca5121c9d4400009dbb95 true
+  // topicsSelected 5ccca5121c9d4400009dbb95 false
+  // topicsSelected 5cce04141c9d44000084d856 true
+  // topicsSelected 5cce04141c9d44000084d856 false
+  // topicsSelected 5ccca5121c9d4400009dbb95 true
+  // topicsSelected 5cce04141c9d44000084d856 true
+
+  // this.setState({ myArray: [...this.state.myArray, 'new value'] }) //simple value
+  // this.setState({ myArray: [...this.state.myArray, ...[1,2,3] ] })
+
+  onChangeHandler1 = e => {
     //topicscheck
-    e.preventDefault();
-    // this.setState({
-    //   [e.target.name]: e.target.value
-    // })
-  }
-  toggleClass(e) {
+    console.log(
+      "SOMETHINGGGGG ",
+      e.target.name,
+      e.target.value,
+      e.target.checked
+    );
+    if (e.target.checked === true) {
+      this.setState({
+        topicsSelected: this.state.topicsSelected.concat(e.target.value)
+      });
+    } else if (e.target.checked === false) {
+      let index = this.state.topicsSelected.indexOf(e.target.value);
+      console.log("INDEX: ", index);
+      this.state.topicsSelected.splice(index, 1);
+      this.setState({
+        topicsSelected: this.state.topicsSelected
+      });
+    }
+    console.log("topicsSelected Array: ", this.state.topicsSelected);
+  };
+  toggleClass = e => {
     console.log("THIS IS THE CURRENT TAB NAME: ", e);
     if (e === "addQuestionTab") {
       console.log("addQuestion: activeTab");
@@ -60,7 +124,7 @@ class Home extends Component {
     }
     // this.state = { showPopup: false, showButtons: false };
     // let isVisible = false;
-  }
+  };
 
   //new
   componentDidMount() {
@@ -71,6 +135,19 @@ class Home extends Component {
     console.log("DATA: ", data);
     this.props.getProfileName(data);
     // this.props.getAllTopics();
+    // axios.defaults.withCredentials = true;
+    axios.get(window.base_url + `/topic/all`).then(response => {
+      console.log("Status Code : ", response.status);
+      console.log("Data from node : ", response.data);
+      this.setState(
+        {
+          topics: response.data
+        },
+        err => {
+          console.log("Error : ", err);
+        }
+      );
+    });
   }
   //
   togglePopup() {
@@ -96,6 +173,29 @@ class Home extends Component {
 
     console.log("in course:" + this.props.match.params.Id);
 
+    console.log("this.state.topics: ", this.state.topics);
+    console.log("this.state.topicsSelected: ", this.state.topicsSelected);
+    //this.state.topics[i].topicName
+    //this.state.topics[i]._id
+
+    let renderTopicsCheckbox = (this.state.topics || []).map(t => {
+      return (
+        <div class="custom-control">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            name="topicsSelected"
+            value={t._id}
+            id={t._id}
+            onChange={this.onChangeHandler1}
+          />
+          <label class="custom-control-label" for={t._id}>
+            {t.topicName}
+          </label>
+        </div>
+      );
+    });
+
     //   const { activeTab } = this.state;
     //   const TabLabel = ({ active, text, onClick }) =>
     // <li onClick={onClick} className={active ? 'is-active' : null}>
@@ -104,6 +204,12 @@ class Home extends Component {
 
     return (
       <div className="container container-fluid">
+        <Switch>
+          {/* <Route path="/home/inbox/a" component={Sample} /> */}
+          <Route path="/home/messages/create" component={CreateMessage1} />
+          <Route path="/home/messages/:_id" component={ViewConversation1} />
+          <Route path="/home/messages" component={DisplayAllMessages1} />
+        </Switch>
         <div className="row">
           <div className="col-md-2">
             <HomeSideBar id={this.props.match.params.Id} />
@@ -174,16 +280,6 @@ class Home extends Component {
                         <h4 class="modal-title" id="AskQuestionModalLabel">
                           {/* <!-- Nav tabs --> */}
                           <ul class="nav nav-tabs">
-                            {/* <TabLabel
-                              onClick={this.toggleClass.bind(this, 'addQuestionTab')}
-                              active={activeTab === 'addQuestionTab'}
-                              text="Add Question"
-                            />
-                            <TabLabel
-                              onClick={this.toggleClass.bind(this, 'shareLinkTab')}
-                              active={activeTab === 'shareLinkTab'}
-                              text="Share Link"
-                            /> */}
                             <li
                               role="presentation"
                               className={this.state.addQuestion}
@@ -366,18 +462,8 @@ class Home extends Component {
                             color: "#333"
                           }}
                         >
-                          Is this a static or dynamic question?
+                          {this.state.newquestion}
                         </h5>
-                        <a href="#">
-                          <span
-                            style={{
-                              float: "right",
-                              marginTop: "12px",
-                              color: "#e2e2e2"
-                            }}
-                            class="glyphicon glyphicon-option-horizontal"
-                          />
-                        </a>
                         <button
                           type="button"
                           class="close"
@@ -392,22 +478,7 @@ class Home extends Component {
                           <b>Add topics that best describe your question</b>
                         </p>
                         <hr />
-                        <div class="custom-control">
-                          <input
-                            type="checkbox"
-                            class="custom-control-input"
-                            id="topicscheck"
-                            onChange={this.onChangeHandler1}
-                          />
-                          <label
-                            class="custom-control-label"
-                            labelfor="topicscheck"
-                            name="topicname"
-                            value="topicvalue"
-                          >
-                            Check this custom checkbox
-                          </label>
-                        </div>
+                        {renderTopicsCheckbox}
                       </div>
                       <div
                         class="modal-footer"
