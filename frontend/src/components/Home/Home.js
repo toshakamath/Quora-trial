@@ -59,8 +59,10 @@ class Home extends Component {
     }
     console.log("Data to be sent to backend: ",data);
     axios.defaults.withCredentials = true;
+    const Token=localStorage.getItem("token")
+    console.log("TOKENNNNN: ",Token)
         axios
-        .post(window.base_url+`/question`)
+        .post(window.base_url+`/question`, {headers:{Authorization:Token}})
           .then((response) => {
             console.log("Status Code : ", response.status);
             console.log("Data from node : ", response.data);

@@ -56,8 +56,9 @@ onSubmitAnswer=(e)=>{
   }
   console.log("DATAAA: ", data);
   axios.defaults.withCredentials = true;
+  const Token=localStorage.getItem("token")
         axios
-        .post(window.base_url+`/answer`)
+        .post(window.base_url+`/answer`,{headers:{Authorization:Token}})
           .then((response) => {
             console.log("Status Code : ", response.status);
             console.log("Data from node : ", response.data);
