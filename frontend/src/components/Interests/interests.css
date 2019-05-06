@@ -1,4 +1,4 @@
-/* .line {
+.line {
   margin-top: 0px;
   border-top: 2px solid #b92b27;
 }
@@ -13,7 +13,7 @@
   padding: 0px 0px;
 }
 
-.interesstForm ul {
+.ulinterest {
   list-style-type: none;
   border: 1px solid rgb(196, 196, 196);
   box-shadow: 0 0 5px #888;
@@ -27,7 +27,7 @@
   text-align: center;
 }
 
-li {
+.interestli {
   display: inline-block;
   margin: 0px 10px;
   height: 32%;
@@ -37,7 +37,7 @@ input[type="checkbox"] {
   display: none;
 }
 
-label {
+.interestlabel {
   border: 1px solid whitesmoke;
   padding: 10px;
   display: block;
@@ -52,7 +52,7 @@ label {
   user-select: none;
 }
 
-label::before {
+.interestlabel::before {
   background-color: white;
   color: white;
   content: " ";
@@ -70,7 +70,7 @@ label::before {
   transform: scale(0);
 }
 
-label img {
+.interestlabel img {
   transition-duration: 0.2s;
   transform-origin: 50% 50%;
 }
@@ -110,4 +110,4 @@ label img {
   width: 200px;
   border-radius: 110px;
   float: right;
-} */
+}

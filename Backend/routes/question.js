@@ -66,6 +66,8 @@ router.get("/", (req, res) => {
     });
 });
 
+
+
 module.exports = router;
 
 //Laxmikant question post query

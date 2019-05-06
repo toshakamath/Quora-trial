@@ -4,7 +4,7 @@ import { Field, reduxForm } from "redux-form";
 import "./signup.css";
 
 import { connect } from "react-redux";
-var signupUser = require("../../Actions/authentication").signupUser;
+var signupUser = require("../../Actions/authAction").signupUser;
 
 //Define a Login Component
 class Signup extends Component {
@@ -26,7 +26,7 @@ class Signup extends Component {
 
   //submit Login handler to send a request to the node backend
   onSignup = values => {
-    //this.props.signupUser(values, this.props.history);
+    this.props.signupUser(values, this.props.history);
     console.log("values entered ", values);
   };
 

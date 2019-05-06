@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
-
 import { Link, withRouter } from "react-router-dom";
 import Profile from "../Profile/Profile";
 import Navbar from "../Navbar/Navbar";
 import Home from "../Home/Home";
 import Answer from "../Answer/Answer";
+import Search from "../Search/Search";
+import ViewQuestion from "../ViewQuestion/ViewQuestion";
 import "../../App.css";
 import "./Dashboard.css";
 import ConversationsList from "../Message/ConversationsList";
 import CreateMessage from "../Message/CreateMessage";
+import Content from "../Content/Content";
 // import Questions from "../Questions/questions";
 // import { getQuestions } from "../../Actions/questionsAction";
 // import PropTypes from "prop-types";

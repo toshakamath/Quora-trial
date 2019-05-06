@@ -44,15 +44,16 @@ const questions = ({ question }) => {
       <div className="card-body">
         <h15 className="card-title">Topic: {question.topic} </h15>
 
-        <a href={"#question" + question._id} className="questions">
-          <h5 className="card-title">{question.question}</h5>
+        <a href={"/" + question._id} className="questions">
+          <h5 className="card-title">
+            <b>{question.question}</b>
+          </h5>
         </a>
 
         <h6 className="userInfo card-subtitle mb-2 text-muted">User Info</h6>
         <h6 className="userInfo card-subtitle mb-2 text-muted">
           Answered: {displayAsweredTime}
         </h6>
-
         <a
           className="answers card-link collapsed"
           data-toggle="collapse"
@@ -63,16 +64,35 @@ const questions = ({ question }) => {
           <div id="summary">
             <p className="card-text collapse" id={question._id}>
               {maxUpVotedAnswer}
+              <a
+                className="collapsed"
+                data-toggle="collapse"
+                href={"#" + question._id}
+                aria-expanded="false"
+                aria-controls={question._id}
+              />
+              <div className="buttonbar">
+                <button className="btn btn-light" id="upvote">
+                  <i
+                    className="fa fa-arrow-up"
+                    aria-hidden="true"
+                    id="upvotearrow"
+                  />
+                  &nbsp; Upvote ()
+                </button>
+                <div className="bookmarkcheckbox">
+                  <input
+                    type="checkbox"
+                    id="checkbox"
+                    name="cc"
+                    className="bookmarkcb"
+                  />
+                  <label htmlFor="checkbox" id="labelbookmark">
+                    Bookmark
+                  </label>
+                </div>
+              </div>
             </p>
-            <a
-              className="collapsed"
-              data-toggle="collapse"
-              href={"#" + question._id}
-              aria-expanded="false"
-              aria-controls={question._id}
-            >
-              <div />
-            </a>
           </div>
         </a>
 
@@ -99,87 +119,3 @@ const mapStateToProps = state => ({
 });
 
 export default questions;
-
-// class questions extends Component {
-//   render() {
-//     {
-//       const questionsData = (
-//         <div className="card cardstyle">
-//           {/* <img className="card-img-top" src="..." alt="Card image cap" /> */}
-//           <div className="card-body">
-//             <h15 className="card-title">Answer Topic: Computers </h15>
-
-//             <a href="#" className="questions">
-//               <h5 className="card-title">
-//                 What's one instinctive thing you did that prevented something
-//                 bad from happening?
-//               </h5>
-//             </a>
-
-//             <h6 className="userInfo card-subtitle mb-2 text-muted">
-//               User Info
-//             </h6>
-
-//             <a href="#" className="answers card-link">
-//               <div id="summary">
-//                 <p className="card-text collapse" id="collapseSummary">
-//                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-//                   porttitor maximus laoreet. Pellentesque habitant morbi
-//                   tristique senectus et netus et malesuada fames ac turpis
-//                   egestas. In hac habitasse platea dictumst. Suspendisse
-//                   venenatis sollicitudin erat in gravida. Sed eget nisl
-//                   tristique, commodo lectus sit amet, vulputate sem. Cras
-//                   porttitor lorem ipsum, sit amet iaculis massa feugiat vitae.
-//                   Curabitur sapien odio, ullamcorper tincidunt interdum vitae,
-//                   vestibulum eu neque. Nam leo massa, fringilla eget mauris
-//                   feugiat, auctor suscipit justo.
-//                 </p>
-//                 <a
-//                   className="collapsed"
-//                   data-toggle="collapse"
-//                   href="#collapseSummary"
-//                   aria-expanded="false"
-//                   aria-controls="collapseSummary"
-//                 >
-//                   <div />
-//                 </a>
-//               </div>
-//             </a>
-
-//             <div>
-//               <a href="#" className="btn btn-primary">
-//                 Go somewhere
-//               </a>
-//               <a href="#" className="card-link">
-//                 Card link
-//               </a>
-//               <a href="#" className="card-link">
-//                 Another link
-//               </a>
-//             </div>
-//           </div>
-//         </div>
-//       );
-//       return (
-//         <div>
-//           <div className="cardcontainer">{questionsData}</div>
-//         </div>
-//       );
-//     }
-//   }
-// }
-
-// questions.propTypes = {
-//   //login: PropTypes.func.isRequired,
-//   //profile: PropTypes.func.isRequired,
-//   //auth: PropTypes.object.isRequired
-//   //errors: PropTypes.object.isRequired
-// };
-// const mapStateToProps = state => ({
-//   auth: state.auth
-// });
-
-// export default connect(
-//   mapStateToProps,
-//   {}
-// )(withRouter(questions));
