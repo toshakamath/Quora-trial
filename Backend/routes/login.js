@@ -44,7 +44,8 @@ router.post("/", (req, res) => {
                   console.log("mongo user" + user);
                   const payload = {
                     id: user.id,
-                    email: user.email
+                    email: user.email,
+                    name: user.firstName + user.lastName
                   };
                   //Sign the token with payload
                   jwt.sign(

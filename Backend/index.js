@@ -57,25 +57,26 @@ require("./config/passport")(passport);
 // app.use("/inbox/reply", message.replyMessages);
 
 
+app.use(express.static(__dirname + "/public"));
 //Storing documents/Images
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./uploads");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  }
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "./uploads");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, file.originalname);
+//   }
+// });
 
-const upload = multer({ storage });
+// const upload = multer({ storage });
 
-app.post("/uploadprofile", upload.array("photos", 5), (req, res) => {
-  if (req.session.user) {
-    console.log("working on profiles");
-    console.log("req.body", req.body);
-    res.end();
-  }
-});
+// //app.post("/uploadprofile", upload.array("photos", 5), (req, res) => {
+//   if (req.session.user) {
+//     console.log("working on profiles");
+//     console.log("req.body", req.body);
+//     res.end();
+//   }
+// });
 
 //use Routes
 app.use("/inbox", message);

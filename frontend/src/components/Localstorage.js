@@ -1,10 +1,15 @@
-var jwt = require("jsonwebtoken");
-
-module.exports.setData = tokendata => {
+module.exports.setData = data => {
+  // var receivedData = JSON.stringify(data);
   //Storing token in the local storage
-  localStorage.setItem("token", tokendata);
+  console.log("token:" + data);
+
+  localStorage.setItem("token", data);
+  localStorage.setItem("auth", true);
+  console.log("localstoragre:" + localStorage.getItem("token"));
+  // localStorage.setItem("local_storage", receivedData);
+  //localStorage.setItem("usertype", type);
 };
 
-module.exports.getToken = () => {
-  return localStorage.getItem("token");
+module.exports.getData = () => {
+  return JSON.parse(localStorage.getItem("token"));
 };

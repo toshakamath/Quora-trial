@@ -10,10 +10,10 @@ import ProfileReducer from "./ProfileReducer";
 export default combineReducers({
   auth: authReducer,
   errors: errors,
+  profile: ProfileReducer,
   form: formReducer,
   message: MessageReducer,
   questions: questions,
   answers: answers,
   profile: ProfileReducer
-  
 });

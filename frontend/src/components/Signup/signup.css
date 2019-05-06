@@ -22,8 +22,7 @@
   overflow-y: hidden;
   top: 8%;
   text-align: center;
-  padding : 15px 0px;
-  
+  padding: 15px 0px;
 }
 
 h1 {
@@ -43,7 +42,7 @@ h4 {
     "Hiragino Kaku Gothic Pro", "Meiryo", serif;
 }
 
-form {
+.form form {
   display: table;
   margin: 0px auto;
   width: 480px;
@@ -56,13 +55,11 @@ label {
   font-weight: bold;
   display: block;
   margin-bottom: 15px;
-  
 }
 
 .form-control {
   width: 100%;
   border: 1px solid #666;
-  
 }
 
 .error {
@@ -75,7 +72,7 @@ label {
   height: 80px;
 }
 
-.button{
+.button {
   margin-top: 25px;
   line-height: 0px;
 }

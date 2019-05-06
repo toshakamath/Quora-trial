@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import Axios from "axios";
 import "./Navbar.css";
 // import "../Message/ConversationsList";
@@ -16,7 +17,8 @@ class Navbar extends Component {
 
   logOut(e) {
     //e.prventDefault()
-    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("token");
+    localStorage.removeItem("auth");
     this.props.history.push("/login");
   }
 
@@ -47,7 +49,7 @@ class Navbar extends Component {
         <div className="container d-flex justify-content-between">
           <div className="headerLogo">
             <Link to="/home">
-              <span className="display-none"></span>
+              <span className="display-none" />
             </Link>
           </div>
           <div className="d-flex justify-content-between">
@@ -61,12 +63,12 @@ class Navbar extends Component {
                         aria-hidden="true"
                       >
                         <i
-                          class="far fa-newspaper"
+                          className="far fa-newspaper"
                           size="width:24px;height:24px"
                         />
                       </span>
                     </div>
-                    <span class="badge badge-light bd">4</span>
+                    <span className="badge badge-light bd">4</span>
                     <span className="expanded">Home</span>
                   </Link>
                 </div>
@@ -79,7 +81,7 @@ class Navbar extends Component {
                         className="ui-icon ui-icon-color-grey icon-size-regular"
                         aria-hidden="true"
                       >
-                        <i class="far fa-edit" />
+                        <i className="far fa-edit" />
                       </span>
                     </div>
                     <span className="expanded">Answer</span>
@@ -94,7 +96,7 @@ class Navbar extends Component {
                         className="ui-icon ui-icon-color-grey icon-size-regular"
                         aria-hidden="true"
                       >
-                        <i class="fas fa-users" />
+                        <i className="fas fa-users" />
                       </span>
                     </div>
                     <span className="expanded">Spaces</span>
@@ -109,7 +111,7 @@ class Navbar extends Component {
                         className="ui-icon ui-icon-color-grey icon-size-regular"
                         aria-hidden="true"
                       >
-                        <i class="far fa-bell" />
+                        <i className="far fa-bell" />
                       </span>
                     </div>
                     <span className="expanded">Notifications</span>
@@ -156,18 +158,60 @@ class Navbar extends Component {
                                 height="50px"
                                 width="50px"
                                 src={`https://qph.fs.quoracdn.net/main-thumb-70332528-50-qpikqkavbsrjbupveiqfitmnpiraxvsw.jpeg`}
-                                type="button" data-toggle="dropdown"
+                                type="button"
+                                data-toggle="dropdown"
                               />
-                              <ul class="dropdown-menu" id="navbardropdown">
-                              <li><a href="/profile" class="list-group-item list-group-item-action list-group-item-light">Profile</a></li>
-                              {/* <li><Link to={{pathname: `/home/inbox/a`,state: { modal: true }}}>Messages</Link></li> */}
-
-                              <li><a href="/home/messages" class="list-group-item list-group-item-action list-group-item-light">Messages</a></li>
-                              {/* <li><button type="button" class="list-group-item list-group-item-action list-group-item-light" data-toggle="modal" data-target="#DisplayAllMessages">Messages</button></li> */}
-                              <li><a href="#" class="list-group-item list-group-item-action list-group-item-light">Your Content</a></li>
-                              <li><a href="#" class="list-group-item list-group-item-action list-group-item-light">Stats</a></li>
-                              <li><a href="#" class="list-group-item list-group-item-action list-group-item-light">Logout</a></li>
-                              <li><a href="#" class="list-group-item list-group-item-action list-group-item-light">Delete Account</a></li>
+                              <ul className="dropdown-menu" id="navbardropdown">
+                                <li>
+                                  <a
+                                    href="/profile"
+                                    className="list-group-item list-group-item-action list-group-item-light"
+                                  >
+                                    Profile
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    href="/home/messages"
+                                    className="list-group-item list-group-item-action list-group-item-light"
+                                  >
+                                    Messages
+                                  </a>
+                                </li>
+                                {/* <li><button type="button" class="list-group-item list-group-item-action list-group-item-light" data-toggle="modal" data-target="#DisplayAllMessages">Messages</button></li> */}
+                                <li>
+                                  <a
+                                    href="#"
+                                    className="list-group-item list-group-item-action list-group-item-light"
+                                  >
+                                    Your Content
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    href="#"
+                                    className="list-group-item list-group-item-action list-group-item-light"
+                                  >
+                                    Stats
+                                  </a>
+                                </li>
+                                <li>
+                                  <Link
+                                    to="/login"
+                                    onClick={this.logOut.bind(this)}
+                                    className="list-group-item list-group-item-action list-group-item-light"
+                                  >
+                                    Logout
+                                  </Link>
+                                </li>
+                                <li>
+                                  <a
+                                    href="#"
+                                    className="list-group-item list-group-item-action list-group-item-light"
+                                  >
+                                    Delete Account
+                                  </a>
+                                </li>
                               </ul>
                             </span>
                           </div>

@@ -20,7 +20,7 @@ import ViewConversation1 from "../Message/ViewConversation1";
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       showPopup: false,
       addQuestion: "activeTab",
       shareLink: "inactiveTab",
@@ -35,7 +35,7 @@ class Home extends Component {
     console.log(e.target.name, e.target.value);
     this.setState({
       [e.target.name]: e.target.value
-    })
+    });
   }
   addQuestion=(e)=>{
     e.preventDefault();
@@ -100,19 +100,18 @@ class Home extends Component {
   }
   toggleClass=(e)=> {
     console.log("THIS IS THE CURRENT TAB NAME: ", e);
-    if(e==="addQuestionTab"){
+    if (e === "addQuestionTab") {
       console.log("addQuestion: activeTab");
-    this.setState({
-      addQuestion: "activeTab",
-      shareLink: "inactiveTab"
-    })
-  }
-    else if(e==="shareLinkTab"){
+      this.setState({
+        addQuestion: "activeTab",
+        shareLink: "inactiveTab"
+      });
+    } else if (e === "shareLinkTab") {
       console.log("shareLink: activeTab");
       this.setState({
         shareLink: "activeTab",
-        addQuestion:"inactiveTab"
-      })
+        addQuestion: "inactiveTab"
+      });
     }
     // this.state = { showPopup: false, showButtons: false };
     // let isVisible = false;
@@ -122,7 +121,7 @@ class Home extends Component {
   componentDidMount() {
     this.props.getQuestions();
     const token = localStorage.getItem("token");
-    console.log("TOKEN: ",token);
+    console.log("TOKEN: ", token);
     const data = { token: token };
     console.log("DATA: ", data);
     this.props.getProfileName(data);
@@ -146,19 +145,19 @@ class Home extends Component {
       showPopup: !this.state.showPopup
     });
   }
-  
+
   render() {
     //new
-    let checkprops =this.props;
+    let checkprops = this.props;
     console.log("checkprops: ", checkprops);
-    let name= "Laxmikant Pandhare";              //this.props.profile.profiledetails.name;
+    let name = "Laxmikant Pandhare"; //this.props.profile.profiledetails.name;
     console.log(name);
     const { questions } = this.props.questions;
 
     if (questions === null) return <div />;
 
-    const questionsList = questions.map(question => (
-      <Questions question={question} />
+    const questionsList = questions.map((question, index) => (
+      <Questions key={index} question={question} />
     ));
     //iterate over books to create a table row
 
@@ -233,76 +232,190 @@ class Home extends Component {
                 {/*below will get an pop up*/}
                 <button
                   // to="/dashboard"
-                  style={{ background: "none", border: "none", padding: "0", cursor: "pointer" }}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    padding: "0",
+                    cursor: "pointer"
+                  }}
                   onClick={this.togglePopup.bind(this)}
                   className="AskQuestionButton"
                   type="button"
-                  data-toggle="modal" data-target="#AskQuestionModal"
+                  data-toggle="modal"
+                  data-target="#AskQuestionModal"
                 >
                   What is your question or link ?
                 </button>
-                <div class="modal" id="AskQuestionModal" tabindex="-1" role="dialog" aria-labelledby="AskQuestionModalLabel" aria-hidden="true">
+                <div
+                  class="modal"
+                  id="AskQuestionModal"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="AskQuestionModalLabel"
+                  aria-hidden="true"
+                >
                   <div class="modal-dialog">
                     <div class="modal-content" style={{ width: "600px" }}>
                       <div id="AskQuestionModalHeader" class="modal-header">
-                        
                         {/* <h4 class="modal-title" id="AskQuestionModalLabel">Modal title</h4> */}
                         <h4 class="modal-title" id="AskQuestionModalLabel">
                          {/* <!-- Nav tabs --> */}
                         <ul class="nav nav-tabs">
                             <li role="presentation" className={this.state.addQuestion} onClick={this.toggleClass.bind(this, 'addQuestionTab')}><a href="#addQuestionTab" aria-controls="addQuestionTab" role="tab" data-toggle="tab">Add Question</a>
                             </li>
-                            <li role="presentation" className={this.state.shareLink} onClick={this.toggleClass.bind(this, 'shareLinkTab')}><a href="#shareLinkTab" aria-controls="shareLinkTab" role="tab" data-toggle="tab">Share Link</a>
+                            <li
+                              role="presentation"
+                              className={this.state.shareLink}
+                              onClick={this.toggleClass.bind(
+                                this,
+                                "shareLinkTab"
+                              )}
+                            >
+                              <a
+                                href="#shareLinkTab"
+                                aria-controls="shareLinkTab"
+                                role="tab"
+                                data-toggle="tab"
+                              >
+                                Share Link
+                              </a>
                             </li>
                           </ul>
-                          </h4>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        </h4>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <div id="AskQuestionModalBody" class="modal-body" style={{ height: "300px" }}>
+                      <div
+                        id="AskQuestionModalBody"
+                        class="modal-body"
+                        style={{ height: "300px" }}
+                      >
                         <div role="tabpanel">
                           {/* <!-- Tab panes --> */}
                           <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="addQuestionTab">
-                            {/* Add Question Tab */}
-                            <div>
-                            <img src={`http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png`} alt={name} style={{ width: "30px", height: "30px", borderRadius: "20px", marginRight:"5px" }} />
-                              {name} asked <span style={{display:"inline-block"}}>
-                                  <select class="form-control" id="identity" name="identity" onChange={this.onChangeHandler}
-                                  style={{backgroundColor:"#F3F3F3", color:"#666666", borderRadius: "20px", border:"none", height:"25px", width:"auto"}}>
+                            <div
+                              role="tabpanel"
+                              class="tab-pane active"
+                              id="addQuestionTab"
+                            >
+                              {/* Add Question Tab */}
+                              <div>
+                                <img
+                                  src={`http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png`}
+                                  alt={name}
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    borderRadius: "20px",
+                                    marginRight: "5px"
+                                  }}
+                                />
+                                {name} asked{" "}
+                                <span style={{ display: "inline-block" }}>
+                                  <select
+                                    class="form-control"
+                                    id="identity"
+                                    name="identity"
+                                    onChange={this.onChangeHandler}
+                                    style={{
+                                      backgroundColor: "#F3F3F3",
+                                      color: "#666666",
+                                      borderRadius: "20px",
+                                      border: "none",
+                                      height: "25px",
+                                      width: "auto"
+                                    }}
+                                  >
                                     <option value="public">Public</option>
                                     <option value="anonymous">Anonymous</option>
                                   </select>
                                 </span>
+                              </div>
+                              <div>
+                                <textarea
+                                  id="addquestiontextarea"
+                                  class="form-control"
+                                  name="newquestion"
+                                  onChange={this.onChangeHandler}
+                                  placeholder='Start your question with "What", "How", "Why", etc'
+                                />
+                                <hr />
+                                <input
+                                  class="form-control"
+                                  id="addquestioninput"
+                                  name="questionlink"
+                                  onChange={this.onChangeHandler}
+                                  placeholder="Optional: include a link that gives context"
+                                />
+                              </div>
+                              <div />
                             </div>
-                            <div>
-                            <textarea id="addquestiontextarea" class="form-control" name="newquestion" onChange={this.onChangeHandler}
-                            placeholder="Start your question with &quot;What&quot;, &quot;How&quot;, &quot;Why&quot;, etc">
-                            </textarea>
-                            <hr/>
-                            <input class="form-control" id="addquestioninput" name="questionlink" onChange={this.onChangeHandler}
-                            placeholder="Optional: include a link that gives context" >
-                            </input>
+                            <div
+                              role="tabpanel"
+                              class="tab-pane"
+                              id="shareLinkTab"
+                            >
+                              Share Link Tab
                             </div>
-                            <div></div>
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="shareLinkTab">Share Link Tab</div>
                           </div>
                         </div>
                       </div>
-                      <div id="AskQuestionModalFooter" class="modal-footer" style={{ height: "10px", marginBottom: "20px" }}>
-                        <button id="messagesClose" type="button" class="btn btn-default" data-dismiss="modal"
-                        style={{ marginTop: "50px", background: "transparent", color: "#949494", fontSize: "15px", fontWeight: "normal", lineHeight: "1.4" }}
-                        >Cancel</button>
-                        <button type="button" class="btn btn-primary save" data-dismiss="modal" data-toggle="modal" data-target="#SelectTopicsModal"
-                        style={{ borderRadius: "3px", fontWeight: "bold", background: "#3e78ad", color: "#fff", border: "1px solid #3a66ad" }}
-                        onClick={this.addQuestion}
-                        >Add Question</button>
+                      <div
+                        id="AskQuestionModalFooter"
+                        class="modal-footer"
+                        style={{ height: "10px", marginBottom: "20px" }}
+                      >
+                        <button
+                          id="messagesClose"
+                          type="button"
+                          class="btn btn-default"
+                          data-dismiss="modal"
+                          style={{
+                            marginTop: "50px",
+                            background: "transparent",
+                            color: "#949494",
+                            fontSize: "15px",
+                            fontWeight: "normal",
+                            lineHeight: "1.4"
+                          }}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-primary save"
+                          data-dismiss="modal"
+                          data-toggle="modal"
+                          data-target="#SelectTopicsModal"
+                          style={{
+                            borderRadius: "3px",
+                            fontWeight: "bold",
+                            background: "#3e78ad",
+                            color: "#fff",
+                            border: "1px solid #3a66ad"
+                          }}
+                          onClick={this.addQuestion}
+                        >
+                          Add Question
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="modal" id="SelectTopicsModal" tabindex="-1" role="dialog" aria-labelledby="SelectTopicsModalLabel" aria-hidden="true">
+                <div
+                  class="modal"
+                  id="SelectTopicsModal"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="SelectTopicsModalLabel"
+                  aria-hidden="true"
+                >
                   <div class="modal-dialog" role="document">
                     <div class="modal-content" style={{ width: "600px" }}>
                       <div class="modal-header">
@@ -317,11 +430,45 @@ class Home extends Component {
                         {renderTopicsCheckbox}
                         
                       </div>
-                      <div class="modal-footer" style={{ height: "10px", marginBottom: "20px" }}>
-                      <button id="messagesClose" type="button" class="btn btn-default" data-dismiss="modal"
-                        style={{ marginTop: "50px", background: "transparent", color: "#949494", fontSize: "15px", fontWeight: "normal", lineHeight: "1.4" }}
-                        >Cancel</button>
-                        <button onClick={this.mapTopicsToQuestion} type="button" type="submit" name="send" data-toggle="modal" data-target="#SelectTopicsModal" class="btn btn-primary" style={{ borderRadius: "3px", marginTop: "50px", fontWeight: "bold", background: "#3e78ad", color: "#fff", border: "1px solid #3a66ad" }}>Done</button>
+                      <div
+                        class="modal-footer"
+                        style={{ height: "10px", marginBottom: "20px" }}
+                      >
+                        <button
+                          id="messagesClose"
+                          type="button"
+                          class="btn btn-default"
+                          data-dismiss="modal"
+                          style={{
+                            marginTop: "50px",
+                            background: "transparent",
+                            color: "#949494",
+                            fontSize: "15px",
+                            fontWeight: "normal",
+                            lineHeight: "1.4"
+                          }}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          onClick={this.mapTopicsToQuestion}
+                          type="button"
+                          type="submit"
+                          name="send"
+                          data-toggle="modal"
+                          data-target="#SelectTopicsModal"
+                          class="btn btn-primary"
+                          style={{
+                            borderRadius: "3px",
+                            marginTop: "50px",
+                            fontWeight: "bold",
+                            background: "#3e78ad",
+                            color: "#fff",
+                            border: "1px solid #3a66ad"
+                          }}
+                        >
+                          Done
+                        </button>
                       </div>
                     </div>
                   </div>

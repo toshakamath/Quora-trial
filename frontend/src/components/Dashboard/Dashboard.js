@@ -37,15 +37,6 @@ class Dashboard extends Component {
 
   //Dummy componenet did mount
   render() {
-    // const { questions } = this.props.questions;
-
-    // if (questions === null)
-    //   return <div></div>
-
-    // const questionsList = questions.map(question => (
-    //   <Questions question={question} />
-    // ));
-
     return (
       <div>
         <Navbar />

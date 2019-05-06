@@ -1,12 +1,11 @@
 /* .cardstyle {
   width: 49rem;
 } */
-.card{
+.card {
   margin-bottom: 8px;
 }
 .card-body {
   padding-bottom: 4px;
-  
 }
 
 /* .test {
@@ -73,23 +72,23 @@
   background: lightblue;
 }
 
-#upvote {
+/* #upvote {
   width: 120px;
   border-radius: 20px;
   display: inline;
-  height:30px;
+  height: 30px;
   margin-top: -6px;
-}
+} */
 #upvotearrow {
   size: 4px;
   display: inline;
 }
 
-.bookmarkcheckbox{
-  float:right;
+.bookmarkcheckbox {
+  float: right;
 }
 
-#checkbox{
+#checkbox {
   display: inline;
 }
 
