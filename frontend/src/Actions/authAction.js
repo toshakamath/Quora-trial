@@ -49,7 +49,7 @@ export const loginUser = (logindata, history) => dispatch => {
 /***** Topics interests *****/
 export const topicsSelected = (topicsInterested, history) => dispatch => {
   topicsInterested.userId = user_id;
-  console.log("the data is topics ", topicsInterested);
+ // console.log("the data is topics ", topicsInterested);
   axios
     .post(window.base_url + "/topic", topicsInterested)
     .then(res => {
@@ -57,7 +57,7 @@ export const topicsSelected = (topicsInterested, history) => dispatch => {
       //    type: INTERESTS,
       //    payload: res.data
       //    });
-      console.log("this is the data from back end", res.data);
+    //  console.log("this is the data from back end", res.data);
       history.push("/login");
     })
     .catch(err => {
