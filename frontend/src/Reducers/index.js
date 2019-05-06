@@ -5,15 +5,14 @@ import authReducer from "./authReducer";
 import MessageReducer from "./MessageReducer";
 import questions from "./questionsReducer";
 import answers from "./answersReducer";
-import ProfileReducer from "./ProfileReducer";
+import profileReducer from "./profileReducer";
 
 export default combineReducers({
   auth: authReducer,
   errors: errors,
-  profile: ProfileReducer,
+  profile: profileReducer,
   form: formReducer,
   message: MessageReducer,
   questions: questions,
-  answers: answers,
-  profile: ProfileReducer
+  answers: answers
 });
