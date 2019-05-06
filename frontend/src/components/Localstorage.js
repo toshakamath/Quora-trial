@@ -4,6 +4,7 @@ module.exports.setData = data => {
   console.log("token:" + data);
 
   localStorage.setItem("token", data);
+  localStorage.setItem("auth", true);
   console.log("localstoragre:" + localStorage.getItem("token"));
   // localStorage.setItem("local_storage", receivedData);
   //localStorage.setItem("usertype", type);

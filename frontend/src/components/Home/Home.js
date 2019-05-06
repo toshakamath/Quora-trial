@@ -401,7 +401,7 @@ class Home extends Component {
                           />
                           <label
                             class="custom-control-label"
-                            for="topicscheck"
+                            labelfor="topicscheck"
                             name="topicname"
                             value="topicvalue"
                           >

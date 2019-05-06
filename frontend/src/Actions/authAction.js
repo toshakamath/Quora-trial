@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ERRORS, SIGNUP, LOGIN_USER, TOPICS } from "./types";
+import { ERRORS, SIGNUP, LOGIN_USER, SET_CURRENT_USER, TOPICS } from "./types";
 import jwt_decode from "jwt-decode";
 var setData = require("../components/Localstorage").setData;
 var getToken = require("../components/Localstorage").getToken;
@@ -36,6 +36,7 @@ export const loginUser = (logindata, history) => dispatch => {
       });
       /***** Setting up the data in localstorage *****/
       setData(res.data.token);
+
       history.push("/home");
     })
     .catch(err => {
@@ -70,8 +71,10 @@ export const topicsSelected = (topicsInterested, history) => dispatch => {
 
 /***** Render all Topics Selected *****/
 export const fetchTopics = () => dispatch => {
-  let token = getToken();
-  const decoded = jwt_decode(token);
+  // let token = getToken();
+  const Token = localStorage.getItem("token");
+  console.log(Token);
+  const decoded = jwt_decode(Token);
   axios
     .get(window.base_url + "/topic", {
       params: { email: decoded.email }

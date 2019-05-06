@@ -27,37 +27,37 @@ router.use(
 );
 
 router.post("/profileImage", requireAuth, (req, res) => {
-  singleUpload(req, res, function(err, some) {
-    if (err) {
-      return res.status(422).send({
-        errors: [{ title: "Image Upload Error", detail: err.message }]
-      });
-    }
-    console.log(some);
-    return res.status(200).send({ imageUrl: req.files.location });
-  });
-  // let uploadFile = req.files.file;
-  // const fileName = req.files.file.name;
-  // console.log("filename:" + req.files.file.name);
-  // console.log(req.body.assignmentName);
-  // console.log("reqparams:" + req.params.id);
-  // console.log(fileName);
-  // console.log(uploadFile);
-  // uploadFile.mv(`${__dirname}/../public/files/${fileName}`, function(err) {
+  // singleUpload(req, res, function(err, some) {
   //   if (err) {
-  //     return res.status(500).send(err);
+  //     return res.status(422).send({
+  //       errors: [{ title: "Image Upload Error", detail: err.message }]
+  //     });
   //   }
-  //   console.log("path:" + `${__dirname}/../public/files/${fileName}`);
+  //   console.log(some);
+  //   return res.status(200).send({ imageUrl: req.files.location });
   // });
+  let uploadFile = req.files.file;
+  const fileName = req.files.file.name;
+  console.log("filename:" + req.files.file.name);
+  console.log(req.body.assignmentName);
+  console.log("reqparams:" + req.params.id);
+  console.log(fileName);
+  console.log(uploadFile);
+  uploadFile.mv(`${__dirname}/../public/files/${fileName}`, function(err) {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    console.log("path:" + `${__dirname}/../public/files/${fileName}`);
+  });
 
-  // profileFields = {};
+  profileFields = {};
 
-  // profileFields.profileImage = fileName;
-  // Profile.findOneAndUpdate(
-  //   { user: req.user.id },
-  //   { $set: profileFields },
-  //   { new: true }
-  // ).then(profile => res.json(profile));
+  profileFields.profileImage = fileName;
+  Profile.findOneAndUpdate(
+    { user: req.user.id },
+    { $set: profileFields },
+    { new: true }
+  ).then(profile => res.json(profile));
 });
 router.get("/file", (req, res) => {
   Profile.findById(req.user.id)
@@ -181,6 +181,7 @@ router.get(
     const errors = {};
     Profile.findOne({ user: req.user.id })
       .populate("user", ["firstName", "lastName", "email"])
+      .populate("following")
       .then(profile => {
         if (!profile) {
           errors.noprofile = "There is no profile for this user";
@@ -535,16 +536,16 @@ router.post("/follow", requireAuth, (req, res) => {
   Profile.findOne({ user: req.body.userId })
     .then(profile => {
       const count = profile.followers
-        .map(follower => follower.user)
+        .map(follower => follower)
         .indexOf(req.user.id);
 
       if (count => 0) {
         res.status(300).json("already followed");
       } else {
-        const follower = {
-          user: req.user.id
-        };
-        profile.followers.unshift(follower);
+        // const follower = {
+        //   user: req.user.id
+        // };
+        profile.followers.unshift(req.user.id);
         profile
           .save()
           .then(profile => {
@@ -554,11 +555,11 @@ router.post("/follow", requireAuth, (req, res) => {
               .then(profile => {
                 console.log(profile);
                 console.log("found");
-                const following = {
-                  user: req.body.userId
-                };
+                // const following = {
+                //   user: req.body.userId
+                // };
 
-                profile.following.unshift(following);
+                profile.following.unshift(req.body.userId);
 
                 profile
                   .save()

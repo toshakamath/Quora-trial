@@ -17,7 +17,8 @@ class Navbar extends Component {
 
   logOut(e) {
     //e.prventDefault()
-    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("token");
+    localStorage.removeItem("auth");
     this.props.history.push("/login");
   }
 
@@ -48,7 +49,7 @@ class Navbar extends Component {
         <div className="container d-flex justify-content-between">
           <div className="headerLogo">
             <Link to="/home">
-              <span className="display-none"></span>
+              <span className="display-none" />
             </Link>
           </div>
           <div className="d-flex justify-content-between">
@@ -157,16 +158,60 @@ class Navbar extends Component {
                                 height="50px"
                                 width="50px"
                                 src={`https://qph.fs.quoracdn.net/main-thumb-70332528-50-qpikqkavbsrjbupveiqfitmnpiraxvsw.jpeg`}
-                                type="button" data-toggle="dropdown"
+                                type="button"
+                                data-toggle="dropdown"
                               />
-                              <ul class="dropdown-menu" id="navbardropdown">
-                              <li><a href="/profile" class="list-group-item list-group-item-action list-group-item-light">Profile</a></li>
-                              <li><a href="/home/inbox" class="list-group-item list-group-item-action list-group-item-light">Messages</a></li>
-                              {/* <li><button type="button" class="list-group-item list-group-item-action list-group-item-light" data-toggle="modal" data-target="#DisplayAllMessages">Messages</button></li> */}
-                              <li><a href="#" class="list-group-item list-group-item-action list-group-item-light">Your Content</a></li>
-                              <li><a href="#" class="list-group-item list-group-item-action list-group-item-light">Stats</a></li>
-                              <li><a href="#" class="list-group-item list-group-item-action list-group-item-light">Logout</a></li>
-                              <li><a href="#" class="list-group-item list-group-item-action list-group-item-light">Delete Account</a></li>
+                              <ul className="dropdown-menu" id="navbardropdown">
+                                <li>
+                                  <a
+                                    href="/profile"
+                                    className="list-group-item list-group-item-action list-group-item-light"
+                                  >
+                                    Profile
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    href="/home/inbox"
+                                    className="list-group-item list-group-item-action list-group-item-light"
+                                  >
+                                    Messages
+                                  </a>
+                                </li>
+                                {/* <li><button type="button" class="list-group-item list-group-item-action list-group-item-light" data-toggle="modal" data-target="#DisplayAllMessages">Messages</button></li> */}
+                                <li>
+                                  <a
+                                    href="#"
+                                    className="list-group-item list-group-item-action list-group-item-light"
+                                  >
+                                    Your Content
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    href="#"
+                                    className="list-group-item list-group-item-action list-group-item-light"
+                                  >
+                                    Stats
+                                  </a>
+                                </li>
+                                <li>
+                                  <Link
+                                    to="/login"
+                                    onClick={this.logOut.bind(this)}
+                                    className="list-group-item list-group-item-action list-group-item-light"
+                                  >
+                                    Logout
+                                  </Link>
+                                </li>
+                                <li>
+                                  <a
+                                    href="#"
+                                    className="list-group-item list-group-item-action list-group-item-light"
+                                  >
+                                    Delete Account
+                                  </a>
+                                </li>
                               </ul>
                             </span>
                           </div>

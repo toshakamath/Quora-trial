@@ -13,7 +13,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import "./App.css";
 import "react-router-modal/css/react-router-modal.css";
 import { ModalContainer, ModalRoute, Modal } from "react-router-modal";
-import { setCurrentUser, logoutUser } from "./Actions/authentication";
+import { setCurrentUser, logoutUser } from "./Actions/authAction";
 
 class App extends Component {
   render() {

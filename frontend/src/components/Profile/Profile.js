@@ -12,9 +12,16 @@ import yourQuestions from "../yourQuestions/yourQuestions";
 import ProfileSidebar from "../ProfileSidebar/ProfileSidebar";
 import { getProfile } from "../../Actions/profileAction";
 import ReactQuill, { Quill, Mixin } from "react-quill";
+
 import "react-quill/dist/quill.snow.css";
 import "../../App.css";
 import "./Profile.css";
+import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
+import ReactHtmlParser, {
+  processNodes,
+  convertNodeToElement,
+  htmlparser2
+} from "react-html-parser";
 
 class Profile extends Component {
   constructor(props) {
@@ -25,7 +32,11 @@ class Profile extends Component {
       follower: "",
       bio: "",
       file: "",
-      profileImage: ""
+      profileImage: "",
+      education: [],
+      experience: [],
+      text: "",
+      followercount: ""
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -91,6 +102,10 @@ class Profile extends Component {
 
   componentDidMount() {
     const Token = localStorage.getItem("token");
+    if (!localStorage.getItem("auth")) {
+      console.log("true");
+      this.props.history.push("/login");
+    }
     console.log(Token);
     axios
       .get(window.base_url + "/profile", {
@@ -101,7 +116,10 @@ class Profile extends Component {
           profileData: response.data,
           name: response.data.user.firstName,
           bio: response.data.bio,
-          profileImage: response.data.profileImage
+          profileImage: response.data.profileImage,
+          education: [...response.data.education],
+          experience: [...response.data.experience],
+          followercount: response.data.followers.length
         });
       });
   }
@@ -132,9 +150,39 @@ class Profile extends Component {
       })
       .then(response => {
         console.log(response.data.imageUrl);
+        this.setState({
+          profileImage: response.data.profileImage
+        });
       });
   }
   render() {
+    // console.log(this.state.name);
+    // let deltaOps = this.state.name;
+    // console.log(deltaOps);
+    // var htmlText = QuillDeltaToHtmlConverter(deltaOps, {}).convert();
+    const education = [];
+    Object.assign(education, this.state.education);
+    const Education = education.map((education, index) => {
+      return (
+        <div key={index}>
+          <Link to="#">
+            <i className="fas fa-graduation-cap" /> {education.school}
+          </Link>
+        </div>
+      );
+    });
+
+    const experience = [];
+    Object.assign(experience, this.state.experience);
+    const Experience = experience.map((experience, index) => {
+      return (
+        <div key={index}>
+          <Link to="#">
+            <i className="fas fa-briefcase" /> {experience.company}
+          </Link>
+        </div>
+      );
+    });
     return (
       <div className="container profileWrapper">
         <div className="row">
@@ -144,18 +192,65 @@ class Profile extends Component {
                 <div className="col-12 profileBoxWrapper">
                   <div className="row">
                     <div className="col-2 leftWrapper profileImageWrapper">
-                      <form
-                        onSubmit={this.onSubmit}
-                        encType="multipart/form-data"
+                      <div
+                        className="modal"
+                        id="profileImageChange"
+                        role="dialog"
+                        aria-labelledby="DisplayAllMessagesLabel"
+                        aria-hidden="true"
                       >
-                        <input
-                          className="form-control"
-                          type="file"
-                          onChange={this.fileHandler}
-                          required
-                        />
-                        <button type="submit">Send</button>
-                      </form>
+                        <div className="modal-dialog" role="document">
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h5
+                                className="modal-title"
+                                id="DisplayAllMessagesLabel"
+                                style={{
+                                  fontSize: "19px",
+                                  fontWeight: "bold",
+                                  color: "#333",
+                                  borderRadius: "4px 4px 0 0"
+                                }}
+                              >
+                                <b>Edit profile photo</b>
+                              </h5>
+                              <button
+                                type="button"
+                                className="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div className="modal-body">
+                              <div>
+                                <form
+                                  onSubmit={this.onSubmit}
+                                  encType="multipart/form-data"
+                                >
+                                  <input
+                                    className="form-control"
+                                    type="file"
+                                    onChange={this.fileHandler}
+                                    required
+                                  />
+                                  <button
+                                    type="submit"
+                                    className="btn btn-primary"
+                                  >
+                                    Send
+                                  </button>
+                                </form>
+                              </div>
+                            </div>
+                            <div
+                              className="modal-footer"
+                              style={{ height: "20px", marginBottom: "50px" }}
+                            />
+                          </div>
+                        </div>
+                      </div>
                       <img
                         src={`${window.base_url}/files/${
                           this.state.profileImage
@@ -166,7 +261,11 @@ class Profile extends Component {
                         width="100"
                       />
                       <span>
-                        <button className="edit-button">
+                        <button
+                          className="edit-button"
+                          data-toggle="modal"
+                          data-target="#profileImageChange"
+                        >
                           Edit Profile photo
                         </button>
                       </span>
@@ -174,7 +273,8 @@ class Profile extends Component {
                     <div className="col-10 rightWrapper profileContentWrapper">
                       <div className="col-12 nameWrappeer">
                         <span id="nameField">
-                          {this.state.name}{" "}
+                          {this.state.name}
+                          {/* {ReactHtmlParser(htmlText)} */}
                           <span className="smallFont">
                             {" "}
                             <Link to="#" onClick={this.editHandler}>
@@ -244,6 +344,9 @@ class Profile extends Component {
                           </div>
                         </form>
                       </div>
+                      <div className="col-12 followWrapper">
+                        {this.state.followercount} followers
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -284,17 +387,98 @@ class Profile extends Component {
               <div className="col-12 credentialWrapper profileSidebar">
                 <h3 className="credflex">
                   Credentials & Highlights{" "}
-                  <Link to="#xyz">
+                  <Link
+                    to="#xyz"
+                    data-toggle="modal"
+                    data-target="#Displaycred"
+                  >
                     {" "}
                     <i className="fas fa-pencil-alt" />{" "}
                   </Link>
+                  <div
+                    className="modal"
+                    id="Displaycred"
+                    tabIndex="-1"
+                    role="dialog"
+                    aria-labelledby="DisplayAllMessagesLabel"
+                    aria-hidden="true"
+                  >
+                    <div className="modal-dialog" role="document">
+                      <div className="modal-content" style={{ width: "600px" }}>
+                        <div className="modal-header">
+                          <h5
+                            className="modal-title"
+                            id="DisplayAllMessagesLabel"
+                            style={{
+                              fontSize: "19px",
+                              fontWeight: "bold",
+                              color: "#333",
+                              borderRadius: "4px 4px 0 0"
+                            }}
+                          >
+                            <b>Messages</b>
+                          </h5>
+                          <button
+                            type="button"
+                            className="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div className="modal-body" style={{ height: "500px" }}>
+                          <div />
+                        </div>
+                        <div
+                          className="modal-footer"
+                          style={{ height: "20px", marginBottom: "50px" }}
+                        >
+                          <button
+                            type="button"
+                            id="messagesClose"
+                            style={{
+                              marginTop: "80px",
+                              background: "transparent",
+                              color: "#949494",
+                              fontSize: "15px",
+                              fontWeight: "normal",
+                              lineHeight: "1.4"
+                            }}
+                            className="btn"
+                            data-dismiss="modal"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-primary"
+                            data-toggle="modal"
+                            data-target="#CreateMessage"
+                            style={{
+                              borderRadius: "3px",
+                              fontWeight: "bold",
+                              background: "#3e78ad",
+                              color: "#fff",
+                              border: "1px solid #3a66ad"
+                            }}
+                          >
+                            New Message
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </h3>
+
+                {Experience}
+                {Education}
               </div>
               <div className="col-12 topicWrapper profileSidebar">
                 <h3 className="credflex">
                   Konws About{" "}
                   <Link to="#abc">
-                    <i class="fas fa-pencil-alt" />
+                    <i className="fas fa-pencil-alt" />
                   </Link>
                 </h3>
               </div>
@@ -305,6 +489,12 @@ class Profile extends Component {
     );
   }
 }
+Profile.propTypes = {
+  //login: PropTypes.func.isRequired,
+  //profile: PropTypes.func.isRequired,
+  //auth: PropTypes.object.isRequired
+  //errors: PropTypes.object.isRequired
+};
 const mapStateToProps = state => ({
   auth: state.auth
 });

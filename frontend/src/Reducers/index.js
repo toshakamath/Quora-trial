@@ -9,7 +9,7 @@ import ProfileReducer from "./ProfileReducer";
 export default combineReducers({
   auth: authReducer,
   errors: errors,
-  profile: profileReducer,
+  profile: ProfileReducer,
   form: formReducer,
   message: MessageReducer,
   questions: questions,

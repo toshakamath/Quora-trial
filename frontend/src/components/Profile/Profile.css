@@ -49,9 +49,6 @@
   height: 1000px;
 }
 
-.show {
-  left: 100px;
-}
 .log {
   text-align: center;
   background-color: rgb(0, 85, 162);
@@ -142,4 +139,9 @@
   width: 100px;
 
   background-size: 100%;
+}
+
+.followWrapper,
+.bioWrapper {
+  padding-top: 15px;
 }
