@@ -9,15 +9,9 @@ var Question = require("../../Kafka-Backend/Models/questionsDetail");
 router.get("/", (req, res) => {
   const errors = {};
   console.log(req.query);
-//  const answersFields = {};
-
-  //answersFields.answer = "abc";
-  //answersFields._id = "5cbfb135f2a460f63f4fee8c";
-  //answersFields.isAnnonymous = "true";
 
   console.log("fields ans", answersFields);
-  //(req.query.answer)
-  //{ _id: "5cbfaae81aae68f35807012a" }
+
   Answer.find(answersFields)
 
     .then(answers => {
