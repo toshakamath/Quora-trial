@@ -1,5 +1,7 @@
 import axios from "axios";
-import { ERRORS, SIGNUP, LOGIN_USER } from "./types";
+import { ERRORS, SIGNUP, LOGIN_USER, SET_CURRENT_USER } from "./types";
+import jwt_decode from "jwt-decode";
+
 var setData = require("../components/Localstorage").setData;
 
 export const signupUser = (signupdata, history) => dispatch => {
@@ -45,12 +47,20 @@ export const loginUser = (logindata, history) => dispatch => {
     .post(window.base_url + "/login", logindata)
     .then(res => {
       console.log("inside login back from backedn", res.data);
-      dispatch({
-        type: LOGIN_USER,
-        payload: res.data
-      });
+      // dispatch({
+      //   type: LOGIN_USER,
+      //   payload: res.data
+      // });
       /***** Setting up the data in localstorage *****/
+      const decoded = jwt_decode(res.data.token);
+      console.log(decoded);
+      dispatch({
+        type: SET_CURRENT_USER,
+        payload: decoded
+      });
+      // dispatch(setCurrentUser(decoded));
       console.log("response token" + res.data.token);
+      localStorage.setItem("token", res.data.token);
       setData(res.data.token);
       history.push("/home");
     })
@@ -60,4 +70,10 @@ export const loginUser = (logindata, history) => dispatch => {
         payload: err.response.data
       });
     });
+};
+export const setCurrentUser = decoded => {
+  return {
+    type: SET_CURRENT_USER,
+    payload: decoded
+  };
 };

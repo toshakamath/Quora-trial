@@ -2,16 +2,12 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
 import "./signup.css";
-import axios from "axios";
+
 import { connect } from "react-redux";
 var signupUser = require("../../Actions/authentication").signupUser;
 
 //Define a Login Component
 class Signup extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
     <div>
       <label>{label}</label>

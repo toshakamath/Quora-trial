@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import "./Navbar.css";
 class Navbar extends Component {
   logOut(e) {
@@ -105,7 +106,10 @@ class Navbar extends Component {
                 <span>
                   <div className="hover-menu ">
                     <div className="hover-menu-contents">
-                      <Link to="#profileImage" className="navItemLink">
+                      <Link
+                        to={`/profile/${this.props.auth.user.id}`}
+                        className="navItemLink"
+                      >
                         <span className="expanded">
                           <span className="photoWrapper">
                             <div id="#123">
@@ -137,4 +141,10 @@ class Navbar extends Component {
     );
   }
 }
-export default withRouter(Navbar);
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+  {}
+)(withRouter(Navbar));

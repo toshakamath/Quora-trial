@@ -42,7 +42,7 @@ const questions = ({ question }) => {
     <div className="card cardstyle">
       {/* <img className="card-img-top" src="..." alt="Card image cap" /> */}
       <div className="card-body">
-        <h5 className="card-title">Topic: {question.topic} </h5>
+        <h15 className="card-title">Topic: {question.topic} </h15>
 
         <a href={"#question" + question._id} className="questions">
           <h5 className="card-title">{question.question}</h5>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
@@ -15,11 +15,10 @@ import ReactQuill, { Quill, Mixin } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../../App.css";
 import "./Profile.css";
-import Axios from "axios";
 
 class Profile extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       profileData: "",
       name: "",
@@ -116,7 +115,7 @@ class Profile extends Component {
   }
   logOut(e) {
     //e.prventDefault()
-    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("token");
 
     this.props.history.push("login");
   }
@@ -132,7 +131,7 @@ class Profile extends Component {
         headers: { Authorization: Token }
       })
       .then(response => {
-        console.log(response.data);
+        console.log(response.data.imageUrl);
       });
   }
   render() {
@@ -167,7 +166,7 @@ class Profile extends Component {
                         width="100"
                       />
                       <span>
-                        <button className="edit-button" role="submit">
+                        <button className="edit-button">
                           Edit Profile photo
                         </button>
                       </span>
@@ -209,7 +208,7 @@ class Profile extends Component {
                       </div>
                       <div className="col-12 bioWrapper">
                         <span id="bioField">
-                          {this.state.bio}{" "}
+                          <div>{this.state.bio} </div>
                           <span className="smallFont">
                             {" "}
                             <Link to="#" onClick={this.bioEditHandler}>
@@ -306,8 +305,13 @@ class Profile extends Component {
     );
   }
 }
-
-export default connect()(withRouter(Profile));
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+  {}
+)(withRouter(Profile));
 
 //let user = !this.props.profile.profile || this.props.profile.profile.user;
 
@@ -319,4 +323,4 @@ export default connect()(withRouter(Profile));
 // const mapStateToProps = state => ({
 //   auth: state.auth,
 //   profile: state.profile
-// });3
+// });

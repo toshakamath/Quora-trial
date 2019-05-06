@@ -66,6 +66,7 @@ class Interests extends Component {
             className="icon"
             style={{ width: "105px", height: "105px", marginTop: "0px" }}
             src={src}
+            alt="topic"
           />
           <span className="topic">{value}</span>
         </label>
