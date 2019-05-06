@@ -7,7 +7,7 @@ import Signup from "./components/Signup/Signup";
 import Interests from "./components/Interests/Interests";
 import Login from "./components/Login/Login";
 import Dashboard from "./components/Dashboard/Dashboard";
-import Graph from "./components/Graphs/Graph";
+
 
 import "./App.css";
 import "react-router-modal/css/react-router-modal.css";
@@ -35,8 +35,9 @@ class App extends Component {
                 path="/interests"
                 render={props => <Interests {...props} />}
               />
-              <Route exact path="/" component={Dashboard} />
-              <Route exact path="/Graphs" component={Graph} />
+              
+              <Route path="/" component={Dashboard} />
+              
             </Switch>
           </div>
         </Router>

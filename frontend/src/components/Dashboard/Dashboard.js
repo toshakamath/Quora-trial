@@ -13,6 +13,7 @@ import ConversationsList from "../Message/ConversationsList";
 import CreateMessage from "../Message/CreateMessage";
 import Content from "../Content/Content";
 import Sample from "../Sample";
+import Graph from "../Graphs/Graph"
 // import Questions from "../Questions/questions";
 // import { getQuestions } from "../../Actions/questionsAction";
 // import PropTypes from "prop-types";
@@ -54,6 +55,7 @@ class Dashboard extends Component {
           {
             <Switch>
             <Route path="/search" component={Search}/>
+            <Route path="/Graphs" component={Graph} />
             {/* <Route path="/home/inbox/a" component={Sample} />
               <Route path="/home/inbox/createmessage" component={CreateMessage} />
               <Route exact path="/profile" component={Profile} />
