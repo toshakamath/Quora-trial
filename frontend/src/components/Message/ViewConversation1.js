@@ -40,7 +40,7 @@ class ViewConversation1 extends Component {
     console.log("this.props.messagedetails.receiver", this.props);  //{message: "this is a new message"}
     e.preventDefault();
     localStorage.setItem("email", "lucky.singh@gmail.com");
-    const email = JSON.parse(localStorage.getItem("email"));
+    const email = localStorage.getItem("email");
     console.log(email);
     console.log("this.props.message: ", this.props.message);
     let sender = "", receiver = "";

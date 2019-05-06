@@ -6,7 +6,7 @@ const app = express();
 const passport = require("passport");
 const port = process.env.PORT || 3001;
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //import Routes
@@ -26,13 +26,13 @@ const multer = require("multer");
 const path = require("path");
 
 //use cors to allow cross origin resource sharing
-app.use(function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Credentials", "true");
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); //A response that tells the browser to allow requesting code from the origin http://localhost:3000 to access a resource
+  res.setHeader("Access-Control-Allow-Credentials", "true"); //to allow cookies
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET,HEAD,OPTIONS,POST,PUT,DELETE"
   );
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
@@ -54,7 +54,6 @@ require("./config/passport")(passport);
 // app.use("/inbox/displaymessages", message.displayMessages);
 // app.use("/inbox/reply", message.replyMessages);
 
-app.use("/inbox", message);
 
 //Storing documents/Images
 const storage = multer.diskStorage({
@@ -77,6 +76,7 @@ app.post("/uploadprofile", upload.array("photos", 5), (req, res) => {
 });
 
 //use Routes
+app.use("/inbox", message);
 app.use("/login", login);
 app.use("/signup", signup);
 app.use("/topic", topic);

@@ -2,9 +2,9 @@ var jwt = require("jsonwebtoken");
 
 module.exports.setData = tokendata => {
   //Storing token in the local storage
-  localStorage.setItem("token", JSON.stringify(tokendata));
+  localStorage.setItem("token", tokendata);
 };
 
 module.exports.getToken = () => {
-  return JSON.parse(localStorage.getItem("token"));
+  return localStorage.getItem("token");
 };

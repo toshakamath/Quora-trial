@@ -17,7 +17,6 @@ import CreateMessage1 from "../Message/CreateMessage1";
 import DisplayAllMessages1 from "../Message/DisplayAllMessages1";
 import ViewConversation1 from "../Message/ViewConversation1";
 
-
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -25,33 +24,79 @@ class Home extends Component {
       showPopup: false,
       addQuestion: "activeTab",
       shareLink: "inactiveTab",
-      topics:[],
+      topicsSelected:[],
+      identity:"public",
+      newquestion:"",
+      questionlink:""
       // checked: true
      };
   }
-  onChangeHandler(e){   //identity, newquestion, questionlink
-    e.preventDefault();
+  onChangeHandler=(e)=>{   //identity, newquestion, questionlink
+    console.log(e.target.name, e.target.value);
     this.setState({
       [e.target.name]: e.target.value
     })
   }
-  addQuestion(e){
+  addQuestion=(e)=>{
     e.preventDefault();
     //get question name from props here and use in next modal
     // let question_name= this.props.
   }
-  mapTopicsToQuestion(e){
+  mapTopicsToQuestion=(e)=>{
     e.preventDefault();
+    let isAnonymous=false;
+    if(this.state.identity=="public")
+      isAnonymous=false;
+    else if(this.state.identity=="anonymous")
+      isAnonymous=true;
+    
+    let data={
+      token: localStorage.getItem("token"),
+      newquestion:this.state.newquestion,
+      questionlink: this.state.questionlink,
+      isAnonymous: isAnonymous,
+      topicsSelected: this.state.topicsSelected
+    }
+    console.log("Data to be sent to backend: ",data);
+    axios.defaults.withCredentials = true;
+        axios
+        .post(window.base_url+`/question`)
+          .then((response) => {
+            console.log("Status Code : ", response.status);
+            console.log("Data from node : ", response.data);
+          }, (err)=>{
+            console.log("ERROR : ", err);
+          });
+  }
 
+// topicsSelected 5ccca5121c9d4400009dbb95 true
+// topicsSelected 5ccca5121c9d4400009dbb95 false
+// topicsSelected 5cce04141c9d44000084d856 true
+// topicsSelected 5cce04141c9d44000084d856 false
+// topicsSelected 5ccca5121c9d4400009dbb95 true
+// topicsSelected 5cce04141c9d44000084d856 true
+
+// this.setState({ myArray: [...this.state.myArray, 'new value'] }) //simple value
+// this.setState({ myArray: [...this.state.myArray, ...[1,2,3] ] }) 
+
+  onChangeHandler1=(e)=>{    //topicscheck
+    console.log("SOMETHINGGGGG ",e.target.name, e.target.value, e.target.checked);
+    if(e.target.checked===true){
+    this.setState({
+      topicsSelected: this.state.topicsSelected.concat(e.target.value)
+    });
   }
-  onChangeHandler1(e){    //topicscheck
-   // e.preventDefault();
-    console.log("E: ",e.target.value);
-    // this.setState({
-    //   [e.target.name]: e.target.checked
-    // });
+    else if(e.target.checked===false){
+      let index=this.state.topicsSelected.indexOf(e.target.value);
+      console.log("INDEX: ",index);
+      this.state.topicsSelected.splice(index, 1);
+      this.setState({
+            topicsSelected: this.state.topicsSelected
+          });
+    }
+    console.log("topicsSelected Array: ", this.state.topicsSelected);
   }
-  toggleClass(e) {
+  toggleClass=(e)=> {
     console.log("THIS IS THE CURRENT TAB NAME: ", e);
     if(e==="addQuestionTab"){
       console.log("addQuestion: activeTab");
@@ -118,13 +163,14 @@ class Home extends Component {
     console.log("in course:" + this.props.match.params.Id);
 
     console.log("this.state.topics: ", this.state.topics);
+    console.log("this.state.topicsSelected: ", this.state.topicsSelected);
     //this.state.topics[i].topicName
     //this.state.topics[i]._id
 
     let renderTopicsCheckbox = (this.state.topics||[]).map((t)=>{
       return(
         <div class="custom-control">
-          <input type="checkbox" class="custom-control-input" name="samename" value={t._id} id={t._id}   onChange={this.onChangeHandler1}/>
+          <input type="checkbox" class="custom-control-input" name="topicsSelected" value={t._id} id={t._id} onChange={this.onChangeHandler1}/>
           <label class="custom-control-label" for={t._id}>{t.topicName}</label>
         </div>
       )
@@ -202,16 +248,6 @@ class Home extends Component {
                         <h4 class="modal-title" id="AskQuestionModalLabel">
                          {/* <!-- Nav tabs --> */}
                         <ul class="nav nav-tabs">
-                            {/* <TabLabel
-                              onClick={this.toggleClass.bind(this, 'addQuestionTab')}
-                              active={activeTab === 'addQuestionTab'}
-                              text="Add Question"
-                            />
-                            <TabLabel
-                              onClick={this.toggleClass.bind(this, 'shareLinkTab')}
-                              active={activeTab === 'shareLinkTab'}
-                              text="Share Link"
-                            /> */}
                             <li role="presentation" className={this.state.addQuestion} onClick={this.toggleClass.bind(this, 'addQuestionTab')}><a href="#addQuestionTab" aria-controls="addQuestionTab" role="tab" data-toggle="tab">Add Question</a>
                             </li>
                             <li role="presentation" className={this.state.shareLink} onClick={this.toggleClass.bind(this, 'shareLinkTab')}><a href="#shareLinkTab" aria-controls="shareLinkTab" role="tab" data-toggle="tab">Share Link</a>
@@ -268,10 +304,7 @@ class Home extends Component {
                   <div class="modal-dialog" role="document">
                     <div class="modal-content" style={{ width: "600px" }}>
                       <div class="modal-header">
-                        <h5 class="modal-title" id="SelectTopicsModalLabel" style={{ fontSize: "19px", fontWeight: "bold", color: "#333"}}>Is this a static or dynamic question?</h5>
-                        <a href="#">
-                          <span style={{ float: "right", marginTop: "12px", color: "#e2e2e2" }} class="glyphicon glyphicon-option-horizontal"></span>
-                        </a>
+                        <h5 class="modal-title" id="SelectTopicsModalLabel" style={{ fontSize: "19px", fontWeight: "bold", color: "#333"}}>{this.state.newquestion}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>

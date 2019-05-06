@@ -19,9 +19,11 @@ router.post("/", requireAuth, function(req, res) {
       } else {
         var question = new Question({
           _id: new mongoose.Types.ObjectId(),
-          question: req.body.question,
+          question: req.body.newquestion,
+          questionlink: req.body.questionlink,
+          isAnonymous: req.body.isAnonymous,
           user: req.user.id,
-          topic: req.body.topic,
+          topic: req.body.topicsSelected,
           postDate: new Date()
         });
         console.log(question);
