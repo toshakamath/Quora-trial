@@ -5,6 +5,8 @@ import authReducer from "./authReducer";
 import MessageReducer from "./MessageReducer";
 import questions from "./questionsReducer";
 import ProfileReducer from "./ProfileReducer";
+import contentReducer from "./contentReducer";
+import contentAnsweredReducer from "./contentAnsweredReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -12,6 +14,7 @@ export default combineReducers({
   form: formReducer,
   message: MessageReducer,
   questions: questions,
-  profile: ProfileReducer
-  
+  profile: ProfileReducer,
+  content: contentReducer,
+  contentAnswered: contentAnsweredReducer
 });

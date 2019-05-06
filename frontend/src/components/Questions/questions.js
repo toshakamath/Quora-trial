@@ -4,11 +4,10 @@ import { Link, withRouter } from "react-router-dom";
 import "./questions.css";
 
 const questions = ({ question }) => {
-  //let answer = {}
 
   var max = -Infinity;
   var index = -1;
-  question.answers.forEach(function(a, i) {
+  question.answers.forEach(function (a, i) {
     if (a.upVote.length > max) {
       max = a.length;
       index = i;
@@ -16,26 +15,29 @@ const questions = ({ question }) => {
   });
 
   // diff is: Thu Jul 05 1973 04:00:00 GMT+0300 (EEST)
-
-  const maxUpVotedAnswer = question.answers[index].answer;
-  const answerDate = question.answers[index].answerDate;
+  let maxUpVotedAnswer = "";
   var displayAsweredTime = "";
-  var answeredDate = new Date(answerDate);
-  var currentDate = new Date();
-  var diff = new Date(currentDate.getTime() - answeredDate.getTime());
 
-  if (diff.getUTCFullYear() - 1970 > 0) {
-    displayAsweredTime = diff.getUTCFullYear() - 1970 + " years ago";
-  } else if (diff.getUTCMonth() > 0) {
-    displayAsweredTime = diff.getUTCMonth() + " months ago";
-  } else if (diff.getUTCDate() - 1 > 0) {
-    displayAsweredTime = diff.getUTCDate() - 1 + " days ago";
-  } else if (diff.getUTCHours() > 0) {
-    displayAsweredTime = diff.getUTCHours() + " hours ago";
-  } else if (diff.getMinutes() - 1 > 0) {
-    displayAsweredTime = diff.getMinutes() + " minutes ago";
-  } else if (diff.getUTCSeconds() - 1 > 0) {
-    displayAsweredTime = diff.getUTCSeconds() + " seconds ago";
+  if (index > -1) {
+    maxUpVotedAnswer = question.answers[index].answer;
+    const answerDate = question.answers[index].answerDate;
+    var answeredDate = new Date(answerDate);
+    var currentDate = new Date();
+    var diff = new Date(currentDate.getTime() - answeredDate.getTime());
+
+    if (diff.getUTCFullYear() - 1970 > 0) {
+      displayAsweredTime = diff.getUTCFullYear() - 1970 + " years ago";
+    } else if (diff.getUTCMonth() > 0) {
+      displayAsweredTime = diff.getUTCMonth() + " months ago";
+    } else if (diff.getUTCDate() - 1 > 0) {
+      displayAsweredTime = diff.getUTCDate() - 1 + " days ago";
+    } else if (diff.getUTCHours() > 0) {
+      displayAsweredTime = diff.getUTCHours() + " hours ago";
+    } else if (diff.getMinutes() - 1 > 0) {
+      displayAsweredTime = diff.getMinutes() + " minutes ago";
+    } else if (diff.getUTCSeconds() - 1 > 0) {
+      displayAsweredTime = diff.getUTCSeconds() + " seconds ago";
+    }
   }
 
   return (
@@ -50,52 +52,56 @@ const questions = ({ question }) => {
           </h5>
         </a>
 
-        <h6 className="userInfo card-subtitle mb-2 text-muted">User Info</h6>
-        <h6 className="userInfo card-subtitle mb-2 text-muted">
-          Answered: {displayAsweredTime}
-        </h6>
-        <a
-          className="answers card-link collapsed"
-          data-toggle="collapse"
-          href={"#" + question._id}
-          aria-expanded="false"
-          aria-controls={question._id}
-        >
-          <div id="summary">
-            <p className="card-text collapse" id={question._id}>
-              {maxUpVotedAnswer}
-              <a
-                className="collapsed"
-                data-toggle="collapse"
-                href={"#" + question._id}
-                aria-expanded="false"
-                aria-controls={question._id}
-              />
-              <div className="buttonbar">
-                <button className="btn btn-light" id="upvote">
-                  <i
-                    className="fa fa-arrow-up"
-                    aria-hidden="true"
-                    id="upvotearrow"
-                  />
-                  &nbsp; Upvote ()
-                </button>
-                <div className="bookmarkcheckbox">
-                  <input
-                    type="checkbox"
-                    id="checkbox"
-                    name="cc"
-                    className="bookmarkcb"
-                  />
-                  <label htmlFor="checkbox" id="labelbookmark">
-                    Bookmark
-                  </label>
-                </div>
-              </div>
-            </p>
-          </div>
-        </a>
+        {maxUpVotedAnswer === "" ?
+          <div>
+            < h6 className="userInfo card-subtitle mb-2 text-muted">User Info</h6>
 
+
+            <h6 className="userInfo card-subtitle mb-2 text-muted">
+              Answered: {displayAsweredTime}
+            </h6>
+            <a
+              className="answers card-link collapsed"
+              data-toggle="collapse"
+              href={"#" + question._id}
+              aria-expanded="false"
+              aria-controls={question._id}
+            >
+              <div id="summary">
+                <p className="card-text collapse" id={question._id}>
+                  {maxUpVotedAnswer}
+                  <a
+                    className="collapsed"
+                    data-toggle="collapse"
+                    href={"#" + question._id}
+                    aria-expanded="false"
+                    aria-controls={question._id}
+                  />
+                  <div className="buttonbar">
+                    <button className="btn btn-light" id="upvote">
+                      <i
+                        className="fa fa-arrow-up"
+                        aria-hidden="true"
+                        id="upvotearrow"
+                      />
+                      &nbsp; Upvote ()
+                </button>
+                    <div className="bookmarkcheckbox">
+                      <input
+                        type="checkbox"
+                        id="checkbox"
+                        name="cc"
+                        className="bookmarkcb"
+                      />
+                      <label htmlFor="checkbox" id="labelbookmark">
+                        Bookmark
+                  </label>
+                    </div>
+                  </div>
+                </p>
+              </div>
+            </a>
+          </div> : ""}
         {/* 
         <a href="#" className="btn btn-primary">
           Go somewhere
@@ -104,7 +110,7 @@ const questions = ({ question }) => {
           Card link
           </a> */}
       </div>
-    </div>
+    </div >
   );
 };
 

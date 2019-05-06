@@ -20,20 +20,35 @@ router.get("/", (req, res) => {
 });
 
 
-router.get("/questions", (req, res) => {
+
+router.get("/questions", passport.authenticate("jwt", { session: false }), (req, res) => {
     console.log("Inside Get-content questions");
 
-    var params = {};
 
-    if (req.query.userid) {
-        let user = req.query.userid;
+    var params = {};
+    console.log("USER", req.user.id)
+    console.log("YEAR", req.query.year)
+    console.log("YEAR", req.query.sort)
+
+    var ordering = -1;
+    if (req.query.sort === "OldestFirst") {
+        ordering = 1;
+    }
+
+    if (req.user.id) {
+        let user = req.user.id;
         params.user = mongoose.Types.ObjectId(user);
     }
 
     if (req.query.year) {
 
-        var strtDate = new Date(req.query.year, 1, 1, 0, 0, 0);
+        var strtDate = new Date(2000, 1, 1, 0, 0, 0);
         var endDate = new Date();
+        if (req.query.year == "All Time") {
+        }
+        else {
+            endDate = new Date(req.query.year, 12, 31, 0, 0, 0);
+        }
 
         params.postDate = {
             $gte: strtDate, //Date("2019-01-01T00:00:00.000Z"),
@@ -42,6 +57,7 @@ router.get("/questions", (req, res) => {
     }
 
     QuestionModel.find(params)
+        .sort({ postDate: ordering })
         .then(questions => {
             console.log("success Get-content questions")
 
@@ -50,28 +66,46 @@ router.get("/questions", (req, res) => {
         .catch(err => {
             console.log("Error while fetching content questions", err);
         }
-        )
+        );
+
 }
 );
 
-router.get("/answers", (req, res) => {
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+}
+
+router.get("/answers", passport.authenticate("jwt", { session: false }), (req, res) => {
     console.log("Inside Get-content answers");
 
     var params = {};
+    console.log("USER", req.user.id)
+    console.log("YEAR", req.query.year)
 
-    if (req.query.userid) {
-        let user = req.query.userid;
+
+    var ordering = -1;
+    if (req.query.sort === "OldestFirst") {
+        ordering = 1;
+    }
+
+    if (req.user.id) {
+        let user = req.user.id;
         params.answerOwner = mongoose.Types.ObjectId(user);
     }
 
     if (req.query.year) {
 
-        var strtDate = new Date(req.query.year, 1, 1, 0, 0, 0);
+        var strtDate = new Date(2000, 1, 1, 0, 0, 0);
         var endDate = new Date();
+        if (req.query.year == "All Time") {
+        }
+        else {
+            endDate = new Date(req.query.year, 12, 31, 0, 0, 0);
+        }
 
         params.answerDate = {
-            $gte: strtDate,
-            $lt: endDate,
+            $gte: strtDate, //Date("2019-01-01T00:00:00.000Z"),
+            $lt: endDate, //Date("2020-01-01T00:00:00.000Z")
         };
     }
 
@@ -80,14 +114,19 @@ router.get("/answers", (req, res) => {
             if (!questionsIds) { }
 
             console.log("success Get-content answers", questionsIds)
+
             var questionsIdsArray = [];
+
             questionsIdsArray = questionsIds.map(x => x.question);
 
+            var unique = questionsIdsArray[0];//.filter((v, i, a) => a.indexOf(v) === i);
+            console.log("unique", unique);
 
             QuestionModel.find({ _id: { $in: questionsIdsArray } })
+                .sort({ postDate: ordering })
                 .then(questions => {
                     console.log("success Get-content questions")
-
+                    console.log(questions);
                     res.json(questions);
                 })
                 .catch(err => {
@@ -100,6 +139,55 @@ router.get("/answers", (req, res) => {
             console.log("Error while fetching content answers", err);
         }
         )
+}
+);
+
+router.get("/questionsfollowed", passport.authenticate("jwt", { session: false }), (req, res) => {
+    console.log("Inside Get-content questionsbookmarked");
+
+    var params = {};
+    console.log("USER", req.user.id)
+    console.log("YEAR", req.query.year)
+
+
+    var ordering = -1;
+    if (req.query.sort === "OldestFirst") {
+        ordering = 1;
+    }
+
+    // if (req.user.id) {
+    //     let user = req.user.id;
+    //     params.user = mongoose.Types.ObjectId(user);
+    // }
+
+    if (req.query.year) {
+
+        var strtDate = new Date(2000, 1, 1, 0, 0, 0);
+        var endDate = new Date();
+        if (req.query.year == "All Time") {
+        }
+        else {
+            endDate = new Date(req.query.year, 12, 31, 0, 0, 0);
+        }
+
+        params.postDate = {
+            $gte: strtDate, //Date("2019-01-01T00:00:00.000Z"),
+            $lt: endDate, //Date("2020-01-01T00:00:00.000Z")
+        };
+    }
+
+    console.log("req.query.year", params);
+    QuestionModel.find({ postDate: params.postDate, followers: { "$in": [req.user.id] } })
+        .sort({ postDate: ordering })
+        .then(questions => {
+            console.log(questions);
+            res.json(questions);
+        })
+        .catch(err => {
+            console.log("Error while fetching content nbookmarked questions", err);
+        }
+        )
+
 }
 );
 

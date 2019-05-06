@@ -6,7 +6,7 @@ var questionsdetail = new Schema({
   question: { type: String },
   user: { type: Schema.Types.ObjectId, ref: "userDetails" },
   topic: { type: String },
-  followers: [{ user: { type: Schema.Types.ObjectId, ref: "userDetails" } }],
+  followers: [{ type: Schema.Types.ObjectId, ref: "userDetails" }],
   answers: [{ type: Schema.Types.ObjectId, ref: "answersdetail" }],
   postDate: { type: Date }
 });
