@@ -181,7 +181,7 @@ class Navbar extends Component {
                                 {/* <li><button type="button" class="list-group-item list-group-item-action list-group-item-light" data-toggle="modal" data-target="#DisplayAllMessages">Messages</button></li> */}
                                 <li>
                                   <a
-                                    href="#"
+                                    href="/content"
                                     className="list-group-item list-group-item-action list-group-item-light"
                                   >
                                     Your Content
@@ -189,7 +189,7 @@ class Navbar extends Component {
                                 </li>
                                 <li>
                                   <a
-                                    href="#"
+                                    href="/Graphs"
                                     className="list-group-item list-group-item-action list-group-item-light"
                                   >
                                     Stats

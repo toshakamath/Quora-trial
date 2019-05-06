@@ -1,4 +1,4 @@
-/* .siteHeader {
+.siteHeader {
   background: #fff;
   position: fixed;
   top: 0;
@@ -133,7 +133,7 @@
   border-top-right-radius: 0;
 }
 .selectorInput {
-  /* margin: 15px 5px 5px 5px;
+  margin: 15px 5px 5px 5px;
   border: 1px solid #e2e2e2;
   border-radius: 4px;
   padding-left: 26px;
@@ -142,8 +142,8 @@
   background-size: 13px;
   position: relative;
   width: 200px;
-  height: 25px; */
-/* } */
+  height: 25px; 
+ }
 
 #searchbar {
   width: 150px;
@@ -228,7 +228,7 @@ a:hover {
   text-decoration-line: none;
   text-decoration: none;
 }
-*/ .siteHeader {
+ .siteHeader {
   background: #fff;
   position: fixed;
   top: 0;

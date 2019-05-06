@@ -121,6 +121,8 @@ class Profile extends Component {
           experience: [...response.data.experience],
           followercount: response.data.followers.length
         });
+      }, (err)=>{
+        console.log("ERROR: ", err);
       });
   }
   bioEditHandler(e) {
