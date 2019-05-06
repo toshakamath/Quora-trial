@@ -34,7 +34,6 @@ class Dashboard extends Component {
     });
   }
 
-
   //Dummy componenet did mount
   render() {
     // const { questions } = this.props.questions;
@@ -57,6 +56,12 @@ class Dashboard extends Component {
             <Route path="/search" component={Search}/>
             {/* <Route path="/home/inbox/a" component={Sample} />
               <Route path="/home/inbox/createmessage" component={CreateMessage} />
+              <Route exact path="/profile" component={Profile} />
+              <Route path="/search" component={Search} />
+              <Route
+                path="/home/inbox/createmessage"
+                component={CreateMessage}
+              />
               <Route path="/home/inbox" component={ConversationsList} />
               <Route path="/home/inbox" component={ConversationsList} /> */}
               <Route path="/content" component={Content}/>
@@ -67,9 +72,7 @@ class Dashboard extends Component {
             </Switch>
           }
 
-
           <div>
-
             {/* <div className="card questionCard">
               <div >
                 <div>
