@@ -2,6 +2,10 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const passport = require("passport");
+const upload = require("./aws-config");
+
+const singleUpload = upload.single("image");
+
 //var kafka = require('../kafka/client');
 //load credential model
 const Profile = require("../../Kafka-Backend/Models/credentials");
@@ -23,28 +27,37 @@ router.use(
 );
 
 router.post("/profileImage", requireAuth, (req, res) => {
-  let uploadFile = req.files.file;
-  const fileName = req.files.file.name;
-  console.log("filename:" + req.files.file.name);
-  console.log(req.body.assignmentName);
-  console.log("reqparams:" + req.params.id);
-  console.log(fileName);
-  console.log(uploadFile);
-  uploadFile.mv(`${__dirname}/../public/files/${fileName}`, function(err) {
+  singleUpload(req, res, function(err, some) {
     if (err) {
-      return res.status(500).send(err);
+      return res.status(422).send({
+        errors: [{ title: "Image Upload Error", detail: err.message }]
+      });
     }
-    console.log("path:" + `${__dirname}/../public/files/${fileName}`);
+    console.log(some);
+    return res.status(200).send({ imageUrl: req.files.location });
   });
+  // let uploadFile = req.files.file;
+  // const fileName = req.files.file.name;
+  // console.log("filename:" + req.files.file.name);
+  // console.log(req.body.assignmentName);
+  // console.log("reqparams:" + req.params.id);
+  // console.log(fileName);
+  // console.log(uploadFile);
+  // uploadFile.mv(`${__dirname}/../public/files/${fileName}`, function(err) {
+  //   if (err) {
+  //     return res.status(500).send(err);
+  //   }
+  //   console.log("path:" + `${__dirname}/../public/files/${fileName}`);
+  // });
 
-  profileFields = {};
+  // profileFields = {};
 
-  profileFields.profileImage = fileName;
-  Profile.findOneAndUpdate(
-    { user: req.user.id },
-    { $set: profileFields },
-    { new: true }
-  ).then(profile => res.json(profile));
+  // profileFields.profileImage = fileName;
+  // Profile.findOneAndUpdate(
+  //   { user: req.user.id },
+  //   { $set: profileFields },
+  //   { new: true }
+  // ).then(profile => res.json(profile));
 });
 router.get("/file", (req, res) => {
   Profile.findById(req.user.id)
@@ -203,6 +216,9 @@ router.get("/all", (req, res) => {
         errors.noprofile = "There are no profiles";
         return res.status(404).json(errors);
       }
+      profiles.map(profile => {
+        profile.userId;
+      });
       res.json(profiles);
     })
     .catch(err =>
