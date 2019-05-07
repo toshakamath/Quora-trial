@@ -152,7 +152,7 @@ class Questions extends Component {
             Topic: {this.props.question.topic}{" "}
           </h15>
 
-          <a href={"/" + this.props.question._id} className="questions">
+          <a href={"/question/" + this.props.question._id} className="questions">
             <h5 className="card-title" id="questiontitle">
               <b> {this.props.question.question}</b>
             </h5>
