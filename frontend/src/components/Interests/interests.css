@@ -21,7 +21,8 @@
   background: whitesmoke;
   height: 480px;
   width: 480px;
-  margin: -10px auto;
+  margin: 10px auto;
+  margin-bottom: 10px;
   overflow: scroll;
   padding: 10px 0px;
   text-align: center;
@@ -110,4 +111,35 @@ input[type="checkbox"] {
   width: 200px;
   border-radius: 110px;
   float: right;
+  display: grid;
+  margin: 20px auto;
+  margin-right: 480px;
+}
+
+.quoralogo {
+  display: inline;
+}
+
+/* .showprogress {
+  background: red;
+  height: 20px;
+  display: inline;
+} */
+
+#progressline {
+  width: 100px;
+}
+.progress {
+  border-radius: 0.5rem;
+}
+
+#progressdiv {
+  width: 500px;
+  height: 13px;
+  margin: -15px auto;
+  margin-bottom: 25px;
+}
+
+.progress-bar {
+  border-radius: 0.5rem;
 }

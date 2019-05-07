@@ -39,10 +39,7 @@ class HomeSideBar extends Component {
         <div className="homeSidebarInner">
           <ul className="sidebarList">
             <li className="SwitcherItemWithImage">
-              <Link
-                to={`/home`}
-                className="swictherLink"
-              >
+              <Link to={`/home`} className="swictherLink">
                 <div className="switcherImgWrapper">
                   <div className="swictherImg" />
                 </div>
@@ -56,7 +53,11 @@ class HomeSideBar extends Component {
                 className="swictherLink"
               >
                 <div className="BookmarkswictherImg">
-                  <i className="fa fa-bookmark" id="bookmark" aria-hidden="true" />
+                  <i
+                    className="fa fa-bookmark"
+                    id="bookmark"
+                    aria-hidden="true"
+                  />
                 </div>
                 <label className="bookmarklabel">Bookmarks</label>
               </Link>

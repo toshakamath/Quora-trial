@@ -13,3 +13,5 @@ module.exports.setData = data => {
 module.exports.getData = () => {
   return JSON.parse(localStorage.getItem("token"));
 };
+
+

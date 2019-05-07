@@ -27,10 +27,10 @@ class Navbar extends Component {
       searchItem: this.state.searchitem
     };
     Axios.post(window.base_url + "/search", searchdata).then(response => {
-      console.log("final data", response.data.Search);
+      console.log("final data", response.data);
       this.props.history.push({
         pathname: "/search",
-        state: { detail: response.data.Search }
+        state: { detail: response.data }
       });
     });
   };

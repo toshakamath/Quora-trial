@@ -99,3 +99,7 @@ a {
 .display-none {
   display: none;
 } */
+
+body{
+  background: whitesmoke;
+}
