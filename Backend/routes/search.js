@@ -3,7 +3,7 @@ var router = express.Router();
 var passport = require("passport");
 var requireAuth = passport.authenticate("jwt", { session: false });
 var userDetails = require("../../Kafka-Backend/Models/userDetails");
-var question = require("../../Kafka-Backend/Models/questionsDetail");
+var question = require("../../Kafka-Backend/Models/questionsdetail");
 var topic = require("../../Kafka-Backend/Models/topic");
 ObjectId = require("mongodb").ObjectID;
 
@@ -18,48 +18,49 @@ router.post("/", async function(req, res) {
     topics: []
   };
 
-  user = await userDetails.find({
-    firstName: { $regex: ".*" + req.body.searchItem + ".*" }
-  });
-  console.log("userDONE");
-  if (!!user && user.length) {
-    console.log(user);
-    resp.profile = user; //+" "+user.lastName)
-  } else {
-    console.log("error");
-  }
+  await userDetails.find(
+    { firstName: { $regex: ".*" + req.body.searchItem + ".*" } },
+    (err1, profileResult) => {
+      if (err1) {
+        console.log("Error 1", err1);
+        res.status(400).json({ message: "No userDetails with such keyword" });
+      } else {
+        console.log("User Done ");
+        console.log("User ", profileResult);
+        resp.profile = profileResult;
+      }
+    }
+  );
 
-  question = await question.find({
-    question: { $regex: ".*" + req.body.searchItem + ".*" }
-  });
-  console.log("questioDONE");
-  if (!!question && question.length) {
-    console.log(question);
-    resp.question = question; //+" "+user.lastName)
-  } else {
-    console.log("error");
-  }
+  await topic.find(
+    { topicName: { $regex: ".*" + req.body.searchItem + ".*" } },
+    (err2, topicResult) => {
+      if (err2) {
+        console.log("Error2", err2);
+        res.status(400).json({ message: "No topics with such keyword" });
+      } else {
+        console.log("topic Done ");
+        console.log("Result 2 ", topicResult);
+        resp.topics = topicResult;
+      }
+    }
+  );
 
-  topic = await topic.find({
-    topicName: { $regex: ".*" + req.body.searchItem + ".*" }
-  });
-  console.log("topicDONE");
-  if (!!topic && topic.length) {
-    resp.topic = topic; //+" "+user.lastName)
-  } else {
-    console.log("error");
-  }
-  console.log("All DOne");
+  await question.find(
+    { question: { $regex: ".*" + req.body.searchItem + ".*" } },
+    (err3, questionResult) => {
+      if (err3) {
+        console.log("Error2", err3);
+        res.status(400).json({ message: "No questions with such keyword" });
+      } else {
+        console.log("question Done ");
+        console.log("Result 3 ", questionResult);
+        resp.question = questionResult;
+      }
+    }
+  );
+
   res.status(200).json(resp);
-
-  // userDetails
-  //   .find({ firstName: { $regex: ".*" + req.body.searchItem + ".*" } })
-  //   .then(user => {
-  //     user.map(user => {
-  //       resp.profile.push(user); //+" "+user.lastName)
-  //       console.log("inisde user details find ", resp);
-  //     });
-  //   })
 });
 
 module.exports = router;

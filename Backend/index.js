@@ -23,6 +23,8 @@ const topic = require("./routes/topic");
 const message = require("./routes/message");
 const search = require("./routes/search");
 const getallanswer = require("./routes/getallanswer");
+const updownVote = require("./routes/updownVote");
+const comment = require("./routes/comment");
 
 const fs = require("fs");
 var glob = require("glob");
@@ -92,6 +94,8 @@ app.use("/getonequestion", getonequestion);
 app.use("/search", search);
 app.use("/answer", answer);
 app.use("/getallanswer", getallanswer);
+app.use("/updownVote", updownVote);
+app.use("/comment", comment);
 
 // app.use("/all", profile1);
 //start your server on posrt 3001

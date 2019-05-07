@@ -3,7 +3,7 @@ var router = express.Router();
 var passport = require("passport");
 var requireAuth = passport.authenticate("jwt", { session: false });
 const mongoose = require("mongoose");
-var Question = require("../../Kafka-Backend/Models/questionsDetail");
+var Question = require("../../Kafka-Backend/Models/questionsdetail");
 
 router.post("/", requireAuth, function(req, res) {
   console.log("Inside question Get Request");

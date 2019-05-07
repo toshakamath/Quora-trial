@@ -3,8 +3,9 @@ var router = express.Router();
 var passport = require("passport");
 var requireAuth = passport.authenticate("jwt", { session: false });
 const mongoose = require("mongoose");
-var Question = require("../../Kafka-Backend/Models/questionsDetail");
-var Answers = require("../../Kafka-Backend/Models/answer");
+var Question = require("../../Kafka-Backend/Models/questionsdetail");
+var userDetails = require("../../Kafka-Backend/Models/userDetails");
+var Answers = require("../../Kafka-Backend/Models/answersdetail");
 
 /***  GET one question with all its answers ***/
 router.get("/", (req, res) => {
@@ -22,6 +23,8 @@ router.get("/", (req, res) => {
             res.status(404);
           } else {
             console.log("Successfully found the answers ", answerResult);
+            console.log("ANSWER RESULT", answerResult);
+
             let returnObj = {
               questionDetails: questionResult,
               answerDetails: answerResult
