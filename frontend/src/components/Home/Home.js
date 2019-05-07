@@ -11,8 +11,8 @@ import Questions from "../Questions/questions";
 import Sample from "../Sample";
 import { getQuestions } from "../../Actions/questionsAction";
 import PropTypes from "prop-types";
-import {getProfileName} from "../../Actions/profileAction";
-import { Checkbox } from 'antd';
+import { getProfileName } from "../../Actions/profileAction";
+// import { Checkbox } from 'antd';
 import CreateMessage1 from "../Message/CreateMessage1";
 import DisplayAllMessages1 from "../Message/DisplayAllMessages1";
 import ViewConversation1 from "../Message/ViewConversation1";
@@ -24,80 +24,90 @@ class Home extends Component {
       showPopup: false,
       addQuestion: "activeTab",
       shareLink: "inactiveTab",
-      topicsSelected:[],
-      identity:"public",
-      newquestion:"",
-      questionlink:""
+      topicsSelected: [],
+      identity: "public",
+      newquestion: "",
+      questionlink: "",
+      more: false
       // checked: true
-     };
+    };
   }
-  onChangeHandler=(e)=>{   //identity, newquestion, questionlink
+  onChangeHandler = e => {
+    //identity, newquestion, questionlink
     console.log(e.target.name, e.target.value);
     this.setState({
       [e.target.name]: e.target.value
     });
-  }
-  addQuestion=(e)=>{
+  };
+  addQuestion = e => {
     e.preventDefault();
     //get question name from props here and use in next modal
     // let question_name= this.props.
-  }
-  mapTopicsToQuestion=(e)=>{
+  };
+  mapTopicsToQuestion = e => {
     e.preventDefault();
-    let isAnonymous=false;
-    if(this.state.identity=="public")
-      isAnonymous=false;
-    else if(this.state.identity=="anonymous")
-      isAnonymous=true;
-    
-    let data={
-      newquestion:this.state.newquestion,
+    let isAnonymous = false;
+    if (this.state.identity == "public") isAnonymous = false;
+    else if (this.state.identity == "anonymous") isAnonymous = true;
+
+    let data = {
+      newquestion: this.state.newquestion,
       questionlink: this.state.questionlink,
       isAnonymous: isAnonymous,
       topicsSelected: this.state.topicsSelected
-    }
-    console.log("Data to be sent to backend: ",data);
+    };
+    console.log("Data to be sent to backend: ", data);
     axios.defaults.withCredentials = true;
-    const Token=localStorage.getItem("token")
-    console.log("TOKENNNNN: ",Token)
-        axios
-        .post(window.base_url+`/question`, data,{headers:{Authorization:Token}})
-          .then((response) => {
-            console.log("Status Code : ", response.status);
-            console.log("Data from node : ", response.data);
-          }, (err)=>{
-            console.log("ERROR : ", err);
-          });
-  }
+    const Token = localStorage.getItem("token");
+    console.log("TOKENNNNN: ", Token);
+    axios
+      .post(window.base_url + `/question`, data, {
+        headers: { Authorization: Token }
+      })
+      .then(
+        response => {
+          console.log("Status Code : ", response.status);
+          console.log("Data from node : ", response.data);
+        },
+        err => {
+          console.log("ERROR : ", err);
+        }
+      );
+  };
 
-// topicsSelected 5ccca5121c9d4400009dbb95 true
-// topicsSelected 5ccca5121c9d4400009dbb95 false
-// topicsSelected 5cce04141c9d44000084d856 true
-// topicsSelected 5cce04141c9d44000084d856 false
-// topicsSelected 5ccca5121c9d4400009dbb95 true
-// topicsSelected 5cce04141c9d44000084d856 true
+  // topicsSelected 5ccca5121c9d4400009dbb95 true
+  // topicsSelected 5ccca5121c9d4400009dbb95 false
+  // topicsSelected 5cce04141c9d44000084d856 true
+  // topicsSelected 5cce04141c9d44000084d856 false
+  // topicsSelected 5ccca5121c9d4400009dbb95 true
+  // topicsSelected 5cce04141c9d44000084d856 true
 
-// this.setState({ myArray: [...this.state.myArray, 'new value'] }) //simple value
-// this.setState({ myArray: [...this.state.myArray, ...[1,2,3] ] }) 
+  // this.setState({ myArray: [...this.state.myArray, 'new value'] }) //simple value
+  // this.setState({ myArray: [...this.state.myArray, ...[1,2,3] ] })
 
-  onChangeHandler1=(e)=>{    //topicscheck
-    console.log("SOMETHINGGGGG ",e.target.name, e.target.value, e.target.checked);
-    if(e.target.checked===true){
-    this.setState({
-      topicsSelected: this.state.topicsSelected.concat(e.target.value)
-    });
-  }
-    else if(e.target.checked===false){
-      let index=this.state.topicsSelected.indexOf(e.target.value);
-      console.log("INDEX: ",index);
+  onChangeHandler1 = e => {
+    //topicscheck
+    console.log(
+      "SOMETHINGGGGG ",
+      e.target.name,
+      e.target.value,
+      e.target.checked
+    );
+    if (e.target.checked === true) {
+      this.setState({
+        topicsSelected: this.state.topicsSelected.concat(e.target.value)
+      });
+    } else if (e.target.checked === false) {
+      let index = this.state.topicsSelected.indexOf(e.target.value);
+      console.log("INDEX: ", index);
       this.state.topicsSelected.splice(index, 1);
       this.setState({
-            topicsSelected: this.state.topicsSelected
-          });
+        topicsSelected: this.state.topicsSelected
+      });
     }
     console.log("topicsSelected Array: ", this.state.topicsSelected);
-  }
-  toggleClass=(e)=> {
+  };
+  toggleClass = e => {
     console.log("THIS IS THE CURRENT TAB NAME: ", e);
     if (e === "addQuestionTab") {
       console.log("addQuestion: activeTab");
@@ -114,7 +124,7 @@ class Home extends Component {
     }
     // this.state = { showPopup: false, showButtons: false };
     // let isVisible = false;
-  }
+  };
 
   //new
   componentDidMount() {
@@ -125,17 +135,19 @@ class Home extends Component {
     console.log("DATA: ", data);
     this.props.getProfileName(data);
     // this.props.getAllTopics();
-        axios.defaults.withCredentials = true;
-        axios.get(window.base_url+`/topic/all`)
-          .then((response) => {
-            console.log("Status Code : ", response.status);
-            console.log("Data from node : ", response.data);
-            this.setState({
-                topics: response.data
-              },(err)=>{
-                console.log("Error : ", err);
-              })
-          });
+    axios.defaults.withCredentials = true;
+    axios.get(window.base_url + `/topic/all`).then(response => {
+      console.log("Status Code : ", response.status);
+      console.log("Data from node : ", response.data);
+      this.setState(
+        {
+          topics: response.data
+        },
+        err => {
+          console.log("Error : ", err);
+        }
+      );
+    });
   }
   //
   togglePopup() {
@@ -143,6 +155,7 @@ class Home extends Component {
       showPopup: !this.state.showPopup
     });
   }
+
 
   render() {
     //new
@@ -155,7 +168,7 @@ class Home extends Component {
     if (questions === null) return <div />;
 
     const questionsList = questions.map((question, index) => (
-      <Questions key={index} question={question} />
+      <Questions key={index} question={question}  />
     ));
     //iterate over books to create a table row
 
@@ -166,29 +179,38 @@ class Home extends Component {
     //this.state.topics[i].topicName
     //this.state.topics[i]._id
 
-    let renderTopicsCheckbox = (this.state.topics||[]).map((t)=>{
-      return(
+    let renderTopicsCheckbox = (this.state.topics || []).map(t => {
+      return (
         <div class="custom-control">
-          <input type="checkbox" class="custom-control-input" name="topicsSelected" value={t.topicName} id={t._id} onChange={this.onChangeHandler1}/>
-          <label class="custom-control-label" for={t._id}>{t.topicName}</label>
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            name="topicsSelected"
+            value={t.topicName}
+            id={t._id}
+            onChange={this.onChangeHandler1}
+          />
+          <label class="custom-control-label" for={t._id}>
+            {t.topicName}
+          </label>
         </div>
-      )
-    })
+      );
+    });
 
-  //   const { activeTab } = this.state;
-  //   const TabLabel = ({ active, text, onClick }) => 
-  // <li onClick={onClick} className={active ? 'is-active' : null}>
-  //   <h2>{text}</h2>
-  // </li>
+    //   const { activeTab } = this.state;
+    //   const TabLabel = ({ active, text, onClick }) =>
+    // <li onClick={onClick} className={active ? 'is-active' : null}>
+    //   <h2>{text}</h2>
+    // </li>
 
     return (
       <div className="container container-fluid">
-      <Switch>
-        {/* <Route path="/home/inbox/a" component={Sample} /> */}
-        <Route path="/home/messages/create" component={CreateMessage1} />
-        <Route path="/home/messages/:_id" component={ViewConversation1} />
-        <Route path="/home/messages" component={DisplayAllMessages1} />
-      </Switch>
+        <Switch>
+          {/* <Route path="/home/inbox/a" component={Sample} /> */}
+          <Route path="/home/messages/create" component={CreateMessage1} />
+          <Route path="/home/messages/:_id" component={ViewConversation1} />
+          <Route path="/home/messages" component={DisplayAllMessages1} />
+        </Switch>
         <div className="row">
           <div className="col-md-2">
             <HomeSideBar id={this.props.match.params.Id} />
@@ -257,9 +279,24 @@ class Home extends Component {
                       <div id="AskQuestionModalHeader" class="modal-header">
                         {/* <h4 class="modal-title" id="AskQuestionModalLabel">Modal title</h4> */}
                         <h4 class="modal-title" id="AskQuestionModalLabel">
-                         {/* <!-- Nav tabs --> */}
-                        <ul class="nav nav-tabs">
-                            <li role="presentation" className={this.state.addQuestion} onClick={this.toggleClass.bind(this, 'addQuestionTab')}><a href="#addQuestionTab" aria-controls="addQuestionTab" role="tab" data-toggle="tab">Add Question</a>
+                          {/* <!-- Nav tabs --> */}
+                          <ul class="nav nav-tabs">
+                            <li
+                              role="presentation"
+                              className={this.state.addQuestion}
+                              onClick={this.toggleClass.bind(
+                                this,
+                                "addQuestionTab"
+                              )}
+                            >
+                              <a
+                                href="#addQuestionTab"
+                                aria-controls="addQuestionTab"
+                                role="tab"
+                                data-toggle="tab"
+                              >
+                                Add Question
+                              </a>
                             </li>
                             <li
                               role="presentation"
@@ -417,16 +454,32 @@ class Home extends Component {
                   <div class="modal-dialog" role="document">
                     <div class="modal-content" style={{ width: "600px" }}>
                       <div class="modal-header">
-                        <h5 class="modal-title" id="SelectTopicsModalLabel" style={{ fontSize: "19px", fontWeight: "bold", color: "#333"}}>{this.state.newquestion}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <h5
+                          class="modal-title"
+                          id="SelectTopicsModalLabel"
+                          style={{
+                            fontSize: "19px",
+                            fontWeight: "bold",
+                            color: "#333"
+                          }}
+                        >
+                          {this.state.newquestion}
+                        </h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-body" style={{ height: "300px" }}>
-                        <p><b>Add topics that best describe your question</b></p>
-                        <hr/>
+                        <p>
+                          <b>Add topics that best describe your question</b>
+                        </p>
+                        <hr />
                         {renderTopicsCheckbox}
-                        
                       </div>
                       <div
                         class="modal-footer"

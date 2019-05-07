@@ -10,3 +10,8 @@
 #setPhoto > p > img{
     width: 100%;
   }
+
+  #upvote{
+      display: inline;
+      margin-right: 7px;
+  }

@@ -8,6 +8,17 @@
   padding-bottom: 4px;
 }
 
+#topicname {
+  font-size: 16px;
+  color: rgb(105, 104, 104);
+  font-family: Georgia, Times, "Times New Roman", "Hiragino Kaku Gothic Pro",
+    "Meiryo", serif;
+  padding: 4px 4px;
+}
+
+#commenticon{
+  margin-right: 7px;
+}
 /* .test {
   data-toggle: collapse;
   aria-expanded: false;
@@ -18,6 +29,31 @@
   font-size: 14px;
   line-height: 1.5;
 }  */
+
+.collapse {
+  background: red;
+  /* height: 200px; */
+}
+
+.expand {
+  height: auto;
+}
+
+.firstlines {
+  height: 20px;
+  line-height: 20px;
+  overflow: hidden;
+}
+
+.answerbody {
+  font-family: "q_serif", Georgia, Times, "Times New Roman",
+    "Hiragino Kaku Gothic Pro", "Meiryo", serif;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  font-weight: 400;
+}
+
+/* 
 
 #summary p.collapse:not(.show) {
   height: 42px !important;
@@ -39,16 +75,16 @@
 #summary a:not(.collapsed):after {
   content: "(less)...";
   margin-left: 10px;
-}
+} */
 
-.answers {
+/* .answers {
   color: #333 !important;
   font-weight: 500;
   font-family: "q_serif", Georgia, Times, "Times New Roman",
     "Hiragino Kaku Gothic Pro", "Meiryo", serif;
   font-size: 16px;
   line-height: 1.5rem;
-}
+} */
 
 .questions {
   color: #333;
@@ -72,13 +108,24 @@
   background: lightblue;
 }
 
-/* #upvote {
+#upvote {
   width: 120px;
   border-radius: 20px;
   display: inline;
-  height: 30px;
-  margin-top: -6px;
-} */
+  height: 35px;
+  margin-top: 10px;
+}
+.upvote {
+  margin-left: -2px;
+  display: inline;
+}
+
+.upvotetext {
+  color: #666 !important;
+  text-align: center;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 #upvotearrow {
   size: 4px;
   display: inline;
@@ -105,3 +152,87 @@
 #labelbookmark{
   display:inline;
 }  */
+
+#questiontitle {
+  font-family: "q_serif", Georgia, Times, "Times New Roman",
+    "Hiragino Kaku Gothic Pro", "Meiryo", serif;
+  font-weight: 900 !important;
+  line-height: 1.3;
+  color: #333;
+  font-size: 20px;
+}
+
+#commentbox {
+  display: inline;
+  font-size: 13px;
+  line-height: 1.5;
+  vertical-align: middle;
+  min-height: 32px;
+  border-radius: 20px;
+  padding: 4px 16px;
+  width: 550px;
+  font-family: "q_serif", Georgia, Times, "Times New Roman",
+    "Hiragino Kaku Gothic Pro", "Meiryo", serif;
+  border: 1px solid rgb(202, 202, 202);
+}
+
+.footer {
+  background: whitesmoke;
+  height: 50px;
+  margin-top: -10px;
+  padding: 10px 10px;
+  border-radius: 4px;
+}
+.more {
+  color: #057ceb;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.more :hover {
+  cursor: pointer;
+  color: #023a6e;
+  zoom: 110%;
+}
+.commentlink :hover {
+  cursor: pointer;
+  color: rgb(43, 43, 43);
+}
+
+.viewcomments {
+  display: inline;
+  font-size: 13px;
+  line-height: 1.5;
+  vertical-align: middle;
+  min-height: 32px;
+  padding: 15px 16px 16px 16px;
+  width: 550px;
+  font-family: "q_serif", Georgia, Times, "Times New Roman",
+    "Hiragino Kaku Gothic Pro", "Meiryo", serif;
+  color: rgb(75, 74, 74);
+}
+
+#commentbox2 {
+  display: inline;
+  font-size: 13px;
+  line-height: 1.5;
+  vertical-align: middle;
+  min-height: 32px;
+  padding: 4px 16px;
+  width: 450px !important;
+  font-family: "q_serif", Georgia, Times, "Times New Roman",
+    "Hiragino Kaku Gothic Pro", "Meiryo", serif;
+}
+
+#commentbox3 {
+  display: inline;
+  font-size: 13px;
+  line-height: 1.5;
+  vertical-align: middle;
+  min-height: 32px;
+  border-radius: 20px;
+  padding: 4px 16px;
+  width: 450px !important;
+  font-family: "q_serif", Georgia, Times, "Times New Roman",
+    "Hiragino Kaku Gothic Pro", "Meiryo", serif;
+}
