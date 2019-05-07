@@ -20,10 +20,11 @@ class Bookmarks extends Component {
   componentDidMount() {
         axios.defaults.withCredentials = true;
         const Token=localStorage.getItem("token")
-        axios.get(window.base_url+`/bookmarked`, {headers:{Authorization:Token}})
+        console.log("GOING INSIDE Bookmarks");
+        axios.get(window.base_url+`/bookmark/getbookmarked`, {headers:{Authorization:Token}})
           .then((response) => {
-            console.log("Status Code : ", response.status);
-            console.log("Data from node : ", response.data);
+            console.log("Status Code : GET BOOKMARKS", response.status);
+            console.log("Data from node GET BOOKMARKS : ", response.data);
             this.setState({
                 Bookmarks: response.data
               },(err)=>{
