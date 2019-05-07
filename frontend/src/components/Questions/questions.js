@@ -59,6 +59,7 @@ class Questions extends Component {
       "this is ANSWER ID",
       this.props.question.answers[index].upVote.length
     );
+    Axios.defaults.withCredentials = true;
     Axios.post(window.base_url + "/updownVote", id).then(response => {
       console.log("final data", response.data);
       this.setState({ upvotes: response.data.upVoteCount });

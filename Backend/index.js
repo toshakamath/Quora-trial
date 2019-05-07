@@ -6,7 +6,7 @@ const app = express();
 const passport = require("passport");
 const port = process.env.PORT || 3001;
 // app.use(bodyParser.json());
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+// app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 // app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(bodyParser.raw({limit: "50mb"}));
 
@@ -22,10 +22,10 @@ const answer = require("./routes/answer");
 const topic = require("./routes/topic");
 const message = require("./routes/message");
 const content = require("./routes/content");
-
+const ROOT_URL2 = "http://localhost:3000";
 const search = require("./routes/search");
 const getallanswer = require("./routes/getallanswer");
-// const bookmark = require("./routes/bookmark");
+const bookmark = require("./routes/bookmark");
 const updownVote = require("./routes/updownVote");
 const comment = require("./routes/comment");
 
@@ -35,14 +35,18 @@ var glob = require("glob");
 const multer = require("multer");
 const path = require("path");
 
+app.set("view engine", "ejs");
+app.use(cors({ origin: `${ROOT_URL2}`, credentials: true }));
+app.use("/uploads", express.static("uploads"));
 //use cors to allow cross origin resource sharing
+app.use(bodyParser.json());
 app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Origin", `${ROOT_URL2}`); //A response that tells the browser to allow requesting code from the origin http://localhost:3000 to access a resource
+  res.setHeader("Access-Control-Allow-Credentials", "true"); //to allow cookies
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET,HEAD,OPTIONS,POST,PUT,DELETE"
   );
-  res.header("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
@@ -94,7 +98,7 @@ app.use("/search", search);
 app.use("/answer", answer);
 app.use("/content", content);
 app.use("/getallanswer", getallanswer);
-// app.use("/bookmark", bookmark);
+app.use("/bookmark", bookmark);
 app.use("/updownVote", updownVote);
 app.use("/comment", comment);
 
