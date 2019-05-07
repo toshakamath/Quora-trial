@@ -1,7 +1,9 @@
-import { GET_ANSWERS } from "../Actions/types";
+import { GET_ANSWERS, GET_PROFILE_VIEWCOUNT } from "../Actions/types";
 const initialState = {
-    answers: []
+    answers: [],
+    profileview: []
 };
+
 export default function (state = initialState, action) {
     switch (action.type) {
         case GET_ANSWERS:
@@ -10,7 +12,17 @@ export default function (state = initialState, action) {
                 return {
                     ...state,
                     answers
-                    : action.payload
+                        : action.payload
+                };
+            }
+            break;
+        case GET_PROFILE_VIEWCOUNT:
+            console.log("Inside reducer ANswers", action.payload);
+            if (action.payload) {
+                return {
+                    ...state,
+                    profileview
+                        : action.payload
                 };
             }
             break;
@@ -18,3 +30,4 @@ export default function (state = initialState, action) {
             return state;
     }
 }
+

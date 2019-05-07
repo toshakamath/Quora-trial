@@ -43,7 +43,7 @@ router.post("/profileImage", requireAuth, (req, res) => {
   console.log("reqparams:" + req.params.id);
   console.log(fileName);
   console.log(uploadFile);
-  uploadFile.mv(`${__dirname}/../public/files/${fileName}`, function(err) {
+  uploadFile.mv(`${__dirname}/../public/files/${fileName}`, function (err) {
     if (err) {
       return res.status(500).send(err);
     }
@@ -584,6 +584,10 @@ router.post("/follow", requireAuth, (req, res) => {
       console.log("unable to find first profile");
     });
 });
+
+
+
+
 module.exports = router;
 // AWS.config.update({
 //   accessKeyId: "AKIAIXOBVMK5U5Y57TPQ",
@@ -604,3 +608,64 @@ module.exports = router;
 //   };
 //   return s3.upload(params).promise();
 // };
+
+
+router.get("/views", (req, res) => {
+
+  var dat = new Date();
+  dat.setDate(dat.getDate() - 30);
+  console.log("new Date() - 30", dat);
+  var dat1 = new Date();
+  dat1.setDate(dat1.getDate());
+
+  Profile.findOne({ _id: "5cc2ae2eae364b1c5c1ea4ad" }, { profileViews: 1, _id: 0 })
+    .then(views => {
+      if (!views) {
+        errors.views = "There is no views";
+        res.status(404).json(errors);
+      }
+
+      var datesArray = [];
+
+      for (i = 0; i < 30; i++) {
+        var currentDate = new Date();
+
+        currentDate.setDate(currentDate.getDate() - i);
+        const p = currentDate.toISOString().slice(0, 10)
+        var foo = {};
+        foo = {
+          "day": p,
+          "count": 0
+        }
+        datesArray.push(foo);
+      }
+
+      views.profileViews.map(x => {
+        datesArray.map(
+          y => {
+            var m = new Date(x.time);
+            var z = new Date(y.day);
+
+            if (m.getFullYear() === z.getFullYear() &&
+              m.getMonth() === z.getMonth() &&
+              m.getDate() === z.getDate()
+            ) {
+              y.count = y.count + 1;
+            }
+          }
+        )
+      });
+
+      datesArray.map(x => {
+        console.log("datedatatat", x);
+      })
+
+
+      // var questionsIdsArray = [];
+      // questionsIdsArray = views.profileViews.map(x => x.time);
+
+
+      res.json(datesArray);
+    })
+    .catch(err => res.status(404).json(err));
+});

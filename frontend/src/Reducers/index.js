@@ -4,9 +4,10 @@ import errors from "./errors";
 import authReducer from "./authReducer";
 import MessageReducer from "./MessageReducer";
 import questions from "./questionsReducer";
-import ProfileReducer from "./ProfileReducer";
+import ProfileReducer from "./profileReducer";
 import contentReducer from "./contentReducer";
 import contentAnsweredReducer from "./contentAnsweredReducer";
+import answersReducer from "./answersReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -15,7 +16,7 @@ export default combineReducers({
   form: formReducer,
   message: MessageReducer,
   questions: questions,
-
+  answers: answersReducer,
   content: contentReducer,
   contentAnswered: contentAnsweredReducer
 });

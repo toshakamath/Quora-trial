@@ -29,6 +29,13 @@ var credentials = new Schema({
   state: { type: String },
   zipCode: { type: Number },
   profileImage: { type: String },
+  profileViews: [
+    {
+      userid: { type: Schema.Types.ObjectId, ref: "userDetails" },
+      time: { type: Date, default: Date.now }
+    }
+  ],
+
   experience: [
     {
       title: { type: String, required: true },
