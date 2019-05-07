@@ -9,6 +9,7 @@ import 'react-quill/dist/quill.snow.css';
 import axios from "axios";
 import "./ViewQuestion.css";
 import jwt_decode from "jwt-decode";
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 var htmlToRtf = require('html-to-rtf');
 
 
@@ -23,8 +24,10 @@ class ViewQuestion extends Component {
       editorHtml: '', 
       theme: 'snow',
       showFlag: false,
+      showFlag2: false,
       identity:"public",
-      user_id: []
+      user_id: [],
+      rawAnswer:''
     };
   }
 
@@ -52,12 +55,6 @@ class ViewQuestion extends Component {
         len: response.data.questionDetails.answers.length,
         user_id: answerOwnerArray
       });
-     axios.get(window.base_url + "/profile/getallusersdetails", {params:{user_id: this.state.user_id}})
-    .then(response=>{
-      console.log("response.data", response.data);
-    }, (err)=>{
-      console.log("response.data", err);
-    })
     }, (err)=>{
       console.log("response.data", err);
     });
@@ -86,12 +83,47 @@ onSubmitAnswer=(e)=>{
           .then((response) => {
             console.log("Status Code : ", response.status);
             console.log("Data from node : ", response.data);
-            this.props.history.push("/:questionid");
+            this.props.history.push(`${this.props.match.params.questionid}`);
           }, (err)=>{
             console.log("ERROR : ", err);
           });
 }
   renderAnswers() {
+
+    console.log("this.state.rawAnswer",this.state.rawAnswer);
+
+    let print=()=>{
+      if(!this.state.showFlag2)
+        return <div></div>
+      else
+      {
+              return( 
+              <div>
+                <div>
+                <ReactQuill
+                  theme={this.state.theme}
+                  onChange={this.handleChange}
+                  value={this.state.rawAnswer}
+                  modules={ViewQuestion.modules}
+                  formats={ViewQuestion.formats}
+                  bounds={'.app'}
+                  placeholder="Write your answer"
+                />
+                </div>
+                {/* <div id="richtextfooter"> */}
+                <div class="custom-control" >
+                
+                  <input type="checkbox" class="custom-control-input" name="identity" value="anonymous" id="anonymous" onChange={this.onChangeHandler1} />
+                  <label class="custom-control-label" for="anonymous">Anonymous</label>
+                  <button onClick={this.onSubmitAnswer}>Submit</button>
+                  
+                </div>
+                {/* </div> */}
+              </div>
+              );
+          }
+    }
+    
     let answerList = this.state.answerDetails;
     return _.map(answerList, answer => (
       <li className="list-group-item">
@@ -106,16 +138,20 @@ onSubmitAnswer=(e)=>{
             <i className="fa fa-arrow-up" aria-hidden="true" id="upvotearrow" />
             Upvote
           </button>
-          {((jwt_decode(localStorage.getItem("token"))).id)== answer.answerOwner ?
-          
-          <span style={{float: "right"}}><button>
+          {
+            ((jwt_decode(localStorage.getItem("token"))).id)== answer.answerOwner ?
+            <div>
+          <button style={{float:"right"}} value={answer.answer} onClick={this.showRichTextEditor2}> 
             Edit
-          </button></span>
+          </button>
+          {print()}
+          </div>
           :
           <div></div>
           
           //htmlToRtf.saveRtfInFile('<Path>/<FileName>.rtf', htmlToRtf.convertHtmlToRtf(html))
       }
+      
       </li>
     ));
   }
@@ -134,6 +170,23 @@ onSubmitAnswer=(e)=>{
   else if (this.state.showFlag===false){
     this.setState({
       showFlag: true
+    })
+  }
+  }
+  showRichTextEditor2=(e)=>{
+    this.setState({
+      rawAnswer: e.target.value
+    })
+    console.log(this.state.showFlag2)
+    if(this.state.showFlag2===true)
+    {
+    this.setState({
+      showFlag2: false
+    })
+  }
+  else if (this.state.showFlag2===false){
+    this.setState({
+      showFlag2: true
     })
   }
   }

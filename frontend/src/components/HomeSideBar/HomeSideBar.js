@@ -19,7 +19,7 @@ class HomeSideBar extends Component {
     let topics = this.props.auth.topics;
     return _.map(topics, topic => (
       <li className="topicList">
-        <Link to={`/questions/${topic.topicName}`} className="swictherLink">
+        <Link to={`/topic/${topic.topicName}`} className="swictherLink">
           <div className="switcherImgWrapper">
             <div
               className="swictherImgTopics"
@@ -40,7 +40,7 @@ class HomeSideBar extends Component {
           <ul className="sidebarList">
             <li className="SwitcherItemWithImage">
               <Link
-                to={`/courses/${this.props.id}/Home`}
+                to={`/home`}
                 className="swictherLink"
               >
                 <div className="switcherImgWrapper">

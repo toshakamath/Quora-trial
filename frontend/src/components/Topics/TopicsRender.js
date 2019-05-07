@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
-import "./questions.css";
+import _ from "lodash";
+import "./Topics.css";
 
-const questions = ({ question }) => {
+const topics = ({ question, param_name, sendImage }) => {
   //let answer = {}
 
   var max = -Infinity;
@@ -24,6 +25,8 @@ const questions = ({ question }) => {
   var currentDate = new Date();
   var diff = new Date(currentDate.getTime() - answeredDate.getTime());
 
+
+
   if (diff.getUTCFullYear() - 1970 > 0) {
     displayAsweredTime = diff.getUTCFullYear() - 1970 + " years ago";
   } else if (diff.getUTCMonth() > 0) {
@@ -37,9 +40,14 @@ const questions = ({ question }) => {
   } else if (diff.getUTCSeconds() - 1 > 0) {
     displayAsweredTime = diff.getUTCSeconds() + " seconds ago";
   }
-  console.log("SOMEHTNG HEREEEEE: ", question);
+  console.log("SOMEHTNG HEREEEEE: ",sendImage, param_name.topicName);
 
+if(question.topic.includes(param_name.topicName)){
   return (
+      <div>
+          <div className="card questionCard">
+        <h2><img src={sendImage} alt={param_name.topicName} style={{width:"100px", height:"100px", marginRight:"20px", borderRadius:"10px"}}/>{param_name.topicName}</h2>
+        </div>
     <div className="card cardstyle">
       {/* <img className="card-img-top" src="..." alt="Card image cap" /> */}
       <div className="card-body">
@@ -99,20 +107,19 @@ const questions = ({ question }) => {
             </p>
           </div>
         </a>
-
-        {/* 
-        <a href="#" className="btn btn-primary">
-          Go somewhere
-          </a>
-        <a href="#" className="card-link">
-          Card link
-          </a> */}
       </div>
     </div>
+    </div>
   );
+        }
+        else{
+            return(
+                <div></div>
+            );
+        }
 };
 
-questions.propTypes = {
+topics.propTypes = {
   //login: PropTypes.func.isRequired,
   //profile: PropTypes.func.isRequired,
   //auth: PropTypes.object.isRequired
@@ -122,4 +129,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default questions;
+export default topics;

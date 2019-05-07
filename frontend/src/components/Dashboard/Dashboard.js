@@ -13,7 +13,8 @@ import ConversationsList from "../Message/ConversationsList";
 import CreateMessage from "../Message/CreateMessage";
 import Content from "../Content/Content";
 import Sample from "../Sample";
-import Graph from "../Graphs/Graph"
+import Graph from "../Graphs/Graph";
+import Topics from "../Topics/Topics";
 // import Questions from "../Questions/questions";
 // import { getQuestions } from "../../Actions/questionsAction";
 // import PropTypes from "prop-types";
@@ -60,6 +61,7 @@ class Dashboard extends Component {
               <Route path="/content" component={Content}/>
               <Route path="/home" component={Home} />
               <Route path="/profile" component={Profile} />
+              <Route path="/topic/:topicName" component={Topics} />
               <Route path="/:questionid" component={ViewQuestion} />
               <Route path="/Answer" component={Answer} />
             </Switch>

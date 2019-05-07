@@ -71,17 +71,6 @@ router.get("/file", (req, res) => {
     });
 });
 
-router.get("/getallusersdetails", (req, res)=>{
-  console.log("req.body", req.body);
-    User.find({})
-    .then(response=>{
-      console.log(res);
-      res.status(200).send(response);
-    }, (err)=>{
-      console.log(err);
-      res.status(200);
-    })
-})
 // const AWS = require("aws-sdk");
 // const fs = require("fs");
 // const fileType = require("file-type");
@@ -221,7 +210,7 @@ router.get("/",passport.authenticate("jwt", { session: false }),(req, res) => {
 router.get("/all", (req, res) => {
   const errors = {};
   Profile.find()
-    .populate("user", ["fristName,lastName,email"])
+    .populate("user", ["firstName,lastName,email"])
     .then(profiles => {
       if (!profiles) {
         errors.noprofile = "There are no profiles";

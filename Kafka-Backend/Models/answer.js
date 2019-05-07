@@ -5,7 +5,7 @@ var answersdetail = new Schema({
   //need reference of question too..check how to add that
   answer: { type: String },
   answerOwner: { type: String },
-  isAnnonymous: { type: Boolean },
+  isAnonymous: { type: Boolean },
   question: { type: Schema.Types.ObjectId, ref: "questionsdetail" },
   upVote: [{ type: Schema.Types.ObjectId, ref: "userDetails" }],
   downVote: [{ type: Schema.Types.ObjectId, ref: "userDetails" }],

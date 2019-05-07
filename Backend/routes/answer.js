@@ -37,7 +37,7 @@ router.post("/", requireAuth, function (req, res) {
 
   // req.body.question = "abc";
   req.body.questionOwner = "Lucky";
-  req.body.isAnnonymous = true;
+  req.body.isAnonymous = true;
   req.body.topic = "abc";
   // req.body.question = "5cbf8898e35ac3ef9251d64b";
 
@@ -47,7 +47,7 @@ router.post("/", requireAuth, function (req, res) {
     answerOwner: req.user.id,
     question: req.body.question,
     upVote: "5cbf8764ad4cd7eed70e105d",
-    isAnnonymous: req.body.isAnonymous,
+    isAnonymous: req.body.isAnonymous,
     answerDate: Date.now()
   });
 

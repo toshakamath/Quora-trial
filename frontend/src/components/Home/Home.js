@@ -37,11 +37,7 @@ class Home extends Component {
       [e.target.name]: e.target.value
     });
   }
-  addQuestion=(e)=>{
-    e.preventDefault();
-    //get question name from props here and use in next modal
-    // let question_name= this.props.
-  }
+
   mapTopicsToQuestion=(e)=>{
     e.preventDefault();
     let isAnonymous=false;
@@ -398,7 +394,6 @@ class Home extends Component {
                             color: "#fff",
                             border: "1px solid #3a66ad"
                           }}
-                          onClick={this.addQuestion}
                         >
                           Add Question
                         </button>
