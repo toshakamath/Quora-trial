@@ -30,7 +30,7 @@ class Profile extends Component {
     super(props);
     this.state = {
       profileData: "",
-      name: "",
+      name: "Larry Page",
       followers: [],
       bio: "",
       file: "",
@@ -40,7 +40,7 @@ class Profile extends Component {
       text: "",
       followercount: "",
       noProfile: true,
-      following: [],
+      following: ["James","Jameson",""],
       //personal detail
       fname: "",
       lname: "",
@@ -206,10 +206,10 @@ class Profile extends Component {
     const Token = localStorage.getItem("token");
     console.log(localStorage.getItem("name"));
     const name = localStorage.getItem("name");
-    if (!localStorage.getItem("auth")) {
-      console.log("true");
-      this.props.history.push("/login");
-    }
+    // if (!localStorage.getItem("auth")) {
+    //   console.log("true");
+    //   this.props.history.push("/login");
+    // }
     console.log(Token);
     axios
       .get(window.base_url + "/profile", {
@@ -218,7 +218,7 @@ class Profile extends Component {
       .then(response => {
         console.log(response.data);
         if (response.status === 401) {
-          this.props.history.push("/login");
+          this.props.history.push("/profile");
         } else {
           console.log(response.data);
           this.setState({
@@ -235,7 +235,7 @@ class Profile extends Component {
           });
         }
       })
-      .catch(err => this.props.history.push("/login"));
+      .catch(err => this.props.history.push("/profile"));
   }
   bioEditHandler(e) {
     document.getElementById("bioForm").classList.toggle("hidden");
@@ -786,6 +786,7 @@ class Profile extends Component {
       return (
         <div key={index}>
           <Link to="#">
+          
             <i className="fas fa-graduation-cap" /> {education.school}
             <div>{modaladdexperience}</div>
             <div>{experiencevar}</div>

@@ -24,30 +24,30 @@ router.get("/", (req, res) => {
           } else {
             console.log("Successfully found the answers ", answerResult);
 
-            let answerTemp = JSON.parse(JSON.stringify(answerResult));
-            let userarray = [];
-            let userInfo = null;
+            // let answerTemp = JSON.parse(JSON.stringify(answerResult));
+            // let userarray = [];
+            // let userInfo = null;
 
-            for (i = 0; i < answerResult.length; i++) {
-              console.log("USER ID", answerResult[i].answerOwner);
-              userDetails.findById(
-                { _id: answerResult[i].answerOwner },
-                (err2, userInfo) => {
-                  console.log("USERIFNO", userInfo);
-                  if (err2) {
-                    console.log("ERROR", err2);
-                  } else {
-                    if (!!userInfo) {
-                      answerTemp[i].username = userInfo.firstName;
-                      userarray.push(answerTemp[i]);
-                    } else {
-                      userarray.push(answerTemp[i]);
-                    }
-                  }
-                  // answerTemp[i].username = userInfo.firstName;
-                }
-              );
-            }
+            // for (i = 0; i < answerResult.length; i++) {
+            //   console.log("USER ID", answerResult[i].answerOwner);
+            //   userDetails.findById(
+            //     { _id: answerResult[i].answerOwner },
+            //     (err2, userInfo) => {
+            //       console.log("USERIFNO", userInfo);
+            //       if (err2) {
+            //         console.log("ERROR", err2);
+            //       } else {
+            //         if (!!userInfo) {
+            //           answerTemp[i].username = userInfo.firstName;
+            //           userarray.push(answerTemp[i]);
+            //         } else {
+            //           userarray.push(answerTemp[i]);
+            //         }
+            //       }
+            //       // answerTemp[i].username = userInfo.firstName;
+            //     }
+            //   );
+            // }
             console.log("FIANL DATA", answerResult);
 
             let returnObj = {

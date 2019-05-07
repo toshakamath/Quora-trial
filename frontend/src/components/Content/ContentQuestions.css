@@ -20,7 +20,7 @@
   line-height: 1.5;
 }  */
 
-#summary p.collapse:not(.show) {
+/* #summary p.collapse:not(.show) {
   height: 42px !important;
   overflow: hidden;
   display: -webkit-box;
@@ -40,7 +40,7 @@
 #summary a:not(.collapsed):after {
   content: "(less)...";
   margin-left: 10px;
-}
+} */
 
 .answers {
   color: #333 !important;
