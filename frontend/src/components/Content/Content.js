@@ -24,12 +24,18 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    if (!localStorage.getItem("auth")) {
+      console.log("true");
+      this.props.history.push("/login");
+    }
     console.log("TEST METHOD : getContentQuestions, getContentAnswers");
     this.props.getContentQuestions("All Time", "All Types", "");
     this.props.getContentAnswers("All Time", "All Types", "");
     this.props.getContentFollowedQuestions("All Time", "All Types", "");
   }
 
+
+  
   render() {
 
     const { questions } = this.props.content;

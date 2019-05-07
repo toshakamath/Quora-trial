@@ -5,7 +5,7 @@ const aws = require("aws-sdk");
 aws.config.update({
   // Your SECRET ACCESS KEY from AWS should go here,
   // Never share it!
-  // Setup Env Variable, e.g: process.env.SECRET_ACCESS_KEY
+  // Setup Env Variable, e.g: process.env.SEwCRET_ACCESS_KEY
   secretAccessKey: "9dzVXyBQ0u17gAP9AVpKKpKq9EtRL/JtQxpt5M9n",
   // Not working key, Your ACCESS KEY ID from AWS should go here,
   // Never share it!

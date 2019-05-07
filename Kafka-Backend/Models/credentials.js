@@ -47,6 +47,12 @@ var credentials = new Schema({
       description: { type: String }
     }
   ],
+  profileViews: [
+    {
+      userid: { type: Schema.Types.ObjectId, ref: "userDetails" },
+      time:  { type: Date, default: Date.now }
+    }
+  ],
   date: { type: Date, default: Date.now }
 });
 

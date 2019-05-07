@@ -124,6 +124,12 @@ class Home extends Component {
 
   //new
   componentDidMount() {
+    
+    if (!localStorage.getItem("auth")) {
+      console.log("true");
+      this.props.history.push("/login");
+    }
+
     this.props.getQuestions();
     const token = localStorage.getItem("token");
     console.log("TOKEN: ", token);

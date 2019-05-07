@@ -10,4 +10,4 @@ var message = new Schema({
     date: {type:Date}
     });
 
-    module.exports = mongoose.model("message",message);
+module.exports = mongoose.model("message",message);

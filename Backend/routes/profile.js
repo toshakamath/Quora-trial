@@ -247,21 +247,89 @@ router.get("/handle/:handle", (req, res) => {
 //@desc   get profile by userId
 //@access public (anyone can see this user profile)
 
-router.get("/user/:user_id", (req, res) => {
+router.get("/user/:user_id",passport.authenticate("jwt",{session:false}), (req, res) => {
+  console.log("I am here");
   Profile.findOne({ user: req.params.user_id })
     .populate("user", ["firstName", "lastName", "email"])
     .then(profile => {
       if (!profile) {
+        console.log("Profile Found",profile);
         errors.noprofile = "There is no profile";
         res.status(404).json(errors);
       }
-      res.json(profile);
+      // res.json(profile);
+
+console.log(profile.profileViews)
+
+      const views = {
+        user:req.user.id,
+      } 
+      profile.profileViews.push(views)
+      profile.save().then(profile=>res.json(profile)).catch(err=>console.log(err))
+
     })
     .catch(err =>
       res.status(404).json({ profile: "There is no profile for this user" })
     );
 });
 
+router.get("/viewCount",passport.authenticate("jwt",{session:false}),(req,res)=>{
+  Profile.findOne({user:req.user.id}).then(profile=>{
+    if(!profile){
+      res.status(400).json({message:"profile not found"})
+    }
+   // res.json(profile.profileViews)
+
+
+
+
+  // var dat = new Date();
+  // dat.setDate(dat.getDate() - 30);
+  // console.log("new Date() - 30", dat);
+  // var dat1 = new Date();
+  // dat1.setDate(dat1.getDate());
+  // var pipeline = [
+  //   {
+  //     $match: {
+  //       viewTime: {
+  //         $gte: dat,
+  //         $lt: dat1
+  //       }
+  //     }
+  //   },
+
+  //   {
+  //     $project: {
+  //       viewTime: { $substr: ["$viewTime", 0, 10] }
+  //     }
+  //   }
+  // ];
+  // var res = {};
+  // var promise = Model.aggregate(pipeline).exec();
+  // promise
+  //   .then(function(data) {
+  //     console.log("profile view data-");
+  //     console.log(data);
+  //     res.value = data;
+  //     if (data) {
+  //       res.code = 200;
+  //       callback(null, res);
+  //     }
+  //   })
+  //   .catch(function(err) {
+  //     // just need one of these
+  //     console.log("error:", err.message);
+  //     res.code = "400";
+   //   callback(err, res);
+
+//});
+
+
+
+
+
+  })
+})
 // client.get(req.user.id , function(err, value) {
 
 //   if(err){

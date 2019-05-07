@@ -7,7 +7,7 @@ var topic = new Schema({
   topicsSelected: [
     { topicName: { type: String }, topicImage: { type: String } }
   ],
-  followers: { type: String },
+  followers: {  type: Schema.Types.ObjectId, ref: "userDetails"  },
   userId: { type: String }
 });
 

@@ -23,6 +23,12 @@ class Graph extends Component {
   }
 
   componentDidMount() {
+
+    if (!localStorage.getItem("auth")) {
+      console.log("true");
+      this.props.history.push("/login");
+    }
+    
     this.props.getQuestions();
     this.props.getAnswers();
     this.props.getProfileViewCount();

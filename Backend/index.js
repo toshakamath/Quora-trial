@@ -28,6 +28,7 @@ const getallanswer = require("./routes/getallanswer");
 // const bookmark = require("./routes/bookmark");
 const updownVote = require("./routes/updownVote");
 const comment = require("./routes/comment");
+const follower = require("./routes/follower");
 
 const fs = require("fs");
 var glob = require("glob");
@@ -97,6 +98,7 @@ app.use("/getallanswer", getallanswer);
 // app.use("/bookmark", bookmark);
 app.use("/updownVote", updownVote);
 app.use("/comment", comment);
+app.use("/follower", follower);
 
 // app.use("/all", profile1);
 //start your server on posrt 3001
