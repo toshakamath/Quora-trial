@@ -53,7 +53,7 @@ router.get("/", (req, res) => {
             console.log("final object", returnObj);
             res.status(200).send(returnObj);
           }
-        );
+         } );
       }
     });
   });
