@@ -117,7 +117,7 @@ class Profile extends Component {
         console.log(response.data);
         if (response.status === 400) {
           console.log("hello");
-          alert("hello")
+          alert("hello");
         }
         this.setState({
           profileData: response.data,

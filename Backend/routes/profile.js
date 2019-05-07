@@ -185,7 +185,7 @@ router.get(
       .then(profile => {
         if (!profile) {
           errors.noprofile = "There is no profile for this user";
-          return res.json({message:"hello"});
+          return res.json({ message: "hello" });
         } else {
           console.log("I am coming here and lets try for REDIS now");
           console.log(req.user.id);
