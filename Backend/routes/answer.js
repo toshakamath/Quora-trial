@@ -32,21 +32,32 @@ router.post("/", requireAuth, function (req, res) {
   console.log("Inside answer Post Request");
   console.log("Req Body : ", req.body);
 
-  console.log(req.body.question);
-  // req.body.question = "abc";
+  answerdetails.findOne({ _id: req.body.answerid }).then(answer => {
 
-  // req.body.question = "abc";
-  req.body.questionOwner = "Lucky";
-  req.body.isAnnonymous = true;
-  req.body.topic = "abc";
-  // req.body.question = "5cbf8898e35ac3ef9251d64b";
+    if(answer)
+    {
+      console.log("In Edit ANswer");
+
+      answer =  req.body.answer;
+
+      answerdetails
+      .findOneAndUpdate(
+        { _id: req.body.answerid  },
+        { $set: answer},
+        { new: true }
+      )
+      .then(answer => {
+        res.status(200).json({ message: "Bookmarked successfully" });
+      });
+
+    }
+  else{
 
   var user = new Answer({
     _id: new mongoose.Types.ObjectId(),
     answer: req.body.answer,
     answerOwner: req.user.id,
     question: req.body.question,
-    upVote: "5cbf8764ad4cd7eed70e105d",
     isAnnonymous: req.body.isAnnonymous,
     answerDate: Date.now()
   });
@@ -54,9 +65,7 @@ router.post("/", requireAuth, function (req, res) {
   console.log("answer details", user);
   user.save().then(
     doc => {
-      console.log("Answer saved successfully.", doc);
       res.value = "Answer saved successfully.";
-      // res.end(JSON.stringify(res.value));
       Question.findOne({ _id: req.body.question }).then(question => {
         question.answers.unshift(doc._id)
         question.save().then(question => res.status(200).json({ message: "success" }))
@@ -68,6 +77,8 @@ router.post("/", requireAuth, function (req, res) {
       res.end(JSON.stringify(res.value));
     }
   );
+  }
+ });
 });
 
 module.exports = router;

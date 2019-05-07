@@ -29,6 +29,13 @@ class Dashboard extends Component {
     };
   }
 
+  componentDidMount(){
+    if (!localStorage.getItem("auth")) {
+      console.log("true");
+      this.props.history.push("/login");
+    }
+  }
+
   togglePopup() {
     this.setState({
       showPopup: !this.state.showPopup

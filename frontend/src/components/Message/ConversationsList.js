@@ -12,6 +12,12 @@ import "../../App.css";
 class ConversationsList extends Component {
 
   componentDidMount() {
+
+    if (!localStorage.getItem("auth")) {
+      console.log("true");
+      this.props.history.push("/login");
+    }
+    
     localStorage.setItem("email", "lucky.singh@gmail.com");
     const email = localStorage.getItem("email");
     console.log(email);

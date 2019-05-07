@@ -15,6 +15,13 @@ class Search extends Component {
     };
   }
 
+  componentDidMount(){
+    if (!localStorage.getItem("auth")) {
+      console.log("true");
+      this.props.history.push("/login");
+    }
+  }
+
   renderProfile() {
     let searchProfile = (this.props.location.state.detail)||{}.profile;
     return _.map(searchProfile, profile => (

@@ -20,6 +20,13 @@ class Home extends Component {
     this.state = { 
      };
   }
+
+  componentDidMount(){
+    if (!localStorage.getItem("auth")) {
+      console.log("true");
+      this.props.history.push("/login");
+    }
+  }
   
   render() {
 

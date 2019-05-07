@@ -16,6 +16,7 @@ import { Link, withRouter } from "react-router-dom";
 // import Submission from "../submission/Submission";
 
 class Answer extends Component {
+  
   //   constructor(props) {
   //     super(props);
   //     this.state = {

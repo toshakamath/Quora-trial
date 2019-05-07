@@ -15,6 +15,13 @@ class Interests extends Component {
     this.handleSelect = this.handleSelect.bind(this);
   }
 
+  componentDidMount(){
+    if (!localStorage.getItem("auth")) {
+      console.log("true");
+      this.props.history.push("/login");
+    }
+  }
+
   /**** Handle the selected topics ****/
 
   handleSelect(name, url) {

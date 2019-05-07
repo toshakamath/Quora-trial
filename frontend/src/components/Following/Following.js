@@ -7,6 +7,13 @@ class Following extends Component {
     this.state = {};
     this.onChange = this.onChange.bind(this);
   }
+
+  componentDidMount(){
+    if (!localStorage.getItem("auth")) {
+      console.log("true");
+      this.props.history.push("/login");
+    }
+  }
   onChange(e) {
     this.setState({
       [e.target.name]: e.target.value

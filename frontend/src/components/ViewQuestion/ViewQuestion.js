@@ -24,6 +24,13 @@ class ViewQuestion extends Component {
   }
 
   componentDidMount() {
+
+    if (!localStorage.getItem("auth")) {
+      console.log("true");
+      this.props.history.push("/login");
+    }
+
+    
     let questionid = this.props.match.params.questionid;
     Axios.get(window.base_url + "/getonequestion", {
       params: { questionId: questionid }
