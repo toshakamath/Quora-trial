@@ -4,6 +4,7 @@ var passport = require("passport");
 var requireAuth = passport.authenticate("jwt", { session: false });
 const mongoose = require("mongoose");
 var Question = require("../../Kafka-Backend/Models/questionsdetail");
+var userDetails = require("../../Kafka-Backend/Models/userDetails");
 var Answers = require("../../Kafka-Backend/Models/answersdetail");
 
 /***  GET one question with all its answers ***/
