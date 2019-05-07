@@ -5,9 +5,9 @@ var credentials = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "userDetails" },
   followers: [{ type: Schema.Types.ObjectId, ref: "userDetails" }],
   following: [{ type: Schema.Types.ObjectId, ref: "userDetails" }],
-  handle: { type: String, required: true, max: 40 },
+  handle: { type: String, max: 40 },
   location: { type: String },
-  status: { type: String, required: true },
+  status: { type: String },
   skills: {
     type: [String]
   },

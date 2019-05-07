@@ -102,6 +102,8 @@ class Profile extends Component {
 
   componentDidMount() {
     const Token = localStorage.getItem("token");
+    console.log(localStorage.getItem("name"));
+
     if (!localStorage.getItem("auth")) {
       console.log("true");
       this.props.history.push("/login");
@@ -112,6 +114,11 @@ class Profile extends Component {
         headers: { Authorization: Token }
       })
       .then(response => {
+        console.log(response.data);
+        if (response.status === 400) {
+          console.log("hello");
+          alert("hello")
+        }
         this.setState({
           profileData: response.data,
           name: response.data.user.firstName,

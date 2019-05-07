@@ -12,7 +12,7 @@ import Sample from "../Sample";
 import { getQuestions } from "../../Actions/questionsAction";
 import PropTypes from "prop-types";
 import { getProfileName } from "../../Actions/profileAction";
-import { Checkbox } from "antd";
+//import { Checkbox } from "antd";
 import CreateMessage1 from "../Message/CreateMessage1";
 import DisplayAllMessages1 from "../Message/DisplayAllMessages1";
 import ViewConversation1 from "../Message/ViewConversation1";
