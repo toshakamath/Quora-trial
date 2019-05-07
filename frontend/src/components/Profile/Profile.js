@@ -29,14 +29,15 @@ class Profile extends Component {
     this.state = {
       profileData: "",
       name: "",
-      follower: "",
+      followers: [],
       bio: "",
       file: "",
       profileImage: "",
       education: [],
       experience: [],
       text: "",
-      followercount: ""
+      followercount: "",
+      noProfile: true
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -103,7 +104,7 @@ class Profile extends Component {
   componentDidMount() {
     const Token = localStorage.getItem("token");
     console.log(localStorage.getItem("name"));
-
+    const name = localStorage.getItem("name");
     if (!localStorage.getItem("auth")) {
       console.log("true");
       this.props.history.push("/login");
@@ -117,17 +118,20 @@ class Profile extends Component {
         console.log(response.data);
         if (response.status === 400) {
           console.log("hello");
-          alert("hello");
+        } else {
+          console.log(response.data);
+          this.setState({
+            profileData: response.data,
+            name: response.data.user.firstName,
+            bio: response.data.bio,
+            profileImage: response.data.profileImage,
+            education: [...response.data.education],
+            experience: [...response.data.experience],
+            followercount: response.data.followers.length,
+            followers: [...response.data.followers],
+            noProfile: false
+          });
         }
-        this.setState({
-          profileData: response.data,
-          name: response.data.user.firstName,
-          bio: response.data.bio,
-          profileImage: response.data.profileImage,
-          education: [...response.data.education],
-          experience: [...response.data.experience],
-          followercount: response.data.followers.length
-        });
       });
   }
   bioEditHandler(e) {
@@ -167,8 +171,11 @@ class Profile extends Component {
     // let deltaOps = this.state.name;
     // console.log(deltaOps);
     // var htmlText = QuillDeltaToHtmlConverter(deltaOps, {}).convert();
+    console.log(this.state.followers);
     const education = [];
     Object.assign(education, this.state.education);
+    const followers = [];
+    Object.assign(followers, this.state.followers);
     const Education = education.map((education, index) => {
       return (
         <div key={index}>
@@ -258,15 +265,26 @@ class Profile extends Component {
                           </div>
                         </div>
                       </div>
-                      <img
-                        src={`${window.base_url}/files/${
-                          this.state.profileImage
-                        }`}
-                        className="rounded-circle"
-                        alt="username"
-                        height="100"
-                        width="100"
-                      />
+                      {this.state.profileImage ? (
+                        <img
+                          src={`${window.base_url}/files/${
+                            this.state.profileImage
+                          }`}
+                          className="rounded-circle"
+                          alt="username"
+                          height="100"
+                          width="100"
+                        />
+                      ) : (
+                        <img
+                          src="https://qsf.fs.quoracdn.net/-3-images.new_grid.profile_pic_default_small.png-26-679bc670f786484c.png"
+                          alt="proImg"
+                          height="35"
+                          width="35"
+                          className="rounded-circle"
+                        />
+                      )}
+
                       <span>
                         <button
                           className="edit-button"
@@ -365,6 +383,12 @@ class Profile extends Component {
                       </div>
                       <div className="col-9 rightWrapper ProfileActivityWrapper">
                         <Switch>
+                          {/* this.state.noProfile ? ( */}
+                          {/* // ) : (
+                          //   <div>
+                          //     <h2>Please create your profile</h2>
+                          //   </div>
+                          // )} */}
                           <Route
                             path="/profile/yourAnswers"
                             component={yourAnswers}
@@ -375,7 +399,9 @@ class Profile extends Component {
                           />
                           <Route
                             path="/profile/followers"
-                            component={Followers}
+                            component={props => (
+                              <Followers {...props} followers={followers} />
+                            )}
                           />
                           <Route
                             path="/profile/following"
