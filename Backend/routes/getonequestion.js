@@ -24,35 +24,60 @@ router.get("/", (req, res) => {
           } else {
             console.log("Successfully found the answers ", answerResult);
 
+            let answerTemp = JSON.parse(JSON.stringify(answerResult));
+            let userarray = [];
+            let userInfo = null;
 
-            //Laxmikant's changes to increase visitor count check how to increase a count
-            const booked={}
-            console.log("Visitor");
-            console.log(questionResult.visitor);
-            const abc = questionResult.visitor + 1;
-             console.log(abc);
+            for (i = 0; i < answerResult.length; i++) {
+              console.log("USER ID", answerResult[i].answerOwner);
+              userDetails.findById(
+                { _id: answerResult[i].answerOwner },
+                (err2, userInfo) => {
+                  console.log("USERIFNO", userInfo);
+                  if (err2) {
+                    console.log("ERROR", err2);
+                  } else {
+                    if (!!userInfo) {
+                      answerTemp[i].username = userInfo.firstName;
+                      userarray.push(answerTemp[i]);
+                    } else {
+                      userarray.push(answerTemp[i]);
+                    }
+                  }
+                  // answerTemp[i].username = userInfo.firstName;
+                }
+              );
+            }
+            console.log("FIANL DATA", answerResult);
 
-           booked.visitor=abc;
-           console.log(booked);
-             Question
-             .findOneAndUpdate(
-               { _id: req.query.questionId},
-                {$set:booked},
-               { new: true }
-             )
-             .then(answer => {
-               console.log("Increases successfully successfully");
-               console.log(answer);
-             });
-
-             
             let returnObj = {
               questionDetails: questionResult,
               answerDetails: answerResult
             };
+
             console.log("final object", returnObj);
             res.status(200).send(returnObj);
           }
+
+          // Answers.findOne({_id: answerResult})
+
+          //Laxmikant's changes to increase visitor count check how to increase a count
+          const booked = {};
+          console.log("Visitor");
+          console.log(questionResult.visitor);
+          const abc = questionResult.visitor + 1;
+          console.log(abc);
+
+          booked.visitor = abc;
+          console.log(booked);
+          Question.findOneAndUpdate(
+            { _id: req.query.questionId },
+            { $set: booked },
+            { new: true }
+          ).then(answer => {
+            console.log("Increases successfully successfully");
+            console.log(answer);
+          });
         }
       );
     }
