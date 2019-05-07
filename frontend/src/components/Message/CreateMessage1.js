@@ -4,6 +4,7 @@ import { fetchPeople, setMessage, sendMessage, displayMessages, replyMessages, n
 import _ from "lodash";
 import { connect } from "react-redux";
 import "./Message.css";
+import jwt_decode from "jwt-decode";
 
 class CreateMessage1 extends Component {
     constructor(props) {
@@ -14,9 +15,10 @@ class CreateMessage1 extends Component {
         }
     componentDidMount() {
         //call to action
-        localStorage.setItem("email", "lucky.singh@gmail.com");
-        const email = localStorage.getItem("email");
-        //console.log(email);
+        let token_saved = localStorage.getItem("token");
+  let decode = jwt_decode(token_saved);
+  let email= decode.email;
+    console.log("EMAILLLLLL: ",email);
         const data = {
           email: email
         };
@@ -41,9 +43,10 @@ class CreateMessage1 extends Component {
         // console.log(this.props.messagedetails.subject);
         // console.log(this.props.messagedetails.message);
         e.preventDefault();
-        localStorage.setItem("email", "lucky.singh@gmail.com");
-        var em = localStorage.getItem("email");
-        console.log(em);
+        let token_saved = localStorage.getItem("token");
+  let decode = jwt_decode(token_saved);
+  let em= decode.email;
+    console.log("EMAILLLLLL: ",em);
         const data = {
             //sender: em, receiver, subject, message, date
             sender: em,
