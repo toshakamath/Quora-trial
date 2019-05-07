@@ -180,7 +180,6 @@ class Home extends Component {
     return (
       <div className="container container-fluid">
       <Switch>
-        {/* <Route path="/home/inbox/a" component={Sample} /> */}
         <Route path="/home/messages/create" component={CreateMessage1} />
         <Route path="/home/messages/:_id" component={ViewConversation1} />
         <Route path="/home/messages" component={DisplayAllMessages1} />
@@ -355,7 +354,37 @@ class Home extends Component {
                               class="tab-pane"
                               id="shareLinkTab"
                             >
-                              Share Link Tab
+                              {/* Share Link Tab */}
+                              <div>
+                                <img
+                                  src={`http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png`}
+                                  alt={name}
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    borderRadius: "20px",
+                                    marginRight: "5px"
+                                  }}
+                                />
+                                {name} shared{" "}
+                              </div>
+                              <div>
+                                <textarea
+                                  id="sharelinktextarea"
+                                  class="form-control"
+                                  name="newquestion"
+                                  onChange={this.onChangeHandler}
+                                  placeholder='Say something about this...'
+                                />
+                                <hr />
+                                <input
+                                  class="form-control"
+                                  id="sharelinkinput"
+                                  name="questionlink"
+                                  onChange={this.onChangeHandler}
+                                  placeholder="Enter a link"
+                                />
+                              </div>
                             </div>
                           </div>
                         </div>

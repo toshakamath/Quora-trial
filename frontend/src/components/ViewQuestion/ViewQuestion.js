@@ -9,25 +9,27 @@ import 'react-quill/dist/quill.snow.css';
 import axios from "axios";
 import "./ViewQuestion.css";
 import jwt_decode from "jwt-decode";
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
-var htmlToRtf = require('html-to-rtf');
-
 
 class ViewQuestion extends Component {
   constructor(props) {
     super(props);
+    this.contentEditable = React.createRef();
     this.state = {
       questionDetails: {},
       answerDetails: [],
       len: 0,
       // text: '',
-      editorHtml: '', 
+      editorHtml: '',
+      editorHtml2:'', 
       theme: 'snow',
       showFlag: false,
       showFlag2: false,
       identity:"public",
+      identity2:"public",
       user_id: [],
-      rawAnswer:''
+      rawAnswer:'',
+      editAnswerId:'',
+      checked:false
     };
   }
 
@@ -83,15 +85,44 @@ onSubmitAnswer=(e)=>{
           .then((response) => {
             console.log("Status Code : ", response.status);
             console.log("Data from node : ", response.data);
-            this.props.history.push(`${this.props.match.params.questionid}`);
+            this.props.history.push(`/question/${this.props.match.params.questionid}`);
           }, (err)=>{
             console.log("ERROR : ", err);
           });
 }
+onSubmitAnswer2=(e)=>{
+  let isAnonymous=false;
+    if(this.state.identity2=="public")
+      isAnonymous=false;
+    else if(this.state.identity2=="anonymous")
+      isAnonymous=true;
+
+    console.log("this.props.match.params._id: ", this.props.match.params.questionid);
+    
+  let data={
+    editorHtml: this.state.editorHtml2,
+    isAnonymous: isAnonymous,
+    question: this.props.match.params.questionid,
+    answerid: this.state.editAnswerId
+  }
+  console.log("DATAAA: ", data);
+  axios.defaults.withCredentials = true;
+  const Token=localStorage.getItem("token")
+        axios
+        .post(window.base_url+`/answer`,data,{headers:{Authorization:Token}})
+          .then((response) => {
+            console.log("Status Code : ", response.status);
+            console.log("Data from node : ", response.data);
+            this.props.history.push(`/question/${this.props.match.params.questionid}`);
+          }, (err)=>{
+            console.log("ERROR : ", err);
+          });
+}
+
   renderAnswers() {
 
     console.log("this.state.rawAnswer",this.state.rawAnswer);
-
+    
     let print=()=>{
       if(!this.state.showFlag2)
         return <div></div>
@@ -102,62 +133,103 @@ onSubmitAnswer=(e)=>{
                 <div>
                 <ReactQuill
                   theme={this.state.theme}
-                  onChange={this.handleChange}
-                  value={this.state.rawAnswer}
+                  onChange={this.handleChange2}
+                  defaultValue={this.state.rawAnswer}
                   modules={ViewQuestion.modules}
                   formats={ViewQuestion.formats}
                   bounds={'.app'}
                   placeholder="Write your answer"
                 />
                 </div>
-                {/* <div id="richtextfooter"> */}
+                <button class="btn btn-light btn-sm" onClick={this.onSubmitAnswer2}>Submit</button>
                 <div class="custom-control" >
-                
-                  <input type="checkbox" class="custom-control-input" name="identity" value="anonymous" id="anonymous" onChange={this.onChangeHandler1} />
+                  <input type="checkbox" class="custom-control-input" name="identity2" value="anonymous" id="anonymous" onChange={this.onChangeHandler2} />
                   <label class="custom-control-label" for="anonymous">Anonymous</label>
-                  <button onClick={this.onSubmitAnswer}>Submit</button>
-                  
                 </div>
-                {/* </div> */}
               </div>
               );
           }
     }
     
     let answerList = this.state.answerDetails;
+    console.log("SOME DETAILSSSSSSSS: ",answerList);
     return _.map(answerList, answer => (
       <li className="list-group-item">
       <img src="#"></img>
         <label  style={{display:'inline'}} >{answer.answerOwner}</label>
         <div style={{ float: "right" }}>Answered On : {answer.answerDate}</div>
         <br/>
-        {/* <p>{answer.answer}</p> */}
         <div id="setPhoto" className="setPhoto" dangerouslySetInnerHTML={{ __html: answer.answer }} />
-        {/* <p><img></img>lwenf jlvcn</p> */}
-        <button>
+        <button class="btn btn-light btn-sm">
             <i className="fa fa-arrow-up" aria-hidden="true" id="upvotearrow" />
             Upvote
           </button>
+          <button style={{marginLeft:"20px"}} class="btn btn-light btn-sm">
+            <i className="fa fa-arrow-down" aria-hidden="true" id="downvotearrow" />
+            Downvote
+          </button>
+        <span style={{float:"right"}}>
+        <div class="custom-control">
+          <input type="checkbox" autocomplete="off" class="custom-control-input" name="topicsSelected" value={answer._id} id={answer._id} onChange={this.onBookmarkChange}/>
+          <label class="custom-control-label" for={answer._id}><i class="far fa-bookmark"></i> Bookmark</label>
+        </div>
+        </span>
           {
             ((jwt_decode(localStorage.getItem("token"))).id)== answer.answerOwner ?
             <div>
-          <button style={{float:"right"}} value={answer.answer} onClick={this.showRichTextEditor2}> 
+          <button style={{float:"right"}} value={answer.answer} name={answer._id} onClick={this.showRichTextEditor2}> 
             Edit
           </button>
-          {print()}
+          {answer._id == this.state.editAnswerId && print()}
           </div>
           :
           <div></div>
-          
-          //htmlToRtf.saveRtfInFile('<Path>/<FileName>.rtf', htmlToRtf.convertHtmlToRtf(html))
       }
-      
       </li>
     ));
   }
 
+  onBookmarkChange=(e)=>{
+    console.log("SOMETHINGGGGG ",e.target.name, e.target.value, e.target.checked);
+    axios.defaults.withCredentials = true;
+    const Token=localStorage.getItem("token")
+    let data={};
+    if(e.target.checked===true){
+      this.setState({
+        checked: true
+      })      
+      data ={
+          bookmarked: true,
+          answerid: e.target.value
+      }
+      console.log("Checked the box: ", data);
+    }
+    else if(e.target.checked===false){
+      this.setState({
+        checked: false
+      })
+      data ={
+        bookmarked: false,
+        answerid: e.target.value
+      }
+      console.log("UNchecked the box: ", data);
+    }
+    axios
+        .post(window.base_url+`/bookmark`,data,{headers:{Authorization:Token}})
+          .then((response) => {
+            console.log("Status Code : ", response.status);
+            console.log("Data from node : ", response.data);
+            this.props.history.push(`/question/${this.props.match.params.questionid}`);
+          }, (err)=>{
+            console.log("ERROR : ", err);
+          });
+  }
+
   handleChange =(html)=> {
   	this.setState({ editorHtml: html });
+  }
+  handleChange2 =(html)=> {
+  	this.setState({ editorHtml2: html });
   }
 
   showRichTextEditor=(e)=>{
@@ -174,9 +246,12 @@ onSubmitAnswer=(e)=>{
   }
   }
   showRichTextEditor2=(e)=>{
+console.log("e.target.value: ",e.target.value);
     this.setState({
-      rawAnswer: e.target.value
+      rawAnswer: e.target.value,
+      editAnswerId: e.target.name
     })
+    
     console.log(this.state.showFlag2)
     if(this.state.showFlag2===true)
     {
@@ -203,6 +278,19 @@ onSubmitAnswer=(e)=>{
           });
     }
   }
+  onChangeHandler2=(e)=>{
+    console.log("SOMETHINGGGGG ",e.target.name, e.target.value, e.target.checked);
+    if(e.target.checked===true){
+    this.setState({
+      identity2: "anonymous"
+    });
+  }
+    else if(e.target.checked===false){
+      this.setState({
+        identity2: "public"
+          });
+    }
+  }
   render() {
     let cid = this.props.match.params.cid;
 
@@ -214,15 +302,20 @@ onSubmitAnswer=(e)=>{
           <ul className="list-group list-group-flush" id="questionbody">
             <li className="list-group-item" id="question">
               <div className="questionheader">
-                Topic : {this.state.questionDetails.topic}
+                Topics : <span style={{border: "1px solid", padding:"10px", borderRadius:"10px", border: "1px solid grey"}}>{this.state.questionDetails.topic}</span>
               </div>
               <br />
               <b>{this.state.questionDetails.question}</b>
               <br />
-              <button onClick={this.showRichTextEditor}>
+              <button class="btn btn-light btn-sm" onClick={this.showRichTextEditor}>
               <i class="fa fa-pencil-square-o" id="answerquestion" />
               <span>Answer</span>
               </button>
+              <button style={{marginLeft:"20px"}} type="button" class="btn btn-light btn-sm">
+              <i class="fa fa-rss" aria-hidden="true" id="followquestion" /> 
+              Follow
+              </button>
+
               {/* { this.state.showResults ? <Results /> : null } */}
               {!this.state.showFlag ?
               <div></div>:
@@ -235,27 +328,20 @@ onSubmitAnswer=(e)=>{
                       modules={ViewQuestion.modules}
                       formats={ViewQuestion.formats}
                       bounds={'.app'}
-                      placeholder={this.props.placeholder}
+                      placeholder="Write your answer"
                     />
                     </div>
                     {/* <div id="richtextfooter"> */}
-                    <div class="custom-control" >
+                    <button class="btn btn-light btn-sm" onClick={this.onSubmitAnswer}>Submit</button>
+                    <div style={{float:"left"}} class="custom-control" >
                     
                       <input type="checkbox" class="custom-control-input" name="identity" value="anonymous" id="anonymous" onChange={this.onChangeHandler1} />
                       <label class="custom-control-label" for="anonymous">Anonymous</label>
-                      <button onClick={this.onSubmitAnswer}>Submit</button>
-                      
                     </div>
                     {/* </div> */}
                   </div>
               }
-              <i class="fa fa-rss" aria-hidden="true" /> Follow
-              <div style={{ float: "right" }}>
-              
-                <i class="fa fa-comment-o" aria-hidden="true" />
-                Comment
-                
-              </div>
+
               <br />
               <span>{this.state.len} Answer(s)</span>
             </li>

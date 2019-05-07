@@ -45,7 +45,7 @@ const questions = ({ question }) => {
       <div className="card-body">
         <h5 className="card-title">Topic: {question.topic} </h5>
 
-        <a href={"/" + question._id} className="questions">
+        <a href={"/question/" + question._id} className="questions">
           <h5 className="card-title">
             <b>{question.question}</b>
           </h5>

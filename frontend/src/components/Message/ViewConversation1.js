@@ -5,7 +5,6 @@ import { fetchPeople, setMessage, sendMessage, displayMessages, replyMessages, n
 import _ from "lodash";
 import { connect } from "react-redux";
 import "./Message.css";
-import Inbox from './Inbox';
 import "../../App.css";
 
 class ViewConversation1 extends Component {

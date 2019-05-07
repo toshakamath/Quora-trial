@@ -30,25 +30,7 @@ class Topics extends Component {
         this.props.fetchTopics();
       }
       
-      //{this.topicsList()}
-      
   render() {
-    // let topicsList=() =>{
-    //     let topics = this.props.auth.topics;
-    //     return _.map(topics, topic => (
-    //       <li className="topicList">
-    //         <Link to={`/topic/${topic.topicName}`} className="swictherLink">
-    //           <div>
-    //             <div
-    //               style={{ backgroundImage: `url(${topic.topicImage})` , width:"100px", height:"100px" }}
-    //             />
-    //           </div>
-    //           <label className="topicname">{topic.topicName}</label>
-    //         </Link>
-    //       </li>
-    //     ));
-    //   }
-
     let topics1 = this.props.auth.topics;
     //new
     let checkprops = this.props;
@@ -66,9 +48,6 @@ class Topics extends Component {
             sendImage=this.props.auth.topics[i].topicImage;
         }
     }
-    console.log("skdjfnS DGLKNOIW",sendImage);
-
-
     if (questions === null) return <div />;
 
     const questionsList = questions.map((question, index) => (

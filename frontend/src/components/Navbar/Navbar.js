@@ -3,7 +3,6 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Axios from "axios";
 import "./Navbar.css";
-// import "../Message/ConversationsList";
 
 class Navbar extends Component {
   constructor(props) {

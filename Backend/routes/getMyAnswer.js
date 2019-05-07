@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var requireAuth = passport.authenticate('jwt', {session: false});
-var Model = require('../../Kafka-Backend/Models/answer');
+var Model = require('../../Kafka-Backend/Models/answersdetail');
 
 
 //added post method as of now as I am getting call from postman. please chnage itto GET

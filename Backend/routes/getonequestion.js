@@ -3,8 +3,8 @@ var router = express.Router();
 var passport = require("passport");
 var requireAuth = passport.authenticate("jwt", { session: false });
 const mongoose = require("mongoose");
-var Question = require("../../Kafka-Backend/Models/questionsDetail");
-var Answers = require("../../Kafka-Backend/Models/answer");
+var Question = require("../../Kafka-Backend/Models/questionsdetail");
+var Answers = require("../../Kafka-Backend/Models/answersdetail");
 
 /***  GET one question with all its answers ***/
 router.get("/", (req, res) => {
@@ -22,6 +22,29 @@ router.get("/", (req, res) => {
             res.status(404);
           } else {
             console.log("Successfully found the answers ", answerResult);
+
+
+            //Laxmikant's changes to increase visitor count check how to increase a count
+            const booked={}
+            console.log("Visitor");
+            console.log(questionResult.visitor);
+            const abc = questionResult.visitor + 1;
+             console.log(abc);
+
+           booked.visitor=abc;
+           console.log(booked);
+             Question
+             .findOneAndUpdate(
+               { _id: req.query.questionId},
+                {$set:booked},
+               { new: true }
+             )
+             .then(answer => {
+               console.log("Increases successfully successfully");
+               console.log(answer);
+             });
+
+             
             let returnObj = {
               questionDetails: questionResult,
               answerDetails: answerResult

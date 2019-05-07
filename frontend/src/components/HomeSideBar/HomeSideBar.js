@@ -52,7 +52,7 @@ class HomeSideBar extends Component {
             {this.topicsList()}
             <li>
               <Link
-                to={`/courses/Home`}
+                to={`/bookmarks`}
                 className="swictherLink"
               >
                 <div className="BookmarkswictherImg">

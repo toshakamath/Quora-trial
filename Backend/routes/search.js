@@ -3,7 +3,7 @@ var router = express.Router();
 var passport = require("passport");
 var requireAuth = passport.authenticate("jwt", { session: false });
 var userDetails = require("../../Kafka-Backend/Models/userDetails");
-var question = require("../../Kafka-Backend/Models/questionsDetail");
+var question = require("../../Kafka-Backend/Models/questionsdetail");
 var topic = require("../../Kafka-Backend/Models/topic");
 ObjectId = require("mongodb").ObjectID;
 

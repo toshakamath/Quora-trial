@@ -110,3 +110,28 @@ a {
     border: 0;
     box-shadow: none;
 }
+#sharelinktextarea{
+  overflow: hidden;
+  font-family: 'q_serif',Georgia,Times,"Times New Roman","Hiragino Kaku Gothic Pro","Meiryo",serif;
+  font-size: 16px;
+    line-height: 1.4;
+    font-weight: 400;
+    border: 0;
+    box-shadow: none;
+    padding-bottom: 8px;
+    margin-top: 18px;
+    box-sizing: border-box;
+    resize: none;
+
+}
+#sharelinkinput{
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  resize: none;
+    overflow: auto;
+    outline: none;
+    color: #333;
+    border-color: lightgray;
+    box-shadow: none;
+}

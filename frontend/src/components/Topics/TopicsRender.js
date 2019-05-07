@@ -17,6 +17,9 @@ const topics = ({ question, param_name, sendImage }) => {
   });
 
   // diff is: Thu Jul 05 1973 04:00:00 GMT+0300 (EEST)
+  
+  let user= (question.answers[index]||{}).answerOwner;
+  console.log("USER", user);
 
   const maxUpVotedAnswer = (question.answers[index]||{}).answer;
   const answerDate = (question.answers[index]||{}).answerDate;
@@ -24,8 +27,6 @@ const topics = ({ question, param_name, sendImage }) => {
   var answeredDate = new Date(answerDate);
   var currentDate = new Date();
   var diff = new Date(currentDate.getTime() - answeredDate.getTime());
-
-
 
   if (diff.getUTCFullYear() - 1970 > 0) {
     displayAsweredTime = diff.getUTCFullYear() - 1970 + " years ago";
@@ -40,13 +41,15 @@ const topics = ({ question, param_name, sendImage }) => {
   } else if (diff.getUTCSeconds() - 1 > 0) {
     displayAsweredTime = diff.getUTCSeconds() + " seconds ago";
   }
-  console.log("SOMEHTNG HEREEEEE: ",sendImage, param_name.topicName);
 
 if(question.topic.includes(param_name.topicName)){
   return (
       <div>
           <div className="card questionCard">
-        <h2><img src={sendImage} alt={param_name.topicName} style={{width:"100px", height:"100px", marginRight:"20px", borderRadius:"10px"}}/>{param_name.topicName}</h2>
+        <h2><img src={sendImage} alt={param_name.topicName} style={{width:"100px", height:"100px", marginRight:"20px", borderRadius:"10px"}}/>
+        {param_name.topicName}
+        <button style={{marginLeft:"20px"}} type="button" class="btn btn-light btn-sm"><i class="fas fa-tasks"></i> Follow</button>
+        </h2>
         </div>
     <div className="card cardstyle">
       {/* <img className="card-img-top" src="..." alt="Card image cap" /> */}
@@ -62,7 +65,7 @@ if(question.topic.includes(param_name.topicName)){
           {question.questionlink}
           </a>
 
-        <h6 style={{marginTop:"10px"}} className="userInfo card-subtitle mb-2 text-muted">User Info</h6>
+        <h6 style={{marginTop:"10px"}} className="userInfo card-subtitle mb-2 text-muted">{user}</h6>
         <h6 className="userInfo card-subtitle mb-2 text-muted">
           Answered: {displayAsweredTime}
         </h6>
@@ -118,15 +121,5 @@ if(question.topic.includes(param_name.topicName)){
             );
         }
 };
-
-topics.propTypes = {
-  //login: PropTypes.func.isRequired,
-  //profile: PropTypes.func.isRequired,
-  //auth: PropTypes.object.isRequired
-  //errors: PropTypes.object.isRequired
-};
-const mapStateToProps = state => ({
-  auth: state.auth
-});
 
 export default topics;

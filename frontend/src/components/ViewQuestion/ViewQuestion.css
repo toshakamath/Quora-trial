@@ -5,8 +5,17 @@
 .questionheader{
     width: 49rem;
     height: 30px;
-    background: cyan;
 }
 #setPhoto > p > img{
     width: 100%;
+  }
+  .editable {
+    font-family: sans-serif;
+    margin-left: 10%;
+    width: 75%;
+    min-height: 100px;
+    /* border: 1px dashed #aaa; */
+    border: 1px solid #aaa;
+    padding: 5px;
+    resize: none;
   }

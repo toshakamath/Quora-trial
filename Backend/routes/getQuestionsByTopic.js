@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var requireAuth = passport.authenticate('jwt', {session: false});
-var Model = require('../../Kafka-Backend/Models/question');
+var Model = require('../../Kafka-Backend/Models/questionsdetail');
 
 router.get('/', requireAuth, function(req,res){
 

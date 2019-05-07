@@ -30,7 +30,7 @@ class Search extends Component {
     let searchQuestion = (this.props.location.state.detail)||{}.question;
     return _.map(searchQuestion, question => (
       <li className="list-group-item">
-        <Link to={`/${question._id}`}>
+        <Link to={`/question/${question._id}`}>
           <label style={{ display: "inline" }}>{question.question}</label>
         </Link>
       </li>
