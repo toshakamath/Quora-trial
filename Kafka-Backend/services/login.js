@@ -38,9 +38,9 @@ function handle_request(message, callback){
           bcrypt.compare(password, results[0].password, function(err, ress) {
             if (!ress) {
               callback(null, null);  
-
             } 
             else {
+              console.log("outn compariion");
               User.findOne({ email: message.email })
                 .then(user => {
                   //initialize the payload for tokenn
@@ -69,6 +69,7 @@ function handle_request(message, callback){
             }
           });
         } else {
+          console.log("no user");
           callback(null, null);  
         }
       }

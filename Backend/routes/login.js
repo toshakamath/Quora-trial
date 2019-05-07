@@ -97,6 +97,10 @@ router.post("/", function(req, res) {
       });
       res.end('Error in Login the application');
     }
+    else
+        if(!result)  {
+          res.end('Invalid Credentials!');
+        }
     else{
       console.log('logged in successfully.', result);
 
