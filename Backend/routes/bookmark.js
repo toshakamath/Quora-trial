@@ -11,28 +11,33 @@ router.post('/', requireAuth, function (req, res) {
     console.log("Req Body : ", req.body);
 
     answerdetails.findOne({ _id: req.body.answerid }).then(answer => {
-
+        // Req Body :  { bookmarked: false, answerid: '5cd13320caefe969946763d8' }
+        // console.log( );
         if (answer) {
             var votes = {}
 
-            if (req.body.answerid) votes.bookmarked = answer.bookmarked;
-
-            if (votes.bookmarked) {
-                votes.bookmarked.push((req.user.id))
+            if (req.body.answerid){
+                console.log( "inside first if")
+             votes.bookmarked = answer.bookmarked;
             }
+            // if (votes.bookmarked) {
+            //     votes.bookmarked.push((req.user.id))
+            // }
 
             if (!req.body.bookmarked) {
+                console.log( "inside if loop")
                 var index = votes.bookmarked.indexOf(req.user.id);
                 if (index !== -1) votes.bookmarked.splice(index, 1);
             }
             else {
+                console.log("inside else loop" )
                 votes.bookmarked.push((req.user.id))
             }
 
             const updates = {
                 bookmarked: votes.bookmarked
             }
-
+            console.log( "UPDATES", updates)
             answerdetails
                 .findOneAndUpdate(
                     { _id: req.body.answerid },
