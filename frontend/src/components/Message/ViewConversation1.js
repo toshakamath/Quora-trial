@@ -6,6 +6,7 @@ import _ from "lodash";
 import { connect } from "react-redux";
 import "./Message.css";
 import "../../App.css";
+import jwt_decode from "jwt-decode";
 
 class ViewConversation1 extends Component {
     constructor(props) {
@@ -38,9 +39,10 @@ class ViewConversation1 extends Component {
     console.log("hellloooooo ID inside reply: ", _id)
     console.log("this.props.messagedetails.receiver", this.props);  //{message: "this is a new message"}
     e.preventDefault();
-    localStorage.setItem("email", "lucky.singh@gmail.com");
-    const email = localStorage.getItem("email");
-    console.log(email);
+    let token_saved = localStorage.getItem("token");
+  let decode = jwt_decode(token_saved);
+  let email= decode.email;
+    console.log("EMAILLLLLL: ",email);
     console.log("this.props.message: ", this.props.message);
     let sender = "", receiver = "";
     // originalsender=tosha
