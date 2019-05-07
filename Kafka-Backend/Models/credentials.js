@@ -11,6 +11,12 @@ var credentials = new Schema({
   skills: {
     type: [String]
   },
+  profileViews: [
+    {
+      userid: { type: Schema.Types.ObjectId, ref: "userDetails" },
+      time: { type: Date, default: Date.now }
+    }
+  ],
   topics: [{ topic: { type: Schema.Types.ObjectId, ref: "topic" } }],
 
   bio: { type: String },

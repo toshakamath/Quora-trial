@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import axios from "axios";
-import "./Followers.css";
-class Followers extends Component {
+
+class AllProfiles extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      profiles: []
+    };
     this.onChange = this.onChange.bind(this);
   }
   onChange(e) {
@@ -14,7 +16,18 @@ class Followers extends Component {
     });
   }
   componentDidMount() {
-    console.log(this.props.followers);
+    const Token = localStorage.getItem("token");
+    axios
+      .get(window.base_url + "/profile/all", {
+        headers: { Authorization: Token }
+      })
+      .then(response => {
+        console.log(response.data);
+
+        this.setState({
+          profiles: response.data
+        });
+      });
   }
   logOut(e) {
     //e.prventDefault()
@@ -22,9 +35,9 @@ class Followers extends Component {
     this.props.history.push("/login");
   }
 
-  show(e) {
-    document.getElementById("abc").classList.toggle("show");
-  }
+  // show(e) {
+  //   document.getElementById("xyz").classList.toggle("show");
+  // }
   follow(id, e) {
     e.preventDefault();
     console.log(e.target.value);
@@ -37,15 +50,15 @@ class Followers extends Component {
       })
       .then(response => {
         console.log(response.data);
-        this.props.history.push("/profile");
+        this.props.history.push("/profile/followers");
       });
   }
 
   render() {
     console.log("------------------------");
-    console.log(this.props);
+    console.log(this.state.profiles);
     console.log("------------------------");
-    const follower = this.props.followers.map((follower, index) => {
+    const follower = this.state.profiles.map((follower, index) => {
       return (
         <div key={index} className="col-6 followerWrapper">
           <div className="row">
@@ -54,7 +67,7 @@ class Followers extends Component {
                 {follower.profileImage ? (
                   <div className="proImg col-2">
                     <img
-                      src="#"
+                      src={`${window.base_url}/files/${follower.profileImage}`}
                       alt="proImg"
                       height="35"
                       width="35"
@@ -74,7 +87,7 @@ class Followers extends Component {
                   </div>
                 )}
                 <div className="col-10">
-                  <h3 className="proText">{follower.firstName}</h3>
+                  <h3 className="proText">{follower.user.firstName}</h3>
                 </div>
               </Link>
             </div>
@@ -82,7 +95,6 @@ class Followers extends Component {
               <form
                 onSubmit={this.follow.bind(this, follower._id)}
                 value={follower._id}
-                name="pqr"
               >
                 <button className="btn ui-button" type="submit">
                   <span className="followsvg">
@@ -111,4 +123,4 @@ class Followers extends Component {
     );
   }
 }
-export default withRouter(Followers);
+export default withRouter(AllProfiles);

@@ -9,11 +9,27 @@ class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchitem: ""
+      searchitem: "",
+      profileImage: localStorage.getItem("profileImage")
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+  deleteAccount = () => {
+    console.log("delete Account");
+    const Token = localStorage.getItem("token");
+
+    Axios.defaults.withCredentials = true;
+    Axios.delete("http://localhost:3001/profile", {
+      headers: { Authorization: Token }
+    }).then(response => {
+      if (response.status === 200) {
+        console.log("deleted account");
+        localStorage.removeItem("auth");
+      }
+    });
+    window.location.reload();
+  };
 
   logOut(e) {
     //e.prventDefault()
@@ -153,14 +169,37 @@ class Navbar extends Component {
                         <span className="photoWrapper">
                           <div id="#123">
                             <span className="photo-tooltip">
-                              <img
+                              {this.state.profileImage ? (
+                                <img
+                                  src={`${window.base_url}/files/${
+                                    this.state.profileImage
+                                  }`}
+                                  className="profilephotodropdown"
+                                  alt="username"
+                                  height="50"
+                                  width="50"
+                                  data-toggle="dropdown"
+                                />
+                              ) : (
+                                <img
+                                  src="https://qsf.fs.quoracdn.net/-3-images.new_grid.profile_pic_default_small.png-26-679bc670f786484c.png"
+                                  alt="proImg"
+                                  height="50px"
+                                  width="50px"
+                                  className="profilephotodropdown"
+                                  data-toggle="dropdown"
+                                />
+                              )}
+                              {/* <img
                                 className="profilephotodropdown"
                                 height="50px"
                                 width="50px"
-                                src={`https://qph.fs.quoracdn.net/main-thumb-70332528-50-qpikqkavbsrjbupveiqfitmnpiraxvsw.jpeg`}
+                                src={`${window.base_url}/files/${
+                                  this.state.profileImage
+                                }`}
                                 type="button"
                                 data-toggle="dropdown"
-                              />
+                              /> */}
                               <ul className="dropdown-menu" id="navbardropdown">
                                 <li>
                                   <a
@@ -208,6 +247,7 @@ class Navbar extends Component {
                                   <a
                                     href="#"
                                     className="list-group-item list-group-item-action list-group-item-light"
+                                    onClick={this.deleteAccount.bind(this)}
                                   >
                                     Delete Account
                                   </a>

@@ -38,13 +38,15 @@ export const loginUser = (logindata, history) => dispatch => {
       setData(res.data.token);
       const decoded = jwt_decode(res.data.token);
       localStorage.setItem("name", decoded.name);
+      localStorage.setItem("profileImage", decoded.profileImage);
       history.push("/home");
     })
     .catch(err => {
-      dispatch({
-        type: ERRORS,
-        payload: err.response.data
-      });
+      history.push("/login");
+      // dispatch({
+      //   type: ERRORS,
+      //   payload: err.response.data
+      // });
     });
 };
 
