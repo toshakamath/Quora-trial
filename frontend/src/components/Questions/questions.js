@@ -106,7 +106,7 @@ class Questions extends Component {
       <li id="viewallcomments" class="list-group-item">
         <span id="commentbox2">
         <i class="fa fa-comment" id="commenticon" aria-hidden="true"></i>
-          {comm.comment}
+          {comm.username} : {comm.comment}
         </span>
       </li>
     ));
