@@ -4,8 +4,8 @@ import { Link, Switch, Route } from "react-router-dom";
 import Pagination from "react-paginating";
 import _ from "lodash";
 import Axios from "axios";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import "./ViewQuestion.css";
 import jwt_decode from "jwt-decode";
@@ -62,13 +62,11 @@ class ViewQuestion extends Component {
     });
     
   }
-onSubmitAnswer=(e)=>{
-  e.preventDefault();
-  let isAnonymous=false;
-    if(this.state.identity=="public")
-      isAnonymous=false;
-    else if(this.state.identity=="anonymous")
-      isAnonymous=true;
+  onSubmitAnswer = e => {
+    e.preventDefault();
+    let isAnonymous = false;
+    if (this.state.identity == "public") isAnonymous = false;
+    else if (this.state.identity == "anonymous") isAnonymous = true;
 
     console.log("this.props.match.params._id: ", this.props.match.params.questionid);
     
@@ -155,8 +153,8 @@ onSubmitAnswer2=(e)=>{
     console.log("SOME DETAILSSSSSSSS: ",answerList);
     return _.map(answerList, answer => (
       <li className="list-group-item">
-      <img src="#"></img>
-        <label  style={{display:'inline'}} >{answer.answerOwner}</label>
+        <img src="#" />
+        <label style={{ display: "inline" }}>{answer.answerOwner}</label>
         <div style={{ float: "right" }}>Answered On : {answer.answerDate}</div>
         <br/>
         <div id="setPhoto" className="setPhoto" dangerouslySetInnerHTML={{ __html: answer.answer }} />
@@ -275,7 +273,7 @@ console.log("e.target.value: ",e.target.value);
     else if(e.target.checked===false){
       this.setState({
         identity: "public"
-          });
+      });
     }
   }
   onChangeHandler2=(e)=>{
@@ -348,8 +346,7 @@ console.log("e.target.value: ",e.target.value);
             {this.renderAnswers()}
           </ul>
           </div>
-          <div className="col-4">
-          Related Questions </div>
+          <div className="col-4">Related Questions </div>
         </div>
       </div>
     );
@@ -358,42 +355,56 @@ console.log("e.target.value: ",e.target.value);
 
 ViewQuestion.modules = {
   toolbar: [
-    [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
-    [{size: []}],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [{'list': 'ordered'}, {'list': 'bullet'}, 
-     {'indent': '-1'}, {'indent': '+1'}],
-    ['link', 'image', 'video'],
-    ['clean']
+    [{ header: "1" }, { header: "2" }, { font: [] }],
+    [{ size: [] }],
+    ["bold", "italic", "underline", "strike", "blockquote"],
+    [
+      { list: "ordered" },
+      { list: "bullet" },
+      { indent: "-1" },
+      { indent: "+1" }
+    ],
+    ["link", "image", "video"],
+    ["clean"]
   ],
   clipboard: {
     // toggle to add extra line breaks when pasting HTML:
-    matchVisual: false,
+    matchVisual: false
   }
-}
-/* 
+};
+/*
  * Quill ViewQuestion formats
  * See https://quilljs.com/docs/formats/
  */
 ViewQuestion.formats = [
-  'header', 'font', 'size',
-  'bold', 'italic', 'underline', 'strike', 'blockquote',
-  'list', 'bullet', 'indent',
-  'link', 'image', 'video'
-]
+  "header",
+  "font",
+  "size",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "bullet",
+  "indent",
+  "link",
+  "image",
+  "video"
+];
 
-/* 
+/*
  * PropType validation
  */
 // ViewQuestion.propTypes = {
 //   placeholder: PropTypes.string,
 // }
 
-/* 
+/*
  * Render component on page
  */
 // ReactDOM.render(
-//   <ViewQuestion placeholder={'Write something...'}/>, 
+//   <ViewQuestion placeholder={'Write something...'}/>,
 //   document.querySelector('.app')
 // )
 

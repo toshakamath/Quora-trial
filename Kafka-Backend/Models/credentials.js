@@ -5,9 +5,9 @@ var credentials = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "userDetails" },
   followers: [{ type: Schema.Types.ObjectId, ref: "userDetails" }],
   following: [{ type: Schema.Types.ObjectId, ref: "userDetails" }],
-  handle: { type: String, required: true, max: 40 },
+  handle: { type: String, max: 40 },
   location: { type: String },
-  status: { type: String, required: true },
+  status: { type: String },
   skills: {
     type: [String]
   },
@@ -29,6 +29,13 @@ var credentials = new Schema({
   state: { type: String },
   zipCode: { type: Number },
   profileImage: { type: String },
+  profileViews: [
+    {
+      userid: { type: Schema.Types.ObjectId, ref: "userDetails" },
+      time: { type: Date, default: Date.now }
+    }
+  ],
+
   experience: [
     {
       title: { type: String, required: true },

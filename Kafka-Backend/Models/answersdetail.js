@@ -9,6 +9,7 @@ var answersdetail = new Schema({
   question: { type: Schema.Types.ObjectId, ref: "questionsdetail" },
   upVote: [{ type: Schema.Types.ObjectId, ref: "userDetails" }],
   downVote: [{ type: Schema.Types.ObjectId, ref: "userDetails" }],
+  bookmarked: [{ type: Schema.Types.ObjectId, ref: "userDetails" }],
   comment: [
     {
       userid: { type: Schema.Types.ObjectId, ref: "userDetails" },

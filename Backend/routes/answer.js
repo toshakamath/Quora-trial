@@ -9,6 +9,11 @@ var Question = require("../../Kafka-Backend/Models/questionsdetail");
 router.get("/", (req, res) => {
   const errors = {};
   console.log(req.query);
+  //  const answersFields = {};
+
+  //answersFields.answer = "abc";
+  //answersFields._id = "5cbfb135f2a460f63f4fee8c";
+  //answersFields.isAnnonymous = "true";
 
   console.log("fields ans", answersFields);
 

@@ -21,6 +21,8 @@ const getonequestion = require("./routes/getonequestion");
 const answer = require("./routes/answer");
 const topic = require("./routes/topic");
 const message = require("./routes/message");
+const content = require("./routes/content");
+
 const search = require("./routes/search");
 const getallanswer = require("./routes/getallanswer");
 // const bookmark = require("./routes/bookmark");
@@ -35,12 +37,12 @@ const path = require("path");
 
 //use cors to allow cross origin resource sharing
 app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); //A response that tells the browser to allow requesting code from the origin http://localhost:3000 to access a resource
-  res.setHeader("Access-Control-Allow-Credentials", "true"); //to allow cookies
+  res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET,HEAD,OPTIONS,POST,PUT,DELETE"
   );
+  res.header("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
@@ -54,14 +56,10 @@ require("./config/passport")(passport);
 
 app.use(passport.initialize());
 
-// Bring in defined Passport Strategy
-require("./config/passport")(passport);
-
 // app.use("/inbox/peopledetails", message.getPeopleDetails);
 // app.use("/inbox/sendmessage", message.sendMessage);
 // app.use("/inbox/displaymessages", message.displayMessages);
 // app.use("/inbox/reply", message.replyMessages);
-
 
 app.use(express.static(__dirname + "/public"));
 //Storing documents/Images
@@ -94,6 +92,7 @@ app.use("/question", question);
 app.use("/getonequestion", getonequestion);
 app.use("/search", search);
 app.use("/answer", answer);
+app.use("/content", content);
 app.use("/getallanswer", getallanswer);
 // app.use("/bookmark", bookmark);
 app.use("/updownVote", updownVote);
