@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var requireAuth = passport.authenticate('jwt', {session: false});
-var answerdetails = require('../../Kafka-Backend/Models/answer');
+var answerdetails = require('../../Kafka-Backend/Models/answersdetail');
 ObjectId = require('mongodb').ObjectID;
-var questionsDetail = require('../../Kafka-Backend/Models/questionsDetail');
+var questionsDetail = require('../../Kafka-Backend/Models/questionsdetail');
 
 router.post('/', requireAuth, function(req,res){
 

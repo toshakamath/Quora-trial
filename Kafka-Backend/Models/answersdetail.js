@@ -17,7 +17,6 @@ var answersdetail = new Schema({
     }
   ],
   answerDate: { type: Date },
-  bookmarked: [{type: Schema.Types.ObjectId, ref: "userDetails"}]
 });
 
 module.exports = mongoose.model("answersdetail", answersdetail);

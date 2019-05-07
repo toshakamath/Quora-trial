@@ -52,7 +52,8 @@ router.post("/", function(req, res) {
               console.log("this i answer ", answer.upVote.length);
               res.status(200).json({
                 message: "UpVote/DownVote did successfully",
-                upVoteCount: answer.upVote.length
+                upVoteCount: answer.upVote.length,
+                downVoteCount : answer.downVote.lenght
               });
             });
         }

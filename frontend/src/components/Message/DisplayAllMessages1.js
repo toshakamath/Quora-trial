@@ -5,6 +5,7 @@ import _ from "lodash";
 import { connect } from "react-redux";
 import "./Message.css";
 import { Link } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 
 class DisplayAllMessages1 extends React.Component {
@@ -50,9 +51,10 @@ class DisplayAllMessages1 extends React.Component {
 //     event.preventDefault();
 //   }
 componentDidMount() {
-    localStorage.setItem("email", "lucky.singh@gmail.com");
-    const email = localStorage.getItem("email");
-    console.log(email);
+  let token_saved = localStorage.getItem("token");
+  let decode = jwt_decode(token_saved);
+  let email= decode.email;
+    console.log("EMAILLLLLL: ",email);
     const data = { email: email };
     console.log(data);
     this.props.displayMessages(data);
