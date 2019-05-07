@@ -27,15 +27,6 @@ router.use(
 );
 
 router.post("/profileImage", requireAuth, (req, res) => {
-  // singleUpload(req, res, function(err, some) {
-  //   if (err) {
-  //     return res.status(422).send({
-  //       errors: [{ title: "Image Upload Error", detail: err.message }]
-  //     });
-  //   }
-  //   console.log(some);
-  //   return res.status(200).send({ imageUrl: req.files.location });
-  // });
   let uploadFile = req.files.file;
   const fileName = req.files.file.name;
   console.log("filename:" + req.files.file.name);
@@ -43,7 +34,7 @@ router.post("/profileImage", requireAuth, (req, res) => {
   console.log("reqparams:" + req.params.id);
   console.log(fileName);
   console.log(uploadFile);
-  uploadFile.mv(`${__dirname}/../public/files/${fileName}`, function (err) {
+  uploadFile.mv(`${__dirname}/../public/files/${fileName}`, function(err) {
     if (err) {
       return res.status(500).send(err);
     }
@@ -53,78 +44,12 @@ router.post("/profileImage", requireAuth, (req, res) => {
   profileFields = {};
 
   profileFields.profileImage = fileName;
-  Profile.findOneAndUpdate(
-    { user: req.user.id },
+  User.findOneAndUpdate(
+    { _id: req.user.id },
     { $set: profileFields },
     { new: true }
   ).then(profile => res.json(profile));
 });
-router.get("/file", (req, res) => {
-  Profile.findById(req.user.id)
-    .then(profile => {
-      console.log(profile.profileImage);
-      res.status(200).json(profile.profileImage);
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(400).json(err);
-    });
-});
-
-// const AWS = require("aws-sdk");
-// const fs = require("fs");
-// const fileType = require("file-type");
-// const bluebird = require("bluebird");
-// const multiparty = require("multiparty");
-// configure the keys for accessing AWS
-
-// router.post("/profileImage", requireAuth, (request, response) => {
-//   // console.log("request :" + request.files);
-//   // console.log("file path:" + request.files.file[0].path);x
-//   console.log(request.file.file);
-//   const form = new multiparty.Form();
-//   form.parse(request, async (error, fields, files) => {
-//     if (error) throw new Error(error);
-//     try {
-//       console.log(files.file[0].path);
-//       const path = files.file[0].path;
-//       const buffer = fs.readFileSync(path);
-//       const type = fileType(buffer);
-//       const timestamp = Date.now().toString();
-//       const fileName = `bucketFolder/${timestamp}-lg`;
-//       const data = await uploadFile(buffer, fileName, type);
-//       return response.status(200).send(data);
-//     } catch (error) {
-//       return response.status(400).send(error);
-//     }
-//   });
-
-// let uploadFile = req.files.file;
-// const fileName = req.files.file.name;
-// console.log("filename:" + req.files.file.name);
-// console.log(req.body.assignmentName);
-// console.log("reqparams:" + req.params.id);
-// console.log(fileName);
-// console.log(uploadFile);
-// uploadFile.mv(
-//   `${__dirname}/../public/files/assignments/${fileName}`,
-//   function(err) {
-//     if (err) {
-//       return res.status(500).send(err);
-//     }
-//     console.log("path:" + `${__dirname}/../public/files/${fileName}`);
-//   }
-// );
-
-// profileFields = {};
-
-// profileFields.profileImage = fileName;
-// Profile.findOneAndUpdate(
-//   { user: req.user.id },
-//   { $set: profileFields },
-//   { new: true }
-// ).then(profile => console.log(profile));
-// });
 
 //redis database
 // const redis = require("redis");
@@ -138,15 +63,6 @@ router.get("/file", (req, res) => {
 // const client = redis.createClient();
 //file upload
 // const fileUpdload = require("express-fileupload");
-
-// router.use(
-//   fileUpdload({
-//     limits: { fileSize: 50 * 1024 * 1024 },
-//     useTempFiles: true,
-//     tempFileDir: `${__dirname}/../public/temp`,
-//     responseOnLimit: "File size limit has been reached"
-//   })
-// );
 
 //edit name
 router.post("/user", requireAuth, (req, res) => {
@@ -165,7 +81,10 @@ router.post("/user", requireAuth, (req, res) => {
 
 //get current user's profile
 
-router.get("/",passport.authenticate("jwt", { session: false }),(req, res) => {
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
     // client.get(req.user.id, function (err, value) {
 
     //   if (err) {
@@ -177,10 +96,11 @@ router.get("/",passport.authenticate("jwt", { session: false }),(req, res) => {
     //   } else {
 
     const errors = {};
-    console.log("USERID : :: : :  > > > ",req.user.id)
+    console.log("USERID : :: : :  > > > ", req.user.id);
     Profile.findOne({ user: req.user.id })
-      .populate("user", ["firstName", "lastName", "email"])
+      .populate("user")
       .populate("following")
+      .populate("followers")
       .then(profile => {
         if (!profile) {
           errors.noprofile = "There is no profile for this user";
@@ -207,23 +127,21 @@ router.get("/",passport.authenticate("jwt", { session: false }),(req, res) => {
 //@route  GET /profile/all
 //@desc   get all profiles
 //@access public (anyone can see this user profile)
+
 router.get("/all", (req, res) => {
   const errors = {};
+
   Profile.find()
-    .populate("user", ["firstName,lastName,email"])
+    .populate("user")
     .then(profiles => {
       if (!profiles) {
-        errors.noprofile = "There are no profiles";
+        //errors.noprofile = "There are no profiles";
         return res.status(404).json(errors);
       }
-      profiles.map(profile => {
-        profile.userId;
-      });
+
       res.json(profiles);
     })
-    .catch(err =>
-      res.status(404).json({ profile: "There are no profiles" + err })
-    );
+    .catch(err => res.status(404).json({ profile: "There are no profiles" }));
 });
 
 //@route  GET /profile/handle/:handle
@@ -389,7 +307,10 @@ router.get("/viewCount",passport.authenticate("jwt",{session:false}),(req,res)=>
 // );
 
 //create or edit user profile
-router.post("/",passport.authenticate("jwt", { session: false }),(req, res) => {
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
     //get fields
     console.log(req.body);
     // const { errors, isValid } = validateProfileInput(req.body);
@@ -597,13 +518,15 @@ router.delete("/", requireAuth, (req, res) => {
 //@access private
 router.post("/follow", requireAuth, (req, res) => {
   console.log(req.user.id);
+
+  console.log("follow");
   Profile.findOne({ user: req.body.userId })
     .then(profile => {
       const count = profile.followers
         .map(follower => follower)
         .indexOf(req.user.id);
-
-      if (count => 0) {
+      console.log(count);
+      if (count >= 0) {
         res.status(300).json("already followed");
       } else {
         // const follower = {
@@ -649,9 +572,6 @@ router.post("/follow", requireAuth, (req, res) => {
     });
 });
 
-
-
-
 module.exports = router;
 // AWS.config.update({
 //   accessKeyId: "AKIAIXOBVMK5U5Y57TPQ",
@@ -673,16 +593,17 @@ module.exports = router;
 //   return s3.upload(params).promise();
 // };
 
-
 router.get("/views", (req, res) => {
-
   var dat = new Date();
   dat.setDate(dat.getDate() - 30);
   console.log("new Date() - 30", dat);
   var dat1 = new Date();
   dat1.setDate(dat1.getDate());
 
-  Profile.findOne({ _id: "5cc2ae2eae364b1c5c1ea4ad" }, { profileViews: 1, _id: 0 })
+  Profile.findOne(
+    { _id: "5cc2ae2eae364b1c5c1ea4ad" },
+    { profileViews: 1, _id: 0 }
+  )
     .then(views => {
       if (!views) {
         errors.views = "There is no views";
@@ -695,39 +616,36 @@ router.get("/views", (req, res) => {
         var currentDate = new Date();
 
         currentDate.setDate(currentDate.getDate() - i);
-        const p = currentDate.toISOString().slice(0, 10)
+        const p = currentDate.toISOString().slice(0, 10);
         var foo = {};
         foo = {
-          "day": p,
-          "count": 0
-        }
+          day: p,
+          count: 0
+        };
         datesArray.push(foo);
       }
 
       views.profileViews.map(x => {
-        datesArray.map(
-          y => {
-            var m = new Date(x.time);
-            var z = new Date(y.day);
+        datesArray.map(y => {
+          var m = new Date(x.time);
+          var z = new Date(y.day);
 
-            if (m.getFullYear() === z.getFullYear() &&
-              m.getMonth() === z.getMonth() &&
-              m.getDate() === z.getDate()
-            ) {
-              y.count = y.count + 1;
-            }
+          if (
+            m.getFullYear() === z.getFullYear() &&
+            m.getMonth() === z.getMonth() &&
+            m.getDate() === z.getDate()
+          ) {
+            y.count = y.count + 1;
           }
-        )
+        });
       });
 
       datesArray.map(x => {
         console.log("datedatatat", x);
-      })
-
+      });
 
       // var questionsIdsArray = [];
       // questionsIdsArray = views.profileViews.map(x => x.time);
-
 
       res.json(datesArray);
     })

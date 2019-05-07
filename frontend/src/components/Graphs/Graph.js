@@ -41,7 +41,6 @@ class Graph extends Component {
   }
 
   graphcount = () => {
-
     const { questions } = this.props.questions;
 
     var topFive = questions.sort((a, b) => b.visitor - a.visitor).slice(0, 5);
@@ -49,38 +48,39 @@ class Graph extends Component {
     console.log(topFive);
 
     return topFive;
-
-  }
+  };
 
   graphupvotecount = () => {
     console.log("upvote");
     const { answers } = this.props.answers;
 
-    var topFive = answers.sort((a, b) => b.upVote.length - a.upVote.length).slice(0, 10);
+    var topFive = answers
+      .sort((a, b) => b.upVote.length - a.upVote.length)
+      .slice(0, 10);
 
     return topFive;
-
-  }
-
+  };
 
   graphdownvotecount = () => {
-
     console.log("downvote");
     const { answers } = this.props.answers;
 
-    var topFive = answers.sort((a, b) => b.downVote.length - a.downVote.length).slice(0, 5);
+    var topFive = answers
+      .sort((a, b) => b.downVote.length - a.downVote.length)
+      .slice(0, 5);
 
     return topFive;
-  }
+  };
   graphdownvotecount1 = () => {
-
     console.log("downvote");
     const { answers } = this.props.answers;
 
-    var topFive = answers.sort((a, b) => b.downVote.length - a.downVote.length).slice(0, 5);
+    var topFive = answers
+      .sort((a, b) => b.downVote.length - a.downVote.length)
+      .slice(0, 5);
 
     return topFive;
-  }
+  };
 
   //     graphbookmarkcount1= () =>{
 
@@ -95,7 +95,6 @@ class Graph extends Component {
 
   //Dummy componenet did mount
   render() {
-
     var count = [];
     var upvotecount = [];
     var downvotecount = [];
@@ -109,67 +108,56 @@ class Graph extends Component {
 
     console.log("upvotecount", upvotecount);
 
-    if (count.length == 0)
-      return "";
+    if (count.length == 0) return "";
 
     var data2 = [];
-    data2 = [
-      ['Views', 'Visitor Count']
-    ];
+    data2 = [["Views", "Visitor Count"]];
 
     var val = 1;
-    count.forEach((a) => {
+    count.forEach(a => {
       data2.push([count[val - 1].question, count[val - 1].visitor]);
       val = val + 1;
-    })
+    });
 
     // if(upvotecount.upVote.length == 0)
     //   return "";
 
     var data3 = [];
-    data3 = [
-      ['Views', 'Visitor Count']
-    ];
+    data3 = [["Views", "Visitor Count"]];
 
     var val2 = 1;
-    upvotecount.forEach((a) => {
-      data3.push([upvotecount[val2 - 1].answer, upvotecount[val2 - 1].upVote.length]);
+    upvotecount.forEach(a => {
+      data3.push([
+        upvotecount[val2 - 1].answer,
+        upvotecount[val2 - 1].upVote.length
+      ]);
       val2 = val2 + 1;
-    })
+    });
 
     // console.log("data2",data2);
     // console.log("data3",upvotecount);
 
-
-
     var data4 = [];
-    data4 = [
-      ['Views', 'Visitor Count']
-    ];
+    data4 = [["Views", "Visitor Count"]];
 
     var val3 = 1;
-    downvotecount.forEach((a) => {
-      data4.push([downvotecount[val3 - 1].answer, downvotecount[val3 - 1].downVote.length]);
+    downvotecount.forEach(a => {
+      data4.push([
+        downvotecount[val3 - 1].answer,
+        downvotecount[val3 - 1].downVote.length
+      ]);
       val3 = val3 + 1;
-    })
-
-
+    });
 
     var data6 = [];
-    data6 = [
-      ['data6ProfileViews', 'Visitor Count']
-    ];
+    data6 = [["data6ProfileViews", "Visitor Count"]];
 
-    profileview.forEach((a) => {
+    profileview.forEach(a => {
       data6.push([a.day, a.count]);
-    })
-
-
+    });
 
     var data5 = [];
-    data5 = [
-      ['Views', 'Visitor Count']
-    ];
+    data5 = [["Views", "Visitor Count"]];
 
     // var val4= 1;
     // bookmarkcount.forEach((a)=>{
@@ -177,12 +165,11 @@ class Graph extends Component {
     //   val4 = val4 +1;
     // })
 
-
     return (
       <div>
-
         <div className={"my-pretty-chart-container"}>
           {/* Below graph is for Question/Answer View */}
+
           <Chart
             width={700}
             height={700}
@@ -190,15 +177,15 @@ class Graph extends Component {
             loader={<div>Loading Chart</div>}
             data={data2}
             options={{
-              title: 'Most Viewed Questions',
-              chartArea: { width: '70%' },
+              title: "Most Viewed Questions",
+              chartArea: { width: "70%" },
               hAxis: {
-                title: 'Top Questions',
-                minValue: 0,
+                title: "Top Questions",
+                minValue: 0
               },
               vAxis: {
-                title: 'Views',
-              },
+                title: "Views"
+              }
             }}
             legendToggle
           />
@@ -209,17 +196,16 @@ class Graph extends Component {
             chartType="ColumnChart"
             loader={<div>Loading Chart</div>}
             data={data3}
-
             options={{
-              title: 'Most upVoted Answers',
-              chartArea: { width: '70%' },
+              title: "Most upVoted Answers",
+              chartArea: { width: "70%" },
               hAxis: {
-                title: 'Top 10 Upvotes for the Answers',
-                minValue: 0,
+                title: "Top 10 Upvotes for the Answers",
+                minValue: 0
               },
               vAxis: {
-                title: 'Number Of UpVotes',
-              },
+                title: "Number Of UpVotes"
+              }
             }}
             legendToggle
           />
@@ -231,18 +217,17 @@ class Graph extends Component {
             chartType="ColumnChart"
             loader={<div>Loading Chart</div>}
             data={data3}
-
             options={{
-              title: 'Most upVoted Answers',
-              chartArea: { width: '70%' },
+              title: "Most upVoted Answers",
+              chartArea: { width: "70%" },
               hAxis: {
-                title: 'Top 10 Upvotes for the Answers',
-                minValue: 0,
+                title: "Top 10 Upvotes for the Answers",
+                minValue: 0
               },
               vAxis: {
-                title: 'Number Of UpVotes', 
+                title: "Number Of UpVotes"
               },
-              colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
+              colors: ["#e0440e", "#e6693e", "#ec8f6e", "#f3b49f", "#f6c7b6"]
             }}
             legendToggle
           />
@@ -255,15 +240,15 @@ class Graph extends Component {
             loader={<div>Loading Chart</div>}
             data={data4}
             options={{
-              title: 'Most downVoted Answers',
-              chartArea: { width: '70%' },
+              title: "Most downVoted Answers",
+              chartArea: { width: "70%" },
               hAxis: {
-                title: 'Top 5 downVotes for the Answer',
-                minValue: 0,
+                title: "Top 5 downVotes for the Answer",
+                minValue: 0
               },
               vAxis: {
-                title: 'Number Of DownVotes',
-              },
+                title: "Number Of DownVotes"
+              }
             }}
             legendToggle
           />
@@ -276,19 +261,18 @@ class Graph extends Component {
             loader={<div>Loading Chart</div>}
             data={data6}
             options={{
-              title: '#30 Days Profile View',
-              chartArea: { width: '70%' },
+              title: "#30 Days Profile View",
+              chartArea: { width: "70%" },
               hAxis: {
-                title: '#30 Days',
-                minValue: 0,
+                title: "#30 Days",
+                minValue: 0
               },
               vAxis: {
-                title: 'Profile Count',
-              },
+                title: "Profile Count"
+              }
             }}
             legendToggle
           />
-
 
           {/* Below graph is for bookmark View */}
           <Chart
@@ -297,30 +281,28 @@ class Graph extends Component {
             chartType="ColumnChart"
             loader={<div>Loading Chart</div>}
             data={[
-              ['Views', 'Visitor Count'],
-              ['Answer 1', 10],
-              ['Answer 2', 20],
-              ['Answer 3', 30],
-              ['Answer 4', 40],
-              ['Answer 5', 50],
+              ["Views", "Visitor Count"],
+              ["Answer 1", 10],
+              ["Answer 2", 20],
+              ["Answer 3", 30],
+              ["Answer 4", 40],
+              ["Answer 5", 50]
             ]}
             options={{
-              title: 'Most Bookmarked Answers',
-              chartArea: { width: '70%' },
+              title: "Most Bookmarked Answers",
+              chartArea: { width: "70%" },
               hAxis: {
-                title: 'Bookmarks',
-                minValue: 0,
+                title: "Bookmarks",
+                minValue: 0
               },
               vAxis: {
-                title: 'No Of Bookmarks',
-              },
+                title: "No Of Bookmarks"
+              }
             }}
             legendToggle
           />
         </div>
       </div>
-
-
     );
   }
 }
@@ -330,7 +312,7 @@ Graph.propTypes = {
   questions: PropTypes.object.isRequired,
   getAnswers: PropTypes.func.isRequired,
   answers: PropTypes.object.isRequired,
-  getProfileViewCount: PropTypes.func.isRequired,
+  getProfileViewCount: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -340,5 +322,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getQuestions, getAnswers, getProfileViewCount },
+  { getQuestions, getAnswers, getProfileViewCount }
 )(withRouter(Graph));
