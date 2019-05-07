@@ -215,27 +215,40 @@ class Profile extends Component {
       .get(window.base_url + "/profile", {
         headers: { Authorization: Token }
       })
-      .then(response => {
-        console.log(response.data);
-        if (response.status === 401) {
-          this.props.history.push("/login");
-        } else {
+      .then(
+        response => {
           console.log(response.data);
-          this.setState({
-            profileData: response.data,
-            name: response.data.user.firstName,
-            bio: response.data.bio,
-            profileImage: response.data.user.profileImage,
-            education: [...response.data.education],
-            experience: [...response.data.experience],
-            followercount: response.data.followers.length,
-            followers: [...response.data.followers],
-            following: [...response.data.following],
-            noProfile: false
-          });
+          if (response.status === 401) {
+            this.props.history.push("/login");
+          } else {
+            console.log(response.data);
+            this.setState({
+              profileData: response.data,
+              name: response.data.user.firstName,
+              bio: response.data.bio,
+              profileImage: response.data.user.profileImage,
+              education: [...response.data.education],
+              experience: [...response.data.experience],
+              followercount: response.data.followers.length,
+              followers: [...response.data.followers],
+              following: [...response.data.following],
+              noProfile: false
+            });
+          }
+          // this.setState({
+          //   profileData: response.data,
+          //   name: response.data.user.firstName,
+          //   bio: response.data.bio,
+          //   profileImage: response.data.profileImage,
+          //   education: [...response.data.education],
+          //   experience: [...response.data.experience],
+          //   followercount: response.data.followers.length
+          // });
+        },
+        err => {
+          console.log("ERROR: ", err);
         }
-      })
-      .catch(err => this.props.history.push("/login"));
+      );
   }
   bioEditHandler(e) {
     document.getElementById("bioForm").classList.toggle("hidden");
