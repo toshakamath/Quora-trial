@@ -16,7 +16,7 @@
   padding: 4px 4px;
 }
 
-#commenticon{
+#commenticon {
   margin-right: 7px;
 }
 /* .test {
@@ -113,7 +113,6 @@
   border-radius: 20px;
   display: inline;
   height: 35px;
-  margin-top: 10px;
 }
 .upvote {
   margin-left: -2px;
@@ -124,6 +123,7 @@
   color: #666 !important;
   text-align: center;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-top: 10px;
 }
 
 #upvotearrow {

@@ -92,6 +92,7 @@ class Questions extends Component {
     let aid = this.props.question.answers[index]._id;
     Axios.get(window.base_url + "/comment", { params: { answerid: aid } }).then(
       response => {
+        console.log("FINAL scs ", response.data);
         this.setState({ comment: response.data });
         this.setState({ showcomments: true });
         console.log("Show ", this.state.showcomments);
@@ -101,11 +102,12 @@ class Questions extends Component {
 
   renderComments = () => {
     let comments = this.state.comment.comments;
+    console.log("COMMENTS", comments);
     return _.map(comments, comm => (
       <li id="viewallcomments" class="list-group-item">
         <span id="commentbox2">
-        <i class="fa fa-comment" id="commenticon" aria-hidden="true"></i>
-          {comm.comment}
+          <i class="fa fa-comment" id="commenticon" aria-hidden="true" />
+          {comm.username} : {comm.comment}
         </span>
       </li>
     ));
@@ -152,7 +154,10 @@ class Questions extends Component {
             Topic: {this.props.question.topic}{" "}
           </h15>
 
-          <a href={"/question/" + this.props.question._id} className="questions">
+          <a
+            href={"/question/" + this.props.question._id}
+            className="questions"
+          >
             <h5 className="card-title" id="questiontitle">
               <b> {this.props.question.question}</b>
             </h5>
@@ -197,7 +202,7 @@ class Questions extends Component {
               <form onSubmit={this.handleComment}>
                 <div className="footer">
                   {this.state.commentadded ? (
-                    <span id="commentbox3"> {this.state.mycomment} </span>
+                    <span id="commentbox3">{this.state.mycomment} </span>
                   ) : (
                     <input
                       onChange={this.handleChange}

@@ -6,7 +6,7 @@ const app = express();
 const passport = require("passport");
 const port = process.env.PORT || 3001;
 // app.use(bodyParser.json());
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+// app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 // app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(bodyParser.raw({limit: "50mb"}));
 
@@ -35,14 +35,14 @@ var glob = require("glob");
 const multer = require("multer");
 const path = require("path");
 
-//use cors to allow cross origin resource sharing
-app.use(function (req, res, next) {
+app.use(cors({ origin: "http://13.56.18.241:3000", credentials: true }));
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "http://13.56.18.241:3000");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET,HEAD,OPTIONS,POST,PUT,DELETE"
   );
-  res.header("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
