@@ -30,8 +30,8 @@ class Profile extends Component {
     super(props);
     this.state = {
       profileData: "",
-      name: "",
-      followers: [],
+      name: "Jameson",
+      followers: ["James"],
       bio: "",
       file: "",
       profileImage: "",
@@ -208,7 +208,7 @@ class Profile extends Component {
     const name = localStorage.getItem("name");
     if (!localStorage.getItem("auth")) {
       console.log("true");
-      this.props.history.push("/login");
+      // this.props.history.push("/login");
     }
     console.log(Token);
     axios
@@ -218,24 +218,24 @@ class Profile extends Component {
       .then(response => {
         console.log(response.data);
         if (response.status === 401) {
-          this.props.history.push("/login");
+          // this.props.history.push("/login");
         } else {
-          console.log(response.data);
-          this.setState({
-            profileData: response.data,
-            name: response.data.user.firstName,
-            bio: response.data.bio,
-            profileImage: response.data.user.profileImage,
-            education: [...response.data.education],
-            experience: [...response.data.experience],
-            followercount: response.data.followers.length,
-            followers: [...response.data.followers],
-            following: [...response.data.following],
-            noProfile: false
-          });
+          console.log("sonsvljnviowRNVJSFVNR",response.data);
+          // this.setState({
+          //   profileData: response.data,
+          //   name: response.data.user.firstName,
+          //   bio: response.data.bio,
+          //   profileImage: response.data.user.profileImage,
+          //   education: [...response.data.education],
+          //   experience: [...response.data.experience],
+          //   followercount: response.data.followers.length,
+          //   followers: [...response.data.followers],
+          //   following: [...response.data.following],
+          //   noProfile: false
+          // });
         }
       })
-      .catch(err => this.props.history.push("/login"));
+      // .catch(err => this.props.history.push("/login"));
   }
   bioEditHandler(e) {
     document.getElementById("bioForm").classList.toggle("hidden");
@@ -247,9 +247,9 @@ class Profile extends Component {
   }
   logOut(e) {
     //e.prventDefault()
-    localStorage.removeItem("token");
+    // localStorage.removeItem("token");
 
-    this.props.history.push("login");
+    // this.props.history.push("login");
   }
   onSubmit(e) {
     let Token = localStorage.getItem("token");

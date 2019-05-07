@@ -157,7 +157,7 @@ class Home extends Component {
     //new
     let checkprops = this.props;
     console.log("checkprops: ", checkprops);
-    let name = "Laxmikant Pandhare"; //this.props.profile.profiledetails.name;
+    let name = ""; //this.props.profile.profiledetails.name;
     console.log(name);
     const { questions } = this.props.questions;
 
@@ -227,7 +227,7 @@ class Home extends Component {
                                     className="profileImage"
                                     height="50px"
                                     width="50px"
-                                    src={`https://qph.fs.quoracdn.net/main-thumb-70332528-50-qpikqkavbsrjbupveiqfitmnpiraxvsw.jpeg`}
+                                    
                                   />
                                 </span>
                               </div>
