@@ -1,3 +1,79 @@
 .page-content {
   padding-top: 83px;
 }
+
+
+
+.js-wf-loaded .AddQuestionPrompt .AskQuestionButton, .js-wf-loaded .TribeAddQuestionPrompt .AskQuestionButton, .amp-page .AddQuestionPrompt .AskQuestionButton, .amp-page .TribeAddQuestionPrompt .AskQuestionButton {
+
+    font-family: 'q_serif',Georgia,Times,"Times New Roman","Hiragino Kaku Gothic Pro","Meiryo",serif;
+
+}
+.AddQuestionPrompt .AskQuestionButton, .TribeAddQuestionPrompt .AskQuestionButton {
+
+    font-family: Georgia,Times,"Times New Roman","Hiragino Kaku Gothic Pro","Meiryo",serif;
+    font-weight: bold;
+    line-height: 1.3;
+    color: #333;
+    font-size: 18px;
+    color: #949494;
+    display: block;
+
+}
+a {
+
+    text-decoration: none;
+    color: #2b6dad;
+
+}
+a {
+
+    background: transparent;
+
+}
+.AddQuestionPrompt, .TribeAddQuestionPrompt {
+
+    color: #949494;
+    font-size: 13px;
+    text-align: left;
+
+}
+.grid_page {
+
+    font-size: 15px;
+    line-height: 1.4;
+
+}
+body {
+
+    word-wrap: break-word;
+    color: #333;
+    font-size: 13px;
+
+}
+body {
+
+    text-align: left;
+    direction: ltr;
+
+}
+html {
+
+    font-weight: 400;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 15px;
+    line-height: 1.4;
+
+}
+html {
+
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+
+}
+
+
+.questionCard {
+  padding: 16px;
+}
+

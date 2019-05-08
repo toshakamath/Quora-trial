@@ -1,18 +1,28 @@
-import { SIGNUP, LOGIN_USER } from "../Actions/types";
+import { LOGIN_USER, TOPICS } from "../Actions/types";
 const initialState = {
   token: {},
-  authenticated: true
+  authenticated: false,
+  topics: []
 };
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case LOGIN_USER:
-    console.log("Inside reducer login", action.payload);
-    if(action.payload){
+      console.log("Inside reducer login", action.payload);
+      if (action.payload) {
+        return {
+          ...state,
+          token: action.payload,
+          authenticated: true
+        };
+      }
+      break;
+    case TOPICS:
       return {
         ...state,
-        token: action.payload
+        topics: action.payload
       };
-    }
+      break;
     default:
       return state;
   }

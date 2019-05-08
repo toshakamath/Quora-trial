@@ -1,20 +1,14 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-var answer = new Schema ({
+var topic = new Schema({
+  _id: mongoose.Schema.Types.ObjectId,
+  //Topic details
+  topicsSelected: [
+    { topicName: { type: String }, topicImage: { type: String } }
+  ],
+  followers: { type: String },
+  userId: { type: String }
+});
 
-    _id: mongoose.Schema.Types.ObjectId,
-//need reference of question too..check how to add that
-    answer: {type:String},
-    answerOwner: {type:String},
-    isAnnonymous:{type:Boolean},
-    question: { question: { type: Schema.Types.ObjectId, ref: "question" } },
-  // question:{type:String},
-    upVote:[{ user: { type: Schema.Types.ObjectId, ref: "userDetails" } }],
-    downVote:[{ user: { type: Schema.Types.ObjectId, ref: "userDetails" } }],
-    comment:[{userid:{ type: Schema.Types.ObjectId, ref: "userDetails" } , comment:{type:String}}],
-    answerDate: {type:Date}
-        
-    });
-
-    module.exports = mongoose.model("topic",topic);
+module.exports = mongoose.model("topic", topic);
