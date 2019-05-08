@@ -163,7 +163,7 @@ class Graph extends Component {
       <div>
         <div className={"my-pretty-chart-container"}>
           {/* Below graph is for Question/Answer View */}
-          <div className="row" />
+
           <Chart
             width={700}
             height={700}

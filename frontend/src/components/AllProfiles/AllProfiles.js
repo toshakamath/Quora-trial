@@ -31,7 +31,7 @@ class AllProfiles extends Component {
   }
   logOut(e) {
     //e.prventDefault()
-    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("token");
     this.props.history.push("/login");
   }
 
@@ -113,7 +113,7 @@ class AllProfiles extends Component {
         <div className="col-12">
           {" "}
           <h3 className="head">
-            <div className="title">Followers</div>
+            <div className="title">People</div>
           </h3>
         </div>
         <div className="col-12">
