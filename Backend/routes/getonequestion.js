@@ -7,7 +7,7 @@ var Question = require("../../Kafka-Backend/Models/questionsdetail");
 var userDetails = require("../../Kafka-Backend/Models/userDetails");
 var Answers = require("../../Kafka-Backend/Models/answersdetail");
 
-/***  GET one question with all its answers ***/
+/*  GET one question with all its answers */
 router.get("/", (req, res) => {
   Question.findById(req.query.questionId, (err, questionResult) => {
     if (err) {
