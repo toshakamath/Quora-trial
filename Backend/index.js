@@ -1,88 +1,108 @@
 //import the require dependencies
-var express = require('express');
-var app = express();//.router();
-var bodyParser = require('body-parser');
-var session = require('express-session');
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const app = express();
+const passport = require("passport");
+const port = process.env.PORT || 3001;
+const ROOT_URL2 = "http://localhost:3000";
+// app.use(bodyParser.json());
+app.use(cors({ origin: `${ROOT_URL2}`, credentials: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.raw({limit: "50mb"}));
 
-var cors = require('cors');
-const fs = require('fs');
+app.use(bodyParser.json({ limit: "10mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
+//import Routes
+const login = require("./routes/login");
+const signup = require("./routes/signup");
+const profile = require("./routes/profile");
+const question = require("./routes/question");
+const getonequestion = require("./routes/getonequestion");
+const answer = require("./routes/answer");
+const topic = require("./routes/topic");
+const message = require("./routes/message");
+const content = require("./routes/content");
 
-app.set('view engine', 'ejs');
-var mysql = require('mysql'); 
-const multer = require('multer');
-const path = require('path');
-var cors = require('cors');
-var passport = require('passport');
-var requireAuth = passport.authenticate('jwt', {session: false});
+const search = require("./routes/search");
+const getallanswer = require("./routes/getallanswer");
+// const bookmark = require("./routes/bookmark");
+const updownVote = require("./routes/updownVote");
+const comment = require("./routes/comment");
 
-var login = require('./routes/login');
-var signup = require('./routes/signup');
-var question = require('./routes/question');
-var answer = require('./routes/answer');
+const fs = require("fs");
+var glob = require("glob");
 
+const multer = require("multer");
+const path = require("path");
 
 //use cors to allow cross origin resource sharing
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
-
-//use express session to maintain session data
-app.use(session({
-    secret              : 'cmpe273_kafka_passport_mongo',
-    resave              : false, // Forces the session to be saved back to the session store, even if the session was never modified during the request
-    saveUninitialized   : false, // Force to save uninitialized session to db. A session is uninitialized when it is new but not modified.
-    duration            : 60 * 60 * 1000,    // Overall duration of Session : 30 minutes : 1800 seconds
-    activeDuration      :  5 * 60 * 1000
-}));
-
-
-
-app.use(bodyParser.json());
-
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", `${ROOT_URL2}`); //A response that tells the browser to allow requesting code from the origin http://localhost:3000 to access a resource
+  res.setHeader("Access-Control-Allow-Credentials", "true"); //to allow cookies
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,HEAD,OPTIONS,POST,PUT,DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+  );
+  res.setHeader("Cache-Control", "no-cache");
+  next();
+});
 
 //Allow Access Control
-app.use(function(req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
-    res.setHeader('Cache-Control', 'no-cache');
-    next();
-  });
+require("./config/passport")(passport);
 
-
-//require('./app/routes')(app);
 app.use(passport.initialize());
 
-// Bring in defined Passport Strategy
-require('./config/passport')(passport);
+// app.use("/inbox/peopledetails", message.getPeopleDetails);
+// app.use("/inbox/sendmessage", message.sendMessage);
+// app.use("/inbox/displaymessages", message.displayMessages);
+// app.use("/inbox/reply", message.replyMessages);
 
-
-
-app.use('/users/login', login);
-app.use('/users/signup', signup);
-app.use('/users/question', question);
-app.use('/users/answer', answer);
-
+app.use(express.static(__dirname + "/public"));
 //Storing documents/Images
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-      cb(null, './uploads');
-  }
-  , filename: (req, file, cb) => {
-      cb(null, file.originalname);
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "./uploads");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, file.originalname);
+//   }
+// });
 
-const upload = multer({ storage });
+// const upload = multer({ storage });
 
-app.post('/uploadprofile', upload.array('photos', 5), (req, res) => {
-  if (req.session.user) {
-  console.log("working on profiles");
-  console.log('req.body', req.body);
-  res.end();
-  }
-});
+// //app.post("/uploadprofile", upload.array("photos", 5), (req, res) => {
+//   if (req.session.user) {
+//     console.log("working on profiles");
+//     console.log("req.body", req.body);
+//     res.end();
+//   }
+// });
 
+//use Routes
+app.use("/inbox", message);
+app.use("/login", login);
+app.use("/signup", signup);
+app.use("/topic", topic);
+app.use("/profile", profile);
+app.use("/question", question);
+app.use("/getonequestion", getonequestion);
+app.use("/search", search);
+app.use("/answer", answer);
+app.use("/content", content);
+app.use("/getallanswer", getallanswer);
+// app.use("/bookmark", bookmark);
+app.use("/updownVote", updownVote);
+app.use("/comment", comment);
+
+// app.use("/all", profile1);
 //start your server on posrt 3001
-app.listen(3001);
-console.log("Server Listening on port 3000");
+//app.settings.env = "production";
+// console.log("env mode", app.settings.env);
+app.listen(port, () => {
+  console.log("Server is running on port: " + port);
+});
