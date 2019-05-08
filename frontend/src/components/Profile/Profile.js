@@ -87,65 +87,92 @@ class Profile extends Component {
     console.log("inside save pd call");
 
     // zipcode validation
-    var regexresult = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.state.zipcode);
-    console.log("Result of zipcode regex", regexresult);
+   // var regexresult = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.state.zipcode);
+  //  console.log("Result of zipcode regex", regexresult);
 
     //us state validation
 
-    var checkstate = false;
-    if (
-      helper.stateAbbreviations.includes(this.state.stateval) ||
-      helper.statenames.includes(this.state.stateval)
-    ) {
-      checkstate = true;
-    }
+    // var checkstate = false;
+    // if (
+    //   helper.stateAbbreviations.includes(this.state.stateval) ||
+    //   helper.statenames.includes(this.state.stateval)
+    // ) {
+    //   checkstate = true;
+    // }
+    var data = {
+      handle: this.state.handle,
+      staus: this.state.staus,
+      city: this.state.city,
+      bio: this.state.bio,
+      zipcode: this.state.zipcode,
+      state: this.state.stateval,
+      profileImage: this.state.profilImage
+    };
+    console.log("axios pd data is ", data);
+    const Token = localStorage.getItem("token");
+    axios
+      .post("http://localhost:3001/profile", data, {
+        headers: { Authorization: Token }
+      })
+      .then(response => {
+        if (response.status === 200) {
+          console.log("inside resp status");
+          //var isupdated = 1 + this.state.isupdated;
+          //his.setState({ isupdated: isupdated });
+          //this.fetchprofiledbcall();
+          this.props.history.push("/profile");
+        } else {
+          console.log("error updating");
+        }
+        //console.log("state", this.state.isupdated);
+      });
 
-    if (regexresult == true && checkstate == true) {
-      console.log("value of regex is true");
-      var email = this.props.loginStateStore.result.email;
-      console.log("Emaild id is:", email);
-      console.log("About me values is", this.state.aboutMe);
-      var data = {
-        handle: this.state.handle,
-        staus: this.state.staus,
-        city: this.state.city,
-        description: this.state.description,
-        zipcode: this.state.zipcode,
-        state: this.state.stateval,
-        profileImage: this.state.profilImage
-      };
-      console.log("axios pd data is ", data);
-      const Token = localStorage.getItem("token");
-      axios
-        .post("http://localhost:3001/profile", data, {
-          headers: { Authorization: Token }
-        })
-        .then(response => {
-          if (response.status === 200) {
-            console.log("inside resp status");
-            var isupdated = 1 + this.state.isupdated;
-            this.setState({ isupdated: isupdated });
-            //this.fetchprofiledbcall();
-            this.props.history.push("/profile");
-          } else {
-            console.log("error updating");
-          }
-          console.log("state", this.state.isupdated);
-        });
-    } else if (regexresult == false && checkstate == true) {
-      console.log("Invalid US zip code");
-      alert("Please enter a valid US zip code!!");
-    } else if (regexresult == true && checkstate == false) {
-      console.log("Invalid US state: malformed_state exception");
-      alert("Please enter a valid US State!!,malformed_state exception");
-    } else {
-      console.log(
-        "Invalid US zip code && Invalid US state: malformed_state exception"
-      );
-      alert(
-        "Please enter a valid US zip code and State!!:malformed_state exception"
-      );
-    }
+    // if (regexresult == true && checkstate == true) {
+    //   console.log("value of regex is true");
+    //   var email = this.props.loginStateStore.result.email;
+    //   console.log("Emaild id is:", email);
+    //   console.log("About me values is", this.state.aboutMe);
+    //   // var data = {
+    //   //   handle: this.state.handle,
+    //   //   staus: this.state.staus,
+    //   //   city: this.state.city,
+    //   //   description: this.state.description,
+    //   //   zipcode: this.state.zipcode,
+    //   //   state: this.state.stateval,
+    //   //   profileImage: this.state.profilImage
+    //   // };
+    //   // console.log("axios pd data is ", data);
+    //   // const Token = localStorage.getItem("token");
+    //   // axios
+    //   //   .post("http://localhost:3001/profile", data, {
+    //   //     headers: { Authorization: Token }
+    //   //   })
+    //   //   .then(response => {
+    //   //     if (response.status === 200) {
+    //   //       console.log("inside resp status");
+    //   //       var isupdated = 1 + this.state.isupdated;
+    //   //       this.setState({ isupdated: isupdated });
+    //   //       //this.fetchprofiledbcall();
+    //   //       this.props.history.push("/profile");
+    //   //     } else {
+    //   //       console.log("error updating");
+    //   //     }
+    //   //     console.log("state", this.state.isupdated);
+    //   //   });
+    // } else if (regexresult == false && checkstate == true) {
+    //   console.log("Invalid US zip code");
+    //   alert("Please enter a valid US zip code!!");
+    // } else if (regexresult == true && checkstate == false) {
+    //   console.log("Invalid US state: malformed_state exception");
+    //   alert("Please enter a valid US State!!,malformed_state exception");
+    // } else {
+    //   console.log(
+    //     "Invalid US zip code && Invalid US state: malformed_state exception"
+    //   );
+    //   alert(
+    //     "Please enter a valid US zip code and State!!:malformed_state exception"
+    //   );
+    // }
   };
   //edit profile handler finished
   fileHandler = e => {
@@ -206,10 +233,10 @@ class Profile extends Component {
     const Token = localStorage.getItem("token");
     console.log(localStorage.getItem("name"));
     const name = localStorage.getItem("name");
-    if (!localStorage.getItem("auth")) {
-      console.log("true");
-      this.props.history.push("/login");
-    }
+    // if (!localStorage.getItem("auth")) {
+    //   console.log("true");
+    //   this.props.history.push("/login");
+    // }
     console.log(Token);
     axios
       .get(window.base_url + "/profile", {
@@ -218,7 +245,7 @@ class Profile extends Component {
       .then(response => {
         console.log(response.data);
         if (response.status === 401) {
-          this.props.history.push("/login");
+          this.props.history.push("/profile");
         } else {
           console.log(response.data);
           this.setState({
@@ -235,7 +262,7 @@ class Profile extends Component {
           });
         }
       })
-      .catch(err => this.props.history.push("/login"));
+      .catch(err => this.props.history.push("/profile"));
   }
   bioEditHandler(e) {
     document.getElementById("bioForm").classList.toggle("hidden");
@@ -293,7 +320,7 @@ class Profile extends Component {
 
     var data = { email: email, experience: experience };
     axios
-      .post("http://localhost:3001/updateexpprofile", data)
+      .post("http://localhost:3001/profile", data)
       .then(response => {
         console.log("Resose", response);
         if (response.status === 200) {
@@ -362,7 +389,7 @@ class Profile extends Component {
                       group
                       value={this.state.handle}
                       type="text"
-                      id="headline"
+                      id="handle"
                       validate
                       error="wrong"
                       success="right"
@@ -378,7 +405,7 @@ class Profile extends Component {
                       group
                       value={this.state.status}
                       type="text"
-                      id="company"
+                      id="status"
                       validate
                       error="wrong"
                       success="right"
@@ -408,9 +435,9 @@ class Profile extends Component {
                       label="aboutMe"
                       icon="fa-map-pin"
                       group
-                      value={this.state.description}
+                      value={this.state.bio}
                       type="text"
-                      id="aboutMe"
+                      id="bio"
                       validate
                       error="wrong"
                       success="right"
@@ -976,6 +1003,12 @@ class Profile extends Component {
                                 value={this.state.bio}
                                 onChange={this.handleChange}
                               />
+                              <button
+                                className="btn btn-primary changebtn"
+                                type="submit"
+                              >
+                                Update
+                              </button>
                             </div>
                             <div className="col-2">
                               <button

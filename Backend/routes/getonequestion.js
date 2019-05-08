@@ -28,27 +28,27 @@ router.get("/", (req, res) => {
             let userarray = [];
             let userInfo = null;
 
-            for (i = 0; i < answerResult.length; i++) {
-              console.log("USER ID", answerResult[i].answerOwner);
-              userDetails.findById(
-                { _id: answerResult[i].answerOwner },
-                (err2, userInfo) => {
-                  console.log("USERIFNO", userInfo);
-                  if (err2) {
-                    console.log("ERROR", err2);
-                  } else {
-                    if (!!userInfo) {
-                      answerTemp[i].username = userInfo.firstName;
-                      userarray.push(answerTemp[i]);
-                    } else {
-                      userarray.push(answerTemp[i]);
-                    }
-                  }
-                  // answerTemp[i].username = userInfo.firstName;
-                }
-              );
-            }
-            console.log("FIANL DATA", answerResult);
+            // for (i = 0; i < answerResult.length; i++) {
+            //   console.log("USER ID", answerResult[i].answerOwner);
+            //   userDetails.findById(
+            //     { _id: answerResult[i].answerOwner },
+            //     (err2, userInfo) => {
+            //       console.log("USERIFNO", userInfo);
+            //       if (err2) {
+            //         console.log("ERROR", err2);
+            //       } else {
+            //         if (!!userInfo) {
+            //           answerTemp[i].username = userInfo.firstName;
+            //           userarray.push(answerTemp[i]);
+            //         } else {
+            //           userarray.push(answerTemp[i]);
+            //         }
+            //       }
+            //       // answerTemp[i].username = userInfo.firstName;
+            //     }
+            //   );
+            // }
+            // console.log("FIANL DATA", answerResult);
 
             let returnObj = {
               questionDetails: questionResult,

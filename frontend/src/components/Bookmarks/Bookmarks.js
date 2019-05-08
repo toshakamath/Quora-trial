@@ -20,7 +20,7 @@ class Bookmarks extends Component {
   componentDidMount() {
         axios.defaults.withCredentials = true;
         const Token=localStorage.getItem("token")
-        axios.get(window.base_url+`/bookmarked`, {headers:{Authorization:Token}})
+        axios.get(window.base_url+`/bookmark/bookmarked`, {headers:{Authorization:Token}})
           .then((response) => {
             console.log("Status Code : ", response.status);
             console.log("Data from node : ", response.data);
@@ -35,7 +35,10 @@ class Bookmarks extends Component {
   render() {
 
 
+    const education = [];
+    Object.assign(education, this.state.Bookmarks);
    
+  //  Const bookmark=education.map(bookmark=>)
     return (
       <div className="container container-fluid">
         <div className="row">

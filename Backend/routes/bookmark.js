@@ -17,9 +17,9 @@ router.post('/', requireAuth, function (req, res) {
 
             if (req.body.answerid) votes.bookmarked = answer.bookmarked;
 
-            if (votes.bookmarked) {
-                votes.bookmarked.push((req.user.id))
-            }
+            // if (votes.bookmarked) {
+            //     votes.bookmarked.push((req.user.id))
+            // }
 
             if (!req.body.bookmarked) {
                 var index = votes.bookmarked.indexOf(req.user.id);
@@ -50,7 +50,7 @@ router.post('/', requireAuth, function (req, res) {
     });
 });
 
-router.get('/getbookmarked', requireAuth, function (req, res) {
+router.get('/bookmarked', requireAuth, function (req, res) {
 
     answerdetails.find({ bookmarked: { "$in": [req.user.id] } })
         .populate("question", ["question", "postDate"])
