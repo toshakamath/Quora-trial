@@ -1,0 +1,41 @@
+.coursesidebarInner {
+  padding: 24px 12px 12px 24px;
+  overflow-x: visible;
+  overflow-y: visible;
+}
+.coursesidebarInner ul {
+  padding: 10px 20px 10px 20px;
+  list-style-type: none;
+}
+
+.coursesidebarInner ul li {
+  margin: 10px;
+  padding: 10px;
+
+  text-align: left;
+
+  width: 100%;
+}
+li a {
+  color: #2d3b45;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration-style: solid;
+}
+li a:hover {
+  text-decoration-line: none;
+  color: #2d3b45;
+}
+li a:active {
+  color: white;
+}
+
+.coursesidebarInner ul li:hover {
+  background-color: rgb(242, 242, 242);
+  color: white;
+}
+coursesidebarInner ul li a:active {
+  background-color: #0055a2;
+}

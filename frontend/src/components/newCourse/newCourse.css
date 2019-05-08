@@ -1,0 +1,19 @@
+input {
+  width: 100%;
+}
+
+.courseWrapper {
+  background-color: rgb(245, 245, 245);
+  border: 0.5px solid;
+  border-color: rgb(199, 205, 209);
+  margin: 20px;
+  padding: 20px;
+}
+
+.Text {
+  background-color: white;
+}
+
+.as-btn {
+  margin: 40px;
+}

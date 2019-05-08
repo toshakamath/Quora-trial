@@ -17,43 +17,35 @@ class ProfileSidebar extends Component {
           <div>
             <div>
               <li className="rounded editableList">
-                <Link to={`/profile/${this.props.id}/`}>Profile</Link>
+                <Link to={`/profile/All`}>Profile</Link>
               </li>
             </div>
           </div>
           <div>
             <div>
               <li className="rounded editableList">
-                <Link to={`/profile/${this.props.id}/yourAnswers`}>
-                  Answers
-                </Link>
+                <Link to={`/profile/yourAnswers`}>Answers</Link>
               </li>
             </div>
           </div>
           <div>
             <div>
               <li className="rounded editableList">
-                <Link to={`/profile/${this.props.id}/yourQuestions`}>
-                  Questions
-                </Link>
+                <Link to={`/profile/yourQuestions`}>Questions</Link>
               </li>
             </div>
           </div>
           <div>
             <div>
               <li className="rounded editableList">
-                <Link to={`/profile/${this.props.id}/Followers`}>
-                  Followers
-                </Link>
+                <Link to={`/profile/Followers`}>Followers</Link>
               </li>
             </div>
           </div>
           <div>
             <div>
               <li className="rounded editableList">
-                <Link to={`/profile/${this.props.id}/Following`}>
-                  Following
-                </Link>
+                <Link to={`/profile/Following`}>Following</Link>
               </li>
             </div>
           </div>

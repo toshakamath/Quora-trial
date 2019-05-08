@@ -1,0 +1,24 @@
+#content-side-bar h4{
+  color: #333;
+    /* font-weight: bolder; */
+    position: relative;
+    border-bottom: 1px solid #e2e2e2;
+    margin-bottom: 10px;
+    line-height: 1.4;
+    padding-bottom: 8px;
+    font-size: 15px;
+    letter-spacing: 0;
+    text-transform: none;
+}
+#content-side-bar a{
+  display: block;
+    padding: 4px 5px;
+    margin-left: -4px;
+    border-radius: 3px;
+    color: #666;
+    border: none;
+    cursor: pointer;
+    line-height: 1.4;
+    font-weight: 400;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
