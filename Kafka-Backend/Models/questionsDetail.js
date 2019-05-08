@@ -7,7 +7,7 @@ var questionsdetail = new Schema({
   questionlink: { type: String },
   isAnonymous: { type: Boolean },
   user: { type: Schema.Types.ObjectId, ref: "userDetails" },
-  topic: { type: String },
+  topic:  [String],
   followers: [{ type: Schema.Types.ObjectId, ref: "userDetails" }],
   answers: [{ type: Schema.Types.ObjectId, ref: "answersdetail" }],
   visitor: {type : Number},

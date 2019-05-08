@@ -60,22 +60,23 @@ router.get("/", function(req, res) {
   answerdetails.findOne({ _id: req.query.answerid }).then(async answer => {
     if (answer) {
       console.log("COMMENTS ", answer.comment[0]);
-      let comm = answer.comment;
-      console.log("COMM", comm[0]);
+      let comm = JSON.parse(JSON.stringify(answer.comment));
+      //console.log("COMM", comm[0]);
       let _u = null;
       let userarray = [];
       const a = [];
       for (let i = 0; i < comm.length; i++) {
+        //console.log("findsing user ", comm[i].userid);
         _u = await userDetails.findOne({
           _id: comm[i].userid
         });
+        //console.log("found user ", _u);
         if (!!_u) {
-          comm[i].username = [];
-          comm[i].username.push(_u.firstName);
+          comm[i].username = _u.firstName;
           userarray.push(comm[i]);
         }
       }
-      console.log("COMM ", comm[0].username);
+      //console.log("COMM ", comm[0].username);
       console.log("USER", userarray);
 
       res.status(200).json({ message: "BookMark Count", comments: userarray });

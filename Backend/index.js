@@ -23,10 +23,10 @@ const answer = require("./routes/answer");
 const topic = require("./routes/topic");
 const message = require("./routes/message");
 const content = require("./routes/content");
-
+const ROOT_URL2 = "http://localhost:3000";
 const search = require("./routes/search");
 const getallanswer = require("./routes/getallanswer");
-// const bookmark = require("./routes/bookmark");
+const bookmark = require("./routes/bookmark");
 const updownVote = require("./routes/updownVote");
 const comment = require("./routes/comment");
 
@@ -36,6 +36,9 @@ var glob = require("glob");
 const multer = require("multer");
 const path = require("path");
 
+app.set("view engine", "ejs");
+app.use(cors({ origin: `${ROOT_URL2}`, credentials: true }));
+app.use("/uploads", express.static("uploads"));
 //use cors to allow cross origin resource sharing
 app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", `${ROOT_URL2}`); //A response that tells the browser to allow requesting code from the origin http://localhost:3000 to access a resource
@@ -95,7 +98,7 @@ app.use("/search", search);
 app.use("/answer", answer);
 app.use("/content", content);
 app.use("/getallanswer", getallanswer);
-// app.use("/bookmark", bookmark);
+app.use("/bookmark", bookmark);
 app.use("/updownVote", updownVote);
 app.use("/comment", comment);
 

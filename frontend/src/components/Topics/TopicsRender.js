@@ -42,7 +42,7 @@ const topics = ({ question, param_name, sendImage }) => {
     displayAsweredTime = diff.getUTCSeconds() + " seconds ago";
   }
 
-if(question.topic.includes(param_name.topicName)){
+if((question.topic||[]).includes(param_name.topicName)){
   return (
       <div>
           <div className="card questionCard">
