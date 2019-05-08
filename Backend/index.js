@@ -5,13 +5,14 @@ const bodyParser = require("body-parser");
 const app = express();
 const passport = require("passport");
 const port = process.env.PORT || 3001;
+const ROOT_URL2 = "http://localhost:3000";
 // app.use(bodyParser.json());
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ origin: `${ROOT_URL2}`, credentials: true }));
 // app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(bodyParser.raw({limit: "50mb"}));
 
-app.use(bodyParser.json({limit: '10mb', extended: true}))
-app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
+app.use(bodyParser.json({ limit: "10mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 //import Routes
 const login = require("./routes/login");
 const signup = require("./routes/signup");
@@ -36,13 +37,13 @@ const multer = require("multer");
 const path = require("path");
 
 //use cors to allow cross origin resource sharing
-app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Credentials", "true");
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", `${ROOT_URL2}`); //A response that tells the browser to allow requesting code from the origin http://localhost:3000 to access a resource
+  res.setHeader("Access-Control-Allow-Credentials", "true"); //to allow cookies
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET,HEAD,OPTIONS,POST,PUT,DELETE"
   );
-  res.header("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
