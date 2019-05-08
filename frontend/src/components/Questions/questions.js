@@ -59,6 +59,7 @@ class Questions extends Component {
       "this is ANSWER ID",
       this.props.question.answers[index].upVote.length
     );
+    Axios.defaults.withCredentials = true;
     Axios.post(window.base_url + "/updownVote", id).then(response => {
       console.log("final data", response.data);
       this.setState({ upvotes: response.data.upVoteCount });
@@ -105,7 +106,7 @@ class Questions extends Component {
       <li id="viewallcomments" class="list-group-item">
         <span id="commentbox2">
         <i class="fa fa-comment" id="commenticon" aria-hidden="true"></i>
-          {comm.comment}
+          {comm.username} : {comm.comment}
         </span>
       </li>
     ));
