@@ -36,9 +36,13 @@ export const loginUser = (logindata, history) => dispatch => {
       });
       /***** Setting up the data in localstorage *****/
       setData(res.data.token);
+      console.log("resData", res.data);
       const decoded = jwt_decode(res.data.token);
+      console.log("decoded token", decoded);
+      console.log("decodedname", decoded.name);
       localStorage.setItem("name", decoded.name);
       localStorage.setItem("profileImage", decoded.profileImage);
+      console.log("localstoarge", localStorage.getItem("name"));
       history.push("/home");
     })
     .catch(err => {

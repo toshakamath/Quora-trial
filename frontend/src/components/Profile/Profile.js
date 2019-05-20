@@ -87,8 +87,8 @@ class Profile extends Component {
     console.log("inside save pd call");
 
     // zipcode validation
-   // var regexresult = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.state.zipcode);
-  //  console.log("Result of zipcode regex", regexresult);
+    // var regexresult = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.state.zipcode);
+    //  console.log("Result of zipcode regex", regexresult);
 
     //us state validation
 
@@ -244,10 +244,15 @@ class Profile extends Component {
       })
       .then(response => {
         console.log(response.data);
-        if (response.status === 401) {
-          this.props.history.push("/profile");
+
+        console.log(response.data);
+        console.log("localstorage", localStorage.getItem("name"));
+        console.log(response.status);
+        if (response.data.message) {
+          this.setState({
+            name: localStorage.getItem("name")
+          });
         } else {
-          console.log(response.data);
           this.setState({
             profileData: response.data,
             name: response.data.user.firstName,
@@ -260,6 +265,7 @@ class Profile extends Component {
             following: [...response.data.following],
             noProfile: false
           });
+          console.log("local name", this.state.name);
         }
       })
       .catch(err => this.props.history.push("/profile"));
@@ -319,16 +325,14 @@ class Profile extends Component {
     console.log("Emaild id is:", email);
 
     var data = { email: email, experience: experience };
-    axios
-      .post("http://localhost:3001/profile", data)
-      .then(response => {
-        console.log("Resose", response);
-        if (response.status === 200) {
-          console.log("Inside del");
-          this.setState({ isExpUpdated: true });
-        }
-        this.fetchprofiledbcall();
-      });
+    axios.post("http://localhost:3001/profile", data).then(response => {
+      console.log("Resose", response);
+      if (response.status === 200) {
+        console.log("Inside del");
+        this.setState({ isExpUpdated: true });
+      }
+      this.fetchprofiledbcall();
+    });
   };
   handleaddexperiencemodal = () => {
     console.log("test");
@@ -710,7 +714,8 @@ class Profile extends Component {
                         group
                         type="text"
                         validate
-                        error="wrong"s
+                        error="wrong"
+                        s
                         success="right"
                         onChange={this.handlefieldchangesexperience}
                         className="form-control form-input"

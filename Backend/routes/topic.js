@@ -60,14 +60,16 @@ router.get("/", function(req, res) {
 
 router.get("/all", function(req, res) {
   console.log("Inside Topic Get Request", req);
-  Topic.find({})
-  .then( result=>{
-      console.log("Topics rendered: ",result);
+  Topic.find({}).then(
+    result => {
+      console.log("Topics rendered: ", result);
       res.status(200).send(result);
-  }, err1=>{
-    console.log("Error in finding the user", err1);
+    },
+    err1 => {
+      console.log("Error in finding the user", err1);
       res.status(400).send({ message: "Error in Adding the interests" });
-  })
+    }
+  );
 });
 
 module.exports = router;

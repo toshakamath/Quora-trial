@@ -25,7 +25,7 @@ class AllProfiles extends Component {
         console.log(response.data);
 
         this.setState({
-          profiles: response.data
+          profiles: [...response.data]
         });
       });
   }
@@ -58,16 +58,22 @@ class AllProfiles extends Component {
     console.log("------------------------");
     console.log(this.state.profiles);
     console.log("------------------------");
-    const follower = this.state.profiles.map((follower, index) => {
+    const Profiles = [];
+    Object.assign(Profiles, this.state.profiles);
+    console.log(Profiles);
+
+    const follower = Profiles.map((user, index) => {
+      user.user ? console.log(user.user.firstName) : console.log("no");
+
       return (
         <div key={index} className="col-6 followerWrapper">
           <div className="row">
             <div className="col-12">
               <Link to="#" className="prolink row">
-                {follower.profileImage ? (
+                {user.profileImage ? (
                   <div className="proImg col-2">
                     <img
-                      src={`${window.base_url}/files/${follower.profileImage}`}
+                      src={`${window.base_url}/files/${user.profileImage}`}
                       alt="proImg"
                       height="35"
                       width="35"
@@ -87,14 +93,14 @@ class AllProfiles extends Component {
                   </div>
                 )}
                 <div className="col-10">
-                  <h3 className="proText">{follower.user.firstName}</h3>
+                  <h3 className="proText">{user.user.firstName}</h3>
                 </div>
               </Link>
             </div>
             <div className="col-12">
               <form
-                onSubmit={this.follow.bind(this, follower._id)}
-                value={follower._id}
+                onSubmit={this.follow.bind(this, user.user._id)}
+                value={user.user._id}
               >
                 <button className="btn ui-button" type="submit">
                   <span className="followsvg">
