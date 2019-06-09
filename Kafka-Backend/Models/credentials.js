@@ -2,6 +2,16 @@ const mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var credentials = new Schema({
+  _id: mongoose.Schema.Types.ObjectId,
+  email: { type: String },
+  city: { type: String },
+  state: { type: String },
+  firstName: { type: String },
+  lastName: { type: String },
+  zipCode: { type: Number },
+  profileImage: { type: String },
+  status: { type: Boolean },
+  topics: [{ topicName: { type: String }, topicImage: { type: String } }],
   user: { type: Schema.Types.ObjectId, ref: "userDetails" },
   followers: [{ type: Schema.Types.ObjectId, ref: "userDetails" }],
   following: [{ type: Schema.Types.ObjectId, ref: "userDetails" }],

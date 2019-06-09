@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt-nodejs");
 const jwt = require("jsonwebtoken");
 const connection = require("../../Kafka-Backend/connection");
 var User = require("../../Kafka-Backend/Models/userDetails");
+const Profile = require("../../Kafka-Backend/Models/credentials");
 
 //Kafka
 //var kafka = require('../kafka/client');
@@ -38,15 +39,13 @@ router.post("/", (req, res) => {
                 message: "Email and password does not match:" + err
               });
             } else {
-              User.findOne({ email: req.body.email })
+              Profile.findOne({ email: req.body.email })
                 .then(user => {
                   //initialize the payload for tokenn
                   console.log("mongo user" + user);
                   const payload = {
                     id: user.id,
-                    email: user.email,
-                    name: user.firstName + user.lastName,
-                    profileImage: user.profileImage
+                    email: user.email
                   };
                   //Sign the token with payload
                   jwt.sign(

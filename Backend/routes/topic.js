@@ -4,6 +4,7 @@ var passport = require("passport");
 var requireAuth = passport.authenticate("jwt", { session: false });
 const mongoose = require("mongoose");
 var Model = require("../../Kafka-Backend/Models/userDetails");
+var Profile = require("../../Kafka-Backend/Models/credentials");
 var Topic = require("../../Kafka-Backend/Models/topic");
 
 //post a new question from a user
@@ -31,7 +32,7 @@ router.post("/", function(req, res) {
 
 router.get("/", function(req, res) {
   console.log("Inside Topic Get Request", req.query.email);
-  Model.findOne({ email: req.query.email }, "topics", (err1, result) => {
+  Profile.findOne({ email: req.query.email }, "topics", (err1, result) => {
     if (err1) {
       console.log("Error in finding the user", err1);
       res.status(400).send({ message: "Error in Adding the interests" });

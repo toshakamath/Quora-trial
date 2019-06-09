@@ -6,6 +6,7 @@ var bcrypt = require("bcrypt-nodejs");
 var mongooseTypes = require("mongoose").Types;
 const mongoose = require("mongoose");
 var Model = require("../../Kafka-Backend/Models/userDetails");
+const Profile = require("../../Kafka-Backend/Models/credentials");
 var mysql = require("mysql");
 var connection = require("../../Kafka-Backend/connection");
 
@@ -76,8 +77,8 @@ router.post("/", function(req, res) {
         } else {
           var user = new Model({
             _id: new mongoose.Types.ObjectId(),
-            firstName: req.body.firstname,
-            lastName: req.body.lastname,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
             email: req.body.email,
             city: req.body.city,
             state: req.body.state,
@@ -85,11 +86,35 @@ router.post("/", function(req, res) {
             profileImage: req.body.profileImage,
             status: req.body.status
           });
+          var user_credentials = new Profile({
+            _id: new mongoose.Types.ObjectId(),
+            email: req.body.email,
+            city: req.body.city,
+            state: req.body.state,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            zipCode: req.body.zipCode,
+            profileImage: req.body.profileImage,
+            status: req.body.status
+          });
+          console.log("USER CREDSSS: ",user_credentials);
 
           user.save().then(
             doc => {
-              res.status(200).json(doc);
-              console.log("User saved successfully.", doc);
+              user_credentials.save().then(
+                doc1 => {
+                  res.status(200).json(doc1);
+                  console.log("User saved inside CREDENTIALS successfully.", doc1);
+                  console.log("User saved inside USERDETAILS successfully.", doc);
+                  // callback(null, doc);
+                },
+                err1 => {
+                  console.log("Unable to save user details.", err1);
+                  res.status(404).json(err1); //callback(err, null);
+                }
+              );
+              // res.status(200).json(doc);
+              // console.log("User saved successfully.", doc);
               // callback(null, doc);
             },
             err => {

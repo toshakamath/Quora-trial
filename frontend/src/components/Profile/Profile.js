@@ -13,7 +13,7 @@ import AllProfiles from "../AllProfiles/AllProfiles";
 import ProfileSidebar from "../ProfileSidebar/ProfileSidebar";
 import { getProfile } from "../../Actions/profileAction";
 import ReactQuill, { Quill, Mixin } from "react-quill";
-
+import jwt_decode from "jwt-decode";
 import "react-quill/dist/quill.snow.css";
 import "../../App.css";
 import "./Profile.css";
@@ -238,6 +238,7 @@ class Profile extends Component {
     //   this.props.history.push("/login");
     // }
     console.log(Token);
+    console.log("CHECK DECODED: ",jwt_decode(Token));
     axios
       .get(window.base_url + "/profile", {
         headers: { Authorization: Token }
